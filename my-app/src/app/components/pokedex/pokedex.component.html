@@ -1,0 +1,6 @@
+<mat-toolbar color="primary">
+    <span>Pokedex</span>
+</mat-toolbar>
+<div *ngFor="let pokemon of pokemons;" pokemonClick>
+    <mat-card id="{{ pokemon.url }}" class="pokemon-card">{{ pokemon.name }}</mat-card>
+</div>
