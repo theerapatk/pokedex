@@ -10,8 +10,9 @@ export class PokedexService {
 
   constructor(private http: HttpClient) { }
 
-  getPokemons() {
-    return this.http.get<PokeApi>('https://pokeapi.co/api/v2/pokemon');
+  getPokemons(nextUrl: string = '') {
+    let url = nextUrl.trim() === '' ? 'https://pokeapi.co/api/v2/pokemon' : nextUrl;
+    return this.http.get<PokeApi>(url);
   }
 
   getPokemon(url: string) {

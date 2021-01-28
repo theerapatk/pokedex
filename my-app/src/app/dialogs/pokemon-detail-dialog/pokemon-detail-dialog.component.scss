@@ -1,4 +1,31 @@
+// .progress-bar-container {
+//     height: 4px;
+// }
+
+// mat-progress-bar {
+//     position: relative;
+//     z-index: 2;
+//     top: -24px;
+//     left: -24px;
+//     width: calc(100% + 48px);
+// }
+
+h3 {
+    font-weight: bold;
+}
+
+.pokemon-name {
+    text-transform: capitalize;
+}
+
+mat-dialog-content {
+    height: 80%;
+}
+
 .pokemon-sprite {
     max-width: 200px;
     max-height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }

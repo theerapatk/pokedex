@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PokeApiPokemon } from 'src/app/models/poke-api-pokemon';
 import { PokedexService } from 'src/app/services/pokedex.service';
 
@@ -10,6 +10,7 @@ import { PokedexService } from 'src/app/services/pokedex.service';
 })
 export class PokemonDetailDialogComponent implements OnInit {
 
+  isLoading = false;
   pokemonDetail: PokeApiPokemon = {
     id: 0,
     name: '',
@@ -24,14 +25,20 @@ export class PokemonDetailDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getPokemon();
+  }
+
+  private getPokemon() {
+    this.isLoading = true;
     this.pokedexService.getPokemon(this.data.url).subscribe(
-      response => {
-        let { id, name, sprites } = response;
-        this.pokemonDetail.id = id;
-        this.pokemonDetail.name = name;
-        this.pokemonDetail.sprites = sprites;
-      }
+      response => this.handleSuccessfulResponse(response),
+      error => this.isLoading = false
     );
   }
 
+  handleSuccessfulResponse(response: any): void {
+    this.isLoading = false;
+    let { id, name, sprites } = response;
+    this.pokemonDetail = { id, name, sprites };
+  }
 }

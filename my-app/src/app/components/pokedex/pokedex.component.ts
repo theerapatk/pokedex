@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PokeApi } from 'src/app/models/poke-api';
 import { PokeApiResult } from 'src/app/models/poke-api-result';
 import { PokedexService } from 'src/app/services/pokedex.service';
 
@@ -11,17 +10,31 @@ import { PokedexService } from 'src/app/services/pokedex.service';
 export class PokedexComponent implements OnInit {
 
   pokemons: PokeApiResult[] = [];
+  nextUrl: string = '';
 
   constructor(private pokedexService: PokedexService) { }
 
   ngOnInit(): void {
-    this.getPokemon();
+    this.getPokemons();
   }
 
-  private getPokemon() {
-    this.pokedexService.getPokemons().subscribe(
-      response => this.pokemons = [...response.results]
+  private getPokemons(): void {
+    this.pokedexService.getPokemons(this.nextUrl).subscribe(
+      response => {
+        this.pokemons = [...this.pokemons, ...response.results];
+        this.nextUrl = response.next;
+      }
     );
+  }
+
+  onScroll(): void {
+    if (this.nextUrl) {
+      this.getPokemons();
+    }
+  }
+
+  getId(url: string): string {
+    return url.split('pokemon/')[1].split('/')[0];
   }
 
 }

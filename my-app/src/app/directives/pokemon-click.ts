@@ -16,8 +16,8 @@ export class PokemonClick {
 
   openDialog(url: string) {
     this.dialog.open(PokemonDetailDialogComponent, {
-      height: '400px',
-      width: '600px',
+      height: '600px',
+      width: '400px',
       data: { url }
     });
   }

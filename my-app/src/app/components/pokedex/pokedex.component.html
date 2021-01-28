@@ -1,6 +1,19 @@
 <mat-toolbar color="primary">
-    <span>Pokedex</span>
+    <span>Pokédex</span>
 </mat-toolbar>
-<div *ngFor="let pokemon of pokemons;" pokemonClick>
-    <mat-card id="{{ pokemon.url }}" class="pokemon-card">{{ pokemon.name }}</mat-card>
+<div class="pokemon-card-container" pokemonClick>
+    <mat-card *ngFor="let pokemon of pokemons;" id="{{ pokemon.url }}" class="mat-elevation-z2 pokemon-card">#{{
+        getId(pokemon.url) }}
+        <span class="pokemon-name"> {{ pokemon.name }}</span>
+    </mat-card>
+    <ng-container *ngIf="nextUrl">
+        <div class="scoll-to-load-text">
+            <mat-icon aria-hidden="false" aria-label="Scroll down to load more" class="arrow-downward bounce">
+                arrow_downward
+            </mat-icon> Scroll down to
+            load more
+        </div>
+    </ng-container>
 </div>
+<div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"></div>
