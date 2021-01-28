@@ -10,7 +10,7 @@ import { PokedexService } from 'src/app/services/pokedex.service';
 })
 export class PokemonDetailDialogComponent implements OnInit {
 
-  isLoading = false;
+  isLoading = true;
   pokemonDetail: PokeApiPokemon = {
     id: 0,
     name: '',
@@ -25,14 +25,15 @@ export class PokemonDetailDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getPokemon();
+    setTimeout(() => {
+      this.getPokemon();
+    }, 1000);
   }
 
   private getPokemon() {
-    this.isLoading = true;
     this.pokedexService.getPokemon(this.data.url).subscribe(
       response => this.handleSuccessfulResponse(response),
-      error => this.isLoading = false
+      error => {}
     );
   }
 
