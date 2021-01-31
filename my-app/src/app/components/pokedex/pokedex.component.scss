@@ -8,10 +8,13 @@
     flex: 1 0 calc(11%);
     min-width: 75px;
     max-width: 200px;
+    font-weight: bold;
+    transition: 0.3s;
 
     &:hover {
         cursor: pointer;
-        background-color: lightsteelblue;
+        opacity: 0.6;
+        box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.6);
     }
 }
 
@@ -21,7 +24,17 @@
 }
 
 .details-container {
-    margin-top: 1em;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-top: 0.5em;
+}
+
+.pokemon-sprite-container {
+    flex: 1 1 auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .scoll-to-load-text {
