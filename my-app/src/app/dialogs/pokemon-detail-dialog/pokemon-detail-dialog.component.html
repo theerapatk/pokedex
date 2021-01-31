@@ -12,8 +12,14 @@
   </h3>
   <mat-dialog-content>
     <main>
-      <img mat-card-image class="pokemon-sprite" [src]="pokemonDetail.sprites.front_default" alt="Sprite of Pokemon">
-      <p> </p>
+      <div class="main-flex-item">
+        <img mat-card-image class="pokemon-sprite" [src]="pokemonDetail.sprites.front_default" alt="Sprite of Pokemon">
+      </div>
+      <div class="main-flex-item-chart">
+        <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions" [labels]="radarChartLabels"
+          [chartType]="radarChartType">
+        </canvas>
+      </div>
     </main>
   </mat-dialog-content>
   <mat-dialog-actions align="end">

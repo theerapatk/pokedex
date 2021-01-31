@@ -18,14 +18,118 @@ h3 {
     text-transform: capitalize;
 }
 
-mat-dialog-content {
-    height: 80%;
+mat-dialog-content > main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
 }
 
-.pokemon-sprite {
-    max-width: 200px;
-    max-height: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+.main-flex-item {
+    align-self: center;
+    margin: 1em;
+    width: 150px;
+}
+
+.main-flex-item-chart {
+    align-self: center;
+    margin: 1em;
+    width: 300px;
+    height: 300px;
+}
+
+$lightenAmount: 22;
+$normal: #a8a878;
+.normal-lighter {
+    background-color: lighten($normal, $lightenAmount);
+}
+
+$fighting: #c03028;
+.fighting-lighter {
+    background-color: lighten($fighting, $lightenAmount);
+}
+
+$flying: #a890f0;
+.flying-lighter {
+    background-color: lighten($flying, $lightenAmount);
+}
+
+$poison: #a040a0;
+.poison-lighter {
+    background-color: lighten($poison, $lightenAmount);
+}
+
+$ground: #e0c068;
+.ground-lighter {
+    background-color: lighten($ground, $lightenAmount);
+}
+
+$rock: #b8a038;
+.rock-lighter {
+    background-color: lighten($rock, $lightenAmount);
+}
+
+$bug: #a8b820;
+.bug-lighter {
+    background-color: lighten($bug, $lightenAmount);
+}
+
+$ghost: #705898;
+.ghost-lighter {
+    background-color: lighten($ghost, $lightenAmount);
+}
+
+$steel: #b8b8d0;
+.steel-lighter {
+    background-color: lighten($steel, $lightenAmount);
+}
+
+$fire: #f08030;
+.fire-lighter {
+    background-color: lighten($fire, $lightenAmount);
+}
+
+$water: #6890f0;
+.water-lighter {
+    background-color: lighten($water, $lightenAmount);
+}
+
+$grass: #78c850;
+.grass-lighter {
+    background-color: lighten($grass, $lightenAmount);
+}
+
+$electric: #f8d030;
+.electric-lighter {
+    background-color: lighten($electric, $lightenAmount);
+}
+
+$psychic: #f85888;
+.psychic-lighter {
+    background-color: lighten($psychic, $lightenAmount);
+}
+
+$ice: #98d8d8;
+.ice-lighter {
+    background-color: lighten($ice, $lightenAmount);
+}
+
+$dragon: #7038f8;
+.dragon-lighter {
+    background-color: lighten($dragon, $lightenAmount);
+}
+
+$dark: #705848;
+.dark-lighter {
+    background-color: lighten($dark, $lightenAmount);
+}
+
+$fairy: #ee99ac;
+.fairy-lighter {
+    background-color: lighten($fairy, $lightenAmount);
+}
+
+$unknown: #68a090;
+.unknown-lighter {
+    background-color: lighten($unknown, $lightenAmount);
 }

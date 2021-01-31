@@ -29,7 +29,12 @@ describe('PokemonDetailDialogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PokemonDetailDialogComponent);
     component = fixture.componentInstance;
-    const expected: PokeApiPokemon = { id: 1, name: 'bulbasuar', sprites: { front_default: '' } };
+    const expected: PokeApiPokemon = {
+      id: 1, name: 'bulbasuar',
+      sprites: { front_default: '' },
+      types: [{ slot: 0, type: { name: '', url: '' } }],
+      stats: {}
+    };
     serviceSpy.getPokemon.and.returnValue(of(expected));
     fixture.detectChanges();
   });

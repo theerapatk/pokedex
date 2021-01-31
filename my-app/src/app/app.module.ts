@@ -9,6 +9,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChartsModule } from 'ng2-charts';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,7 +45,8 @@ import { PokemonClick } from './directives/pokemon-click';
     MatButtonModule,
     MatProgressBarModule,
     MatIconModule,
-    MatChipsModule
+    MatChipsModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

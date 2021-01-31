@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { PokeApi } from '../models/poke-api';
 import { PokeApiPokemon } from '../models/poke-api-pokemon';
 
@@ -19,6 +18,10 @@ export class PokedexService {
 
   getPokemon(url: string) {
     return this.http.get<PokeApiPokemon>(url);
+  }
+
+  getPokemonByType(type: string) {
+    return this.http.get<any>(`https://pokeapi.co/api/v2/type/${type}`);
   }
 
 }

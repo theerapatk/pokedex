@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { PokeApi } from 'src/app/models/poke-api';
 import { PokeApiResult } from 'src/app/models/poke-api-result';
@@ -15,6 +15,7 @@ export class PokedexComponent implements OnInit {
   isLoading = true;
   pokemons: PokeApiResult[] = [];
   nextUrl: string = '';
+  subscription: Subscription = new Subscription;
 
   constructor(private pokedexService: PokedexService) { }
 
@@ -23,7 +24,7 @@ export class PokedexComponent implements OnInit {
   }
 
   private getPokemons(): void {
-    this.pokedexService.getPokemons(this.nextUrl).subscribe(
+    this.subscription = this.pokedexService.getPokemons(this.nextUrl).subscribe(
       response => this.handleSuccessfulGetPokemons(response)
     );
   }
@@ -37,7 +38,9 @@ export class PokedexComponent implements OnInit {
 
   getPokemonDetails() {
     const pokemonDetailsCalls: Observable<any>[] = [];
-    this.pokemons.forEach(pokemon => pokemonDetailsCalls.push(this.pokedexService.getPokemon(pokemon.url)));
+    this.pokemons.forEach(pokemon => {
+      pokemonDetailsCalls.push(this.pokedexService.getPokemon(pokemon.url))
+    });
     this.isLoading = true;
     forkJoin(pokemonDetailsCalls).subscribe(pokemonDetails => {
       this.pokemons.forEach((pokemon, index) => {
@@ -55,8 +58,28 @@ export class PokedexComponent implements OnInit {
     }
   }
 
-  getId(url: string): string {
-    return url.split('pokemon/')[1].split('/')[0];
+  getId(url: string = ''): string {
+    return url.split('pokemon/')[1]?.split('/')[0];
+  }
+
+  onTypeClick(type: string) {
+    this.pokemons.length = 0;
+    this.subscription = this.pokedexService.getPokemonByType(type).subscribe(
+      response => this.handleSuccessfulGetPokemonByType(response)
+    );
+  }
+
+  private handleSuccessfulGetPokemonByType(response: any): void {
+    this.pokemons = [...this.pokemons, ...response.pokemon.map((item: { pokemon: any; }) => item.pokemon)];
+    this.nextUrl = response.next;
+
+    this.getPokemonDetails();
+  }
+
+  onResetClick() {
+    this.pokemons.length = 0;
+    this.nextUrl = '';
+    this.getPokemons();
   }
 
 }

@@ -1,5 +1,12 @@
 <mat-toolbar color="primary">
-    <span>Pokédex</span>
+    <mat-toolbar-row>
+        <button mat-icon-button>
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>Pokédex</span>
+        <span class="mat-toolbar-spacer"></span>
+        <button mat-flat-button color="primary" (click)="onResetClick()" [disabled]="isLoading">Reset</button>
+    </mat-toolbar-row>
 </mat-toolbar>
 <div class="pokemon-card-container" pokemonClick>
     <mat-card *ngFor="let pokemon of pokemons;" id="{{ pokemon.url }}" class="mat-elevation-z2 pokemon-card"
@@ -11,7 +18,8 @@
                     <img class="pokemon-sprite" [src]="pokemon.details.sprites.front_default" alt="Sprite of Pokemon">
                 </div>
                 <mat-chip-list>
-                    <mat-chip *ngFor="let type of pokemon.details.types;" class="white-text" [ngClass]="type.type.name">
+                    <mat-chip *ngFor="let type of pokemon.details.types;" class="white-text" [ngClass]="type.type.name"
+                        (click)="onTypeClick(type.type.name)">
                         {{ type.type.name }}
                     </mat-chip>
                 </mat-chip-list>
