@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { PokeApi } from 'src/app/models/poke-api';
 import { PokeApiResult } from 'src/app/models/poke-api-result';
@@ -11,8 +11,11 @@ import { PokedexService } from 'src/app/services/pokedex.service';
 })
 export class PokedexComponent implements OnInit {
 
+  shouldShowScrollButton = false;
+  value = '';
   isLoading = true;
   pokemons: PokeApiResult[] = [];
+  originalPokemons: PokeApiResult[] = [];
   nextUrl: string = '';
   subscription: Subscription = new Subscription;
 
@@ -30,6 +33,7 @@ export class PokedexComponent implements OnInit {
 
   private handleSuccessfulGetPokemons(response: PokeApi): void {
     this.pokemons = [...this.pokemons, ...response.results];
+    this.originalPokemons = [...this.pokemons];
     this.nextUrl = response.next;
 
     this.getPokemonDetails();
@@ -70,6 +74,7 @@ export class PokedexComponent implements OnInit {
 
   private handleSuccessfulGetPokemonByType(response: any): void {
     this.pokemons = [...this.pokemons, ...response.pokemon.map((item: { pokemon: any; }) => item.pokemon)];
+    this.originalPokemons = [...this.pokemons];
     this.nextUrl = response.next;
 
     this.getPokemonDetails();
@@ -78,7 +83,34 @@ export class PokedexComponent implements OnInit {
   onResetClick() {
     this.pokemons.length = 0;
     this.nextUrl = '';
-    this.getPokemons();
+    this.pokemons = [...this.originalPokemons];
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    if (filterValue !== '') {
+      let filteredList = this.originalPokemons.filter(pokemon => pokemon.name.includes(filterValue));
+      this.pokemons = filteredList;
+    } else {
+      this.pokemons = [...this.originalPokemons];
+    }
+  }
+
+  onClearSearchClick(input: HTMLInputElement) {
+    input.value = '';
+    this.pokemons = [...this.originalPokemons];
+  }
+
+  onScrollToTopClick() {
+    window.scroll({ top: 0, behavior: 'smooth' });
+  }
+
+  @HostListener('window:scroll', ['$event']) getScrollHeight(event: any) {
+    if (window.pageYOffset > 1500) {
+      this.shouldShowScrollButton = true;
+    } else {
+      this.shouldShowScrollButton = false;
+    }
   }
 
 }

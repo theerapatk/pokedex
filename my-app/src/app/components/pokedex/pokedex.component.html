@@ -5,6 +5,13 @@
         </button>
         <span>Pokédex</span>
         <span class="mat-toolbar-spacer"></span>
+        <mat-form-field class="search-form-field" floatLabel="never">
+            <input matInput type="text" placeholder="search..." (keyup)="applyFilter($event)" #searchInput>
+            <button mat-button *ngIf="searchInput.value" matSuffix mat-icon-button aria-label="Clear"
+                (click)="onClearSearchClick(searchInput)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
         <button mat-flat-button color="primary" (click)="onResetClick()" [disabled]="isLoading">Reset</button>
     </mat-toolbar-row>
 </mat-toolbar>
@@ -26,12 +33,17 @@
             </div>
         </ng-container>
     </mat-card>
-    <ng-container *ngIf="nextUrl">
+    <ng-container *ngIf="nextUrl && searchInput.value.trim() === ''">
         <div class="scoll-to-load-text">
             <mat-icon aria-hidden="false" aria-label="Scroll down to load more" class="arrow-downward bounce">
                 arrow_downward
             </mat-icon> Scroll down to load more
         </div>
     </ng-container>
+</div>
+<div *ngIf="shouldShowScrollButton" class="scroll-to-top-button-container">
+    <button mat-fab color="primary" (click)="onScrollToTopClick()">
+        <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
 </div>
 <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"></div>

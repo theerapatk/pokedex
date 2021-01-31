@@ -1,10 +1,26 @@
+mat-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+
 .mat-toolbar-spacer {
     flex: 1 1 auto;
+}
+
+.search-form-field {
+    width: 400px;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .pokemon-card-container {
     display: flex;
     flex-flow: row wrap;
+    top: 67px;
+    position: relative;
 }
 
 .pokemon-card {
@@ -39,6 +55,13 @@
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.scroll-to-top-button-container {
+    width: 120px;
+    position: fixed;
+    bottom: 40px;
+    right: -35px;
 }
 
 .scoll-to-load-text {
