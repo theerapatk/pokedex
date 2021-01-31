@@ -5,6 +5,7 @@ import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { PokeApiPokemon } from 'src/app/models/poke-api-pokemon';
 import { PokedexService } from 'src/app/services/pokedex.service';
+import { DetailDialogLoadingComponent } from '../detail-dialog-loading/detail-dialog-loading.component';
 import { PokemonDetailDialogComponent } from './pokemon-detail-dialog.component';
 
 describe('PokemonDetailDialogComponent', () => {
@@ -15,7 +16,7 @@ describe('PokemonDetailDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PokemonDetailDialogComponent],
+      declarations: [PokemonDetailDialogComponent, DetailDialogLoadingComponent],
       imports: [HttpClientTestingModule, MatCardModule, MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
