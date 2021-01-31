@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { PokeApi } from 'src/app/models/poke-api';
 import { PokeApiResult } from 'src/app/models/poke-api-result';
 import { PokedexService } from 'src/app/services/pokedex.service';
