@@ -2,18 +2,25 @@
     <span>Pokédex</span>
 </mat-toolbar>
 <div class="pokemon-card-container" pokemonClick>
-    <mat-card *ngFor="let pokemon of pokemons;" id="{{ pokemon.url }}" class="mat-elevation-z2 pokemon-card">#{{
-        getId(pokemon.url) }}
-        <span class="pokemon-name"> {{ pokemon.name }}</span>
+    <mat-card *ngFor="let pokemon of pokemons;" id="{{ pokemon.url }}" class="mat-elevation-z2 pokemon-card"
+        [class]="pokemon.details && pokemon.details.types[0].type.name + '-lighter'">
+        #{{ getId(pokemon.url) }}<span class="pokemon-name"> {{ pokemon.name }}</span>
+        <ng-container *ngIf="pokemon.details && pokemon.details.types.length > 0">
+            <div class="details-container">
+                <mat-chip-list>
+                    <mat-chip *ngFor="let type of pokemon.details.types;" class="white-text" [ngClass]="type.type.name">
+                        {{ type.type.name }}
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+        </ng-container>
     </mat-card>
     <ng-container *ngIf="nextUrl">
         <div class="scoll-to-load-text">
             <mat-icon aria-hidden="false" aria-label="Scroll down to load more" class="arrow-downward bounce">
                 arrow_downward
-            </mat-icon> Scroll down to
-            load more
+            </mat-icon> Scroll down to load more
         </div>
     </ng-container>
 </div>
-<div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
-    (scrolled)="onScroll()"></div>
+<div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"></div>

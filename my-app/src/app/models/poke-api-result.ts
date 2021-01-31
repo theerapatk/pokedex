@@ -1,4 +1,5 @@
 export interface PokeApiResult {
     name: string,
-    url: string
+    url: string,
+    details: any
 }

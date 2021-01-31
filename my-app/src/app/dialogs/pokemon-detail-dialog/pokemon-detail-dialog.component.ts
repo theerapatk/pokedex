@@ -14,6 +14,13 @@ export class PokemonDetailDialogComponent implements OnInit {
   pokemonDetail: PokeApiPokemon = {
     id: 0,
     name: '',
+    types: [{
+      slot: 0,
+      type: {
+        name: '',
+        url: ''
+      }
+    }],
     sprites: {
       front_default: ''
     }
@@ -33,13 +40,13 @@ export class PokemonDetailDialogComponent implements OnInit {
   private getPokemon() {
     this.pokedexService.getPokemon(this.data.url).subscribe(
       response => this.handleSuccessfulResponse(response),
-      error => {}
+      error => { }
     );
   }
 
   handleSuccessfulResponse(response: any): void {
     this.isLoading = false;
-    let { id, name, sprites } = response;
-    this.pokemonDetail = { id, name, sprites };
+    let { id, name, sprites, types } = response;
+    this.pokemonDetail = { id, name, sprites, types };
   }
 }

@@ -38,20 +38,6 @@
     padding: 1.75em;
 }
 
-.header-top {
-    top: 0;
-    left: 0;
-    height: 15px;
-    width: 100%;
-}
-
-.header-left {
-    top: 15px;
-    left: 0;
-    height: 25px;
-    width: 20%;
-}
-
 .header-right {
     top: 0;
     right: 0;
@@ -85,3 +71,58 @@
         padding: 1em;
     }
 }
+
+// @keyframes placeHolderShimmer {
+//     0% {
+//         background-position: -468px 0;
+//     }
+//     100% {
+//         background-position: 468px 0;
+//     }
+// }
+
+// .animated-background {
+//     animation-duration: 1s;
+//     animation-fill-mode: forwards;
+//     animation-iteration-count: infinite;
+//     animation-name: placeHolderShimmer;
+//     animation-timing-function: linear;
+//     background: #f6f7f8;
+//     background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+//     background-size: 970px 104px;
+//     height: 90px;
+//     position: relative;
+// }
+
+// .background-masker {
+//     background: #ffffff;
+//     position: absolute;
+// }
+
+// .content-top {
+//     top: 0;
+//     left: 0;
+//     height: 15px;
+//     width: 100%;
+// }
+
+// .content-right {
+//     top: 15px;
+//     right: 0;
+//     height: 61px;
+//     width: 10%;
+// }
+
+// .content-bottom {
+//     bottom: 0;
+//     left: 0;
+//     height: 15px;
+//     width: 100%;
+// }
+
+// .content-left {
+//     top: 15px;
+//     left: 0;
+//     height: 61px;
+//     width: 10%;
+// }

@@ -8,9 +8,10 @@ export class PokemonClick {
   constructor(public dialog: MatDialog) { }
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-    let element = event.target as HTMLElement;
-    if (element.tagName.toLowerCase() === "mat-card") {
-      this.openDialog(element.id);
+    let target = event.target as HTMLElement;
+    let closestMatCard = target.closest('mat-card') as HTMLElement;
+    if (closestMatCard) {
+      this.openDialog(closestMatCard.id);
     }
   }
 
