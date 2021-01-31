@@ -74,7 +74,6 @@ export class PokedexComponent implements OnInit {
 
   private handleSuccessfulGetPokemonByType(response: any): void {
     this.pokemons = [...this.pokemons, ...response.pokemon.map((item: { pokemon: any; }) => item.pokemon)];
-    this.originalPokemons = [...this.pokemons];
     this.nextUrl = response.next;
 
     this.getPokemonDetails();
@@ -83,14 +82,13 @@ export class PokedexComponent implements OnInit {
   onResetClick() {
     this.pokemons.length = 0;
     this.nextUrl = '';
-    this.pokemons = [...this.originalPokemons];
+    this.getPokemons();
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     if (filterValue !== '') {
-      let filteredList = this.originalPokemons.filter(pokemon => pokemon.name.includes(filterValue));
-      this.pokemons = filteredList;
+      this.pokemons = this.pokemons.filter(pokemon => pokemon.name.includes(filterValue));
     } else {
       this.pokemons = [...this.originalPokemons];
     }
