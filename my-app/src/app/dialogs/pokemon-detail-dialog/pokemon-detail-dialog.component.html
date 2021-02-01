@@ -12,8 +12,7 @@
       <mat-tab label="Summary">
         <div class="tab-content-flex-container">
           <div class="main-flex-item">
-            <img mat-card-image class="pokemon-sprite"
-              [src]="pokemonDetail.sprites.front_default || 'assets/img/meltan_placeholder.png'"
+            <img mat-card-image [src]="pokemonDetail.sprites.front_default || 'assets/img/meltan_placeholder.png'"
               alt="Sprite of Pokemon">
             <ng-container *ngIf="pokemonDetail.abilities.length > 0">
               <b>Abilities</b>
@@ -44,12 +43,23 @@
               <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
               <tr></tr>
             </table>
+            <div *ngIf="isLoadingMove" class="spinner-container">
+              <mat-progress-spinner color="primary" mode="indeterminate">
+              </mat-progress-spinner>
+            </div>
           </div>
         </div>
       </mat-tab>
     </mat-dialog-content>
   </mat-tab-group>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close color="primary">Close</button>
+  <mat-dialog-actions class="mat-dialog-action">
+    <button *ngIf="data.previous" mat-button color="primary" (click)="onNextPokemonClick()">
+      <mat-icon>keyboard_arrow_left</mat-icon>Previous
+      <img class="pokemon-sprite" [src]="data.previous.dataset.imgsrc" alt="Sprite of Pokemon">
+    </button>
+    <button *ngIf="data.next" mat-button color="primary" (click)="onNextPokemonClick(true)">
+      <img class="pokemon-sprite" [src]="data.next.dataset.imgsrc" alt="Sprite of Pokemon">
+      Next<mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
   </mat-dialog-actions>
 </ng-template>

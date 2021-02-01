@@ -11,14 +11,25 @@ export class PokemonClick {
     let target = event.target as HTMLElement;
     let closestMatCard = target.closest('mat-card') as HTMLElement;
     if (closestMatCard) {
-      this.openDialog(closestMatCard.id);
+      this.openDialog(closestMatCard);
     }
   }
 
-  openDialog(url: string) {
-    this.dialog.open(PokemonDetailDialogComponent, {
+  openDialog(element: HTMLElement) {
+    let dialogRef = this.dialog.open(PokemonDetailDialogComponent, {
       width: '600px',
-      data: { url }
+      data: {
+        selfUrl: element.id,
+        previous: element.previousElementSibling,
+        next: element.nextElementSibling
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let element: HTMLElement = document.getElementById(result.id) as HTMLElement;
+        element?.click();
+      }
     });
   }
 }

@@ -8,6 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -59,6 +60,7 @@ import { HttpResponseInterceptor } from './interceptors/http-response.intercepto
     MatTabsModule,
     MatTableModule,
     MatSortModule,
+    MatProgressSpinnerModule,
     ToastrModule.forRoot({
       timeOut: 4000,
       positionClass: 'toast-bottom-center',

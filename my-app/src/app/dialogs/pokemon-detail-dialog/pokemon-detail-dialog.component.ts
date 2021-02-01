@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
@@ -27,6 +27,7 @@ const MOVE_DATA: Move[] = [
 export class PokemonDetailDialogComponent implements OnInit {
 
   isLoading = true;
+  isLoadingMove = true;
   pokemonDetail: PokeApiPokemon = {
     id: 0,
     name: '',
@@ -61,8 +62,9 @@ export class PokemonDetailDialogComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort = new MatSort;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: { url: string },
-    private pokedexService: PokedexService
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private pokedexService: PokedexService,
+    public dialogRef: MatDialogRef<PokemonDetailDialogComponent>
   ) { }
 
   ngOnInit() {
@@ -72,7 +74,7 @@ export class PokemonDetailDialogComponent implements OnInit {
   }
 
   private getPokemon() {
-    this.pokedexService.getPokemon(this.data.url).subscribe(
+    this.pokedexService.getPokemon(this.data.selfUrl).subscribe(
       response => this.handleSuccessfulResponse(response),
       error => { }
     );
@@ -94,10 +96,10 @@ export class PokemonDetailDialogComponent implements OnInit {
   }
 
   getMoves() {
+    let moveDataSource: any[] = [];
     const calls: Observable<any>[] = [];
     this.pokemonDetail.moves.forEach((move: any) => calls.push(this.pokedexService.getByFullUrl(move.move.url)));
     forkJoin(calls).subscribe(moveDetails => {
-      let moveDataSource: any[] = [];
       moveDetails.forEach(detail =>
         moveDataSource.push({
           name: detail.name,
@@ -109,6 +111,7 @@ export class PokemonDetailDialogComponent implements OnInit {
         }));
       this.dataSource = new MatTableDataSource(moveDataSource)
       this.dataSource.sort = this.sort;
+      this.isLoadingMove = false;
     });
   }
 
@@ -118,6 +121,10 @@ export class PokemonDetailDialogComponent implements OnInit {
 
   chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
+  }
+
+  onNextPokemonClick(isNext: boolean = false) {
+    this.dialogRef.close({ id: isNext ? this.data.next?.id : this.data.previous?.id });
   }
 
 }

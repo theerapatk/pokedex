@@ -26,7 +26,8 @@
 </div>
 <div class="pokemon-card-container" pokemonClick>
     <mat-card *ngFor="let pokemon of pokemons;" id="{{ pokemon.url }}" class="mat-elevation-z2 pokemon-card"
-        [class]="pokemon.details && pokemon.details.types[0].type.name + '-lighter'">
+        [class]="pokemon.details && pokemon.details.types[0].type.name + '-lighter'"
+        [attr.data-imgsrc]="pokemon.details && pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'">
         #{{ getId(pokemon.url) }}<span class="pokemon-name"> {{ pokemon.name }}</span>
         <ng-container *ngIf="pokemon.details && pokemon.details.types.length > 0">
             <div class="details-container">
