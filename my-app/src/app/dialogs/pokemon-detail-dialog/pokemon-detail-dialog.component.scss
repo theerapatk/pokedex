@@ -18,7 +18,7 @@ h3 {
     text-transform: capitalize;
 }
 
-mat-dialog-content > main {
+.tab-content-flex-container {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
@@ -26,16 +26,22 @@ mat-dialog-content > main {
 }
 
 .main-flex-item {
-    align-self: center;
     margin: 1em;
-    width: 150px;
+    align-self: center;
+    width: 135px;
 }
 
 .main-flex-item-chart {
     align-self: center;
     margin: 1em;
-    width: 300px;
+    width: 320px;
     height: 300px;
+}
+
+.main-flex-item-table {
+    align-self: center;
+    margin: 1em;
+    height: 400px;
 }
 
 $lightenAmount: 22;
@@ -132,4 +138,8 @@ $fairy: #ee99ac;
 $unknown: #68a090;
 .unknown-lighter {
     background-color: lighten($unknown, $lightenAmount);
+}
+
+table {
+    width: 100%;
 }

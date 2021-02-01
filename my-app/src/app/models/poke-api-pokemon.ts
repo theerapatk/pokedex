@@ -11,5 +11,6 @@ export interface PokeApiPokemon {
     sprites: {
         front_default: string
     },
-    stats: any
+    stats: any,
+    moves: any
 }

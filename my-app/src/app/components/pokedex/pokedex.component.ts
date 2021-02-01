@@ -40,17 +40,13 @@ export class PokedexComponent implements OnInit {
   }
 
   getPokemonDetails() {
-    const pokemonDetailsCalls: Observable<any>[] = [];
-    this.pokemons.forEach(pokemon => {
-      pokemonDetailsCalls.push(this.pokedexService.getPokemon(pokemon.url))
-    });
     this.isLoading = true;
-    forkJoin(pokemonDetailsCalls).subscribe(pokemonDetails => {
+    const calls: Observable<any>[] = [];
+    this.pokemons.forEach(pokemon => calls.push(this.pokedexService.getPokemon(pokemon.url)));
+    forkJoin(calls).subscribe(pokemonDetails => {
       this.pokemons.forEach((pokemon, index) => {
         pokemon.details = pokemonDetails[index];
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 2000);
+        this.isLoading = false;
       });
     });
   }
@@ -74,8 +70,6 @@ export class PokedexComponent implements OnInit {
 
   private handleSuccessfulGetPokemonByType(response: any): void {
     this.pokemons = [...this.pokemons, ...response.pokemon.map((item: { pokemon: any; }) => item.pokemon)];
-    this.nextUrl = response.next;
-
     this.getPokemonDetails();
   }
 
@@ -88,7 +82,7 @@ export class PokedexComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     if (filterValue !== '') {
-      this.pokemons = this.pokemons.filter(pokemon => pokemon.name.includes(filterValue));
+      this.pokemons = this.originalPokemons.filter(pokemon => pokemon.name.includes(filterValue));
     } else {
       this.pokemons = [...this.originalPokemons];
     }

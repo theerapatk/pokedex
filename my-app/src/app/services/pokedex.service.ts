@@ -24,4 +24,8 @@ export class PokedexService {
     return this.http.get<any>(`https://pokeapi.co/api/v2/type/${type}`);
   }
 
+  getByFullUrl(url: string) {
+    return this.http.get<any>(url);
+  }
+
 }

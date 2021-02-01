@@ -1,6 +1,7 @@
 <!-- <div class="progress-bar-container">
   <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
 </div> -->
+
 <div *ngIf="isLoading; then thenBlock else elseBlock"></div>
 
 <ng-template #thenBlock>
@@ -10,18 +11,38 @@
 <ng-template #elseBlock>
   <h3 mat-dialog-title>#{{ pokemonDetail.id }} <span class="pokemon-name">{{ pokemonDetail.name }}</span>
   </h3>
-  <mat-dialog-content>
-    <main>
-      <div class="main-flex-item">
-        <img mat-card-image class="pokemon-sprite" [src]="pokemonDetail.sprites.front_default" alt="Sprite of Pokemon">
-      </div>
-      <div class="main-flex-item-chart">
-        <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions" [labels]="radarChartLabels"
-          [chartType]="radarChartType">
-        </canvas>
-      </div>
-    </main>
-  </mat-dialog-content>
+  <mat-tab-group>
+    <mat-dialog-content>
+      <mat-tab label="Summary">
+        <div class="tab-content-flex-container">
+          <div class="main-flex-item">
+            <img mat-card-image class="pokemon-sprite" [src]="pokemonDetail.sprites.front_default"
+              alt="Sprite of Pokemon">
+          </div>
+          <div class="main-flex-item-chart">
+            <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions" [labels]="radarChartLabels"
+              [chartType]="radarChartType">
+            </canvas>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Moves">
+        <div>
+          <div class="main-flex-item-table">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+              <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+                <td mat-cell *matCellDef="let move">{{ move[column] }}</td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+              <tr></tr>
+            </table>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-dialog-content>
+  </mat-tab-group>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close color="primary">Close</button>
   </mat-dialog-actions>
