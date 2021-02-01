@@ -41,7 +41,8 @@ export class PokemonDetailDialogComponent implements OnInit {
       front_default: ''
     },
     stats: [],
-    moves: []
+    moves: [],
+    abilities: []
   };
 
   // Radar
@@ -79,8 +80,8 @@ export class PokemonDetailDialogComponent implements OnInit {
 
   handleSuccessfulResponse(response: PokeApiPokemon): void {
     this.isLoading = false;
-    let { id, name, sprites, types, stats, moves } = response;
-    this.pokemonDetail = { id, name, sprites, types, stats, moves };
+    let { id, name, sprites, types, stats, moves, abilities } = response;
+    this.pokemonDetail = { id, name, sprites, types, stats, moves, abilities };
 
     let data: any[] = []
     this.pokemonDetail.stats.forEach((stat: any) => {
@@ -97,15 +98,15 @@ export class PokemonDetailDialogComponent implements OnInit {
     this.pokemonDetail.moves.forEach((move: any) => calls.push(this.pokedexService.getByFullUrl(move.move.url)));
     forkJoin(calls).subscribe(moveDetails => {
       let moveDataSource: any[] = [];
-      moveDetails.forEach(detail => 
+      moveDetails.forEach(detail =>
         moveDataSource.push({
-        name: detail.name,
-        type: detail.type.name,
-        category: detail.damage_class.name,
-        power: detail.power,
-        accuracy: detail.accuracy,
-        pp: detail.pp
-      }));
+          name: detail.name,
+          type: detail.type.name,
+          category: detail.damage_class.name,
+          power: detail.power,
+          accuracy: detail.accuracy,
+          pp: detail.pp
+        }));
       this.dataSource = new MatTableDataSource(moveDataSource)
       this.dataSource.sort = this.sort;
     });

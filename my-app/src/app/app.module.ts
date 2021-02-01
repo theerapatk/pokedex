@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularWelcomeComponent } from './components/angular-welcome/angular-welcome.component';
@@ -24,6 +25,7 @@ import { TestComponent } from './components/test/test.component';
 import { DetailDialogLoadingComponent } from './dialogs/detail-dialog-loading/detail-dialog-loading.component';
 import { PokemonDetailDialogComponent } from './dialogs/pokemon-detail-dialog/pokemon-detail-dialog.component';
 import { PokemonClick } from './directives/pokemon-click';
+import { HttpResponseInterceptor } from './interceptors/http-response.interceptor';
 
 @NgModule({
   declarations: [
@@ -56,9 +58,16 @@ import { PokemonClick } from './directives/pokemon-click';
     FormsModule,
     MatTabsModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      positionClass: 'toast-bottom-center',
+      preventDuplicates: true
+    })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

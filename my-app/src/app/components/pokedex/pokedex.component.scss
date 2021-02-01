@@ -15,7 +15,7 @@ mat-toolbar {
 }
 
 mat-progress-bar {
-    position: relative;
+    position: fixed;
     z-index: 2;
     top: 64px;
     left: -24px;

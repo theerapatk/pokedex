@@ -12,8 +12,18 @@
       <mat-tab label="Summary">
         <div class="tab-content-flex-container">
           <div class="main-flex-item">
-            <img mat-card-image class="pokemon-sprite" [src]="pokemonDetail.sprites.front_default"
+            <img mat-card-image class="pokemon-sprite"
+              [src]="pokemonDetail.sprites.front_default || 'assets/img/meltan_placeholder.png'"
               alt="Sprite of Pokemon">
+            <ng-container *ngIf="pokemonDetail.abilities.length > 0">
+              <b>Abilities</b>
+              <ul>
+                <li *ngFor="let ability of pokemonDetail.abilities;">
+                  {{ ability.ability.name }}
+                  <span *ngIf="ability.is_hidden"><i> (hidden ability)</i></span>
+                </li>
+              </ul>
+            </ng-container>
           </div>
           <div class="main-flex-item-chart">
             <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions" [labels]="radarChartLabels"

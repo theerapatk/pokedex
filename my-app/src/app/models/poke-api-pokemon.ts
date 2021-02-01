@@ -12,5 +12,6 @@ export interface PokeApiPokemon {
         front_default: string
     },
     stats: any,
-    moves: any
+    moves: any,
+    abilities: any,
 }

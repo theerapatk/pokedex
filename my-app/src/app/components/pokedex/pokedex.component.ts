@@ -116,6 +116,7 @@ export class PokedexComponent implements OnInit {
     } else {
       if (this.isApplyingType) {
         this.pokemons = [...this.pokemonsByType];
+        this.getPokemonDetails();
       } else {
         this.pokemons = [...this.originalPokemons];
       }
@@ -126,6 +127,7 @@ export class PokedexComponent implements OnInit {
     input.value = '';
     if (this.isApplyingType) {
       this.pokemons = [...this.pokemonsByType];
+      this.getPokemonDetails();
     } else {
       this.pokemons = [...this.originalPokemons];
     }

@@ -31,7 +31,9 @@
         <ng-container *ngIf="pokemon.details && pokemon.details.types.length > 0">
             <div class="details-container">
                 <div class="pokemon-sprite-container">
-                    <img class="pokemon-sprite" [src]="pokemon.details.sprites.front_default" alt="Sprite of Pokemon">
+                    <img class="pokemon-sprite"
+                        [src]="pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'"
+                        alt="Sprite of Pokemon">
                 </div>
                 <mat-chip-list>
                     <mat-chip *ngFor="let type of pokemon.details.types;" class="white-text" [ngClass]="type.type.name"

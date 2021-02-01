@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -15,8 +16,15 @@ describe('PokedexComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [PokedexComponent],
-      imports: [HttpClientTestingModule, MatToolbarModule, InfiniteScrollModule,
-        MatIconModule, MatInputModule, FormsModule, BrowserAnimationsModule]
+      imports: [
+        HttpClientTestingModule,
+        MatToolbarModule,
+        InfiniteScrollModule,
+        MatIconModule,
+        MatInputModule,
+        MatProgressBarModule,
+        FormsModule,
+        BrowserAnimationsModule]
     })
       .compileComponents();
   });
