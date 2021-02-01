@@ -1,7 +1,7 @@
-<div *ngIf="true; then thenBlock else elseBlock"></div>
+<div *ngIf="isLoading; then thenBlock else elseBlock"></div>
 
 <ng-template #thenBlock>
-  <app-detail-dialog-loading [isLoading]="true"></app-detail-dialog-loading>
+  <app-detail-dialog-loading [isLoading]="isLoading"></app-detail-dialog-loading>
 </ng-template>
 
 <ng-template #elseBlock>
