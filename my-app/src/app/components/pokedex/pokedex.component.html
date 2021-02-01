@@ -15,6 +15,15 @@
         <button mat-flat-button color="primary" (click)="onResetClick()" [disabled]="isLoading">Reset</button>
     </mat-toolbar-row>
 </mat-toolbar>
+<div class="progress-bar-container">
+    <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
+</div>
+<div *ngIf="isApplyingType" class="search-result-container">
+    Searching by type:
+    <mat-chip class="white-text" [ngClass]="searchingByType">
+        {{ searchingByType }}
+    </mat-chip>
+</div>
 <div class="pokemon-card-container" pokemonClick>
     <mat-card *ngFor="let pokemon of pokemons;" id="{{ pokemon.url }}" class="mat-elevation-z2 pokemon-card"
         [class]="pokemon.details && pokemon.details.types[0].type.name + '-lighter'">
@@ -33,8 +42,8 @@
             </div>
         </ng-container>
     </mat-card>
-    <ng-container *ngIf="nextUrl && searchInput.value.trim() === ''">
-        <div class="scoll-to-load-text">
+    <ng-container *ngIf="nextUrl && searchInput.value.trim() === '' && !isApplyingType">
+        <div class="scoll-to-load-text" (click)="onScroll()">
             <mat-icon aria-hidden="false" aria-label="Scroll down to load more" class="arrow-downward bounce">
                 arrow_downward
             </mat-icon> Scroll down to load more

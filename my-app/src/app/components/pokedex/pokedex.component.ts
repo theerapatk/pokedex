@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { PokeApi } from 'src/app/models/poke-api';
 import { PokeApiResult } from 'src/app/models/poke-api-result';
@@ -11,13 +11,18 @@ import { PokedexService } from 'src/app/services/pokedex.service';
 })
 export class PokedexComponent implements OnInit {
 
+  searchingByType = '';
+  isApplyingType = false;
   shouldShowScrollButton = false;
   value = '';
-  isLoading = true;
+  isLoading = false;
   pokemons: PokeApiResult[] = [];
   originalPokemons: PokeApiResult[] = [];
+  pokemonsByType: PokeApiResult[] = [];
   nextUrl: string = '';
   subscription: Subscription = new Subscription;
+
+  @ViewChild('searchInput') input: any;
 
   constructor(private pokedexService: PokedexService) { }
 
@@ -26,8 +31,10 @@ export class PokedexComponent implements OnInit {
   }
 
   private getPokemons(): void {
+    this.isLoading = true;
     this.subscription = this.pokedexService.getPokemons(this.nextUrl).subscribe(
-      response => this.handleSuccessfulGetPokemons(response)
+      response => this.handleSuccessfulGetPokemons(response),
+      error => this.isLoading = false
     );
   }
 
@@ -35,24 +42,22 @@ export class PokedexComponent implements OnInit {
     this.pokemons = [...this.pokemons, ...response.results];
     this.originalPokemons = [...this.pokemons];
     this.nextUrl = response.next;
-
     this.getPokemonDetails();
   }
 
-  getPokemonDetails() {
-    this.isLoading = true;
+  private getPokemonDetails() {
     const calls: Observable<any>[] = [];
     this.pokemons.forEach(pokemon => calls.push(this.pokedexService.getPokemon(pokemon.url)));
-    forkJoin(calls).subscribe(pokemonDetails => {
-      this.pokemons.forEach((pokemon, index) => {
+    forkJoin(calls).subscribe(
+      pokemonDetails => this.pokemons.forEach((pokemon, index) => {
         pokemon.details = pokemonDetails[index];
         this.isLoading = false;
-      });
-    });
+      }),
+      error => this.isLoading = false);
   }
 
   onScroll(): void {
-    if (this.nextUrl) {
+    if (this.nextUrl && !this.isApplyingType) {
       this.getPokemons();
     }
   }
@@ -63,34 +68,67 @@ export class PokedexComponent implements OnInit {
 
   onTypeClick(type: string) {
     this.pokemons.length = 0;
+    this.isLoading = true;
+    this.isApplyingType = true;
+    let previousType = this.searchingByType;
+    this.searchingByType = type;
     this.subscription = this.pokedexService.getPokemonByType(type).subscribe(
-      response => this.handleSuccessfulGetPokemonByType(response)
+      response => this.handleSuccessfulGetPokemonByType(response),
+      error => {
+        this.isLoading = false;
+        this.searchingByType = previousType;
+      }
     );
   }
 
   private handleSuccessfulGetPokemonByType(response: any): void {
-    this.pokemons = [...this.pokemons, ...response.pokemon.map((item: { pokemon: any; }) => item.pokemon)];
+    this.pokemonsByType = [...response.pokemon.map((item: { pokemon: any; }) => item.pokemon)];
+    this.pokemons = [...this.pokemonsByType];
+    this.applyFilterByType(this.input.nativeElement.value);
     this.getPokemonDetails();
   }
 
   onResetClick() {
     this.pokemons.length = 0;
     this.nextUrl = '';
+    this.isApplyingType = false;
+    this.input.nativeElement.value = '';
     this.getPokemons();
   }
 
-  applyFilter(event: Event) {
+  applyFilterByType(value: string) {
+    const filterValue = value.trim().toLowerCase();
+    if (filterValue !== '') {
+      this.pokemons = this.pokemonsByType.filter(pokemon => pokemon.name.includes(filterValue));
+    } else {
+      this.pokemons = [...this.pokemonsByType];
+    }
+  }
+
+  applyFilter(event: KeyboardEvent) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     if (filterValue !== '') {
-      this.pokemons = this.originalPokemons.filter(pokemon => pokemon.name.includes(filterValue));
+      if (this.isApplyingType) {
+        this.pokemons = this.pokemonsByType.filter(pokemon => pokemon.name.includes(filterValue));
+      } else {
+        this.pokemons = this.originalPokemons.filter(pokemon => pokemon.name.includes(filterValue));
+      }
     } else {
-      this.pokemons = [...this.originalPokemons];
+      if (this.isApplyingType) {
+        this.pokemons = [...this.pokemonsByType];
+      } else {
+        this.pokemons = [...this.originalPokemons];
+      }
     }
   }
 
   onClearSearchClick(input: HTMLInputElement) {
     input.value = '';
-    this.pokemons = [...this.originalPokemons];
+    if (this.isApplyingType) {
+      this.pokemons = [...this.pokemonsByType];
+    } else {
+      this.pokemons = [...this.originalPokemons];
+    }
   }
 
   onScrollToTopClick() {

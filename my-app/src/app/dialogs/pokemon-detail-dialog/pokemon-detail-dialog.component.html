@@ -1,7 +1,3 @@
-<!-- <div class="progress-bar-container">
-  <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"></mat-progress-bar>
-</div> -->
-
 <div *ngIf="isLoading; then thenBlock else elseBlock"></div>
 
 <ng-template #thenBlock>

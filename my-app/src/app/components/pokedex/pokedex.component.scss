@@ -10,10 +10,30 @@ mat-toolbar {
     flex: 1 1 auto;
 }
 
+.progress-bar-container {
+    height: 4px;
+}
+
+mat-progress-bar {
+    position: relative;
+    z-index: 2;
+    top: 64px;
+    left: -24px;
+    width: calc(100% + 48px);
+}
+
 .search-form-field {
     width: 400px;
     margin-left: 1em;
     margin-right: 1em;
+}
+
+.search-result-container {
+    top: 76px;
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
 }
 
 .pokemon-card-container {
@@ -21,7 +41,6 @@ mat-toolbar {
     flex-flow: row wrap;
     top: 67px;
     position: relative;
-    height: 101%;
 }
 
 .pokemon-card {
@@ -71,6 +90,13 @@ mat-toolbar {
     text-align: center;
     padding: 2em;
     text-transform: uppercase;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.6;
+        color: rgb(22, 138, 255);
+        text-decoration: underline;
+    }
 }
 
 .arrow-downward {
