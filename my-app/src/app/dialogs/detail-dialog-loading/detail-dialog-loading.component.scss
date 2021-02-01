@@ -53,17 +53,24 @@
 }
 
 .footer-top {
-    top: 326px;
+    top: 400px;
     left: 0;
-    height: 176px;
+    height: 90px;
     width: 100%;
 }
 
 .footer-left {
     bottom: 0;
-    left: 0;
-    height: 28px;
-    width: 75%;
+    left: 135px;
+    height: 40px;
+    width: 139px;
+}
+
+.footer-right {
+    bottom: 0;
+    right: 135px;
+    height: 40px;
+    width: 139px;
 }
 
 @media only screen and (max-width: 599px) {
