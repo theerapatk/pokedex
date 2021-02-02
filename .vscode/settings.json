@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/d35dd99c-6df7-45bd-8391-e0065c821715/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/jojo-pokedex",
+    "appService.deploySubpath": "."
+}
