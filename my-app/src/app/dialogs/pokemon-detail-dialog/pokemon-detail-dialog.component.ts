@@ -2,22 +2,13 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { forkJoin, Observable } from 'rxjs';
-import { PokeApiPokemon } from 'src/app/models/poke-api-pokemon';
+import { forkJoin } from 'rxjs';
+import { Move } from 'src/app/models/move';
+import { PokemonDetail } from 'src/app/models/pokemon-detail';
 import { PokedexService } from 'src/app/services/pokedex.service';
-
-export interface Move {
-  name: string,
-  power: number,
-  accuracy: number,
-  pp: number
-};
-
-const MOVE_DATA: Move[] = [
-  { name: 'tackle', power: 40, accuracy: 100, pp: 15 }
-];
 
 @Component({
   selector: 'app-pokemon-detail-dialog',
@@ -28,7 +19,7 @@ export class PokemonDetailDialogComponent implements OnInit {
 
   isLoading = true;
   isLoadingMove = true;
-  pokemonDetail: PokeApiPokemon = {
+  pokemonDetail: PokemonDetail = {
     id: 0,
     name: '',
     types: [{
@@ -76,43 +67,46 @@ export class PokemonDetailDialogComponent implements OnInit {
   private getPokemon() {
     this.pokedexService.getPokemon(this.data.selfUrl).subscribe(
       response => this.handleSuccessfulResponse(response),
-      error => { }
+      error => this.isLoading = false
     );
   }
 
-  handleSuccessfulResponse(response: PokeApiPokemon): void {
+  handleSuccessfulResponse(response: PokemonDetail): void {
     this.isLoading = false;
     let { id, name, sprites, types, stats, moves, abilities } = response;
     this.pokemonDetail = { id, name, sprites, types, stats, moves, abilities };
 
-    let data: any[] = []
-    this.pokemonDetail.stats.forEach((stat: any) => {
-      data.push(stat.base_stat);
-    });
+    this.radarChartData = [...this.radarChartData, ...[{
+      data: stats.map((stat: any) => stat.base_stat), label: 'Base Stats'
+    }]];
+  }
 
-    this.radarChartData = [...this.radarChartData, ...[{ data, label: 'Base Stats' }]];
-
-    this.getMoves();
+  onSelectedTabChange(event: MatTabChangeEvent) {
+    if (event.index === 1 && this.isLoadingMove) {
+      this.getMoves();
+    }
   }
 
   getMoves() {
-    let moveDataSource: any[] = [];
-    const calls: Observable<any>[] = [];
-    this.pokemonDetail.moves.forEach((move: any) => calls.push(this.pokedexService.getByFullUrl(move.move.url)));
-    forkJoin(calls).subscribe(moveDetails => {
-      moveDetails.forEach(detail =>
-        moveDataSource.push({
+    if (this.pokemonDetail.moves.length > 0) {
+      const calls = this.pokemonDetail.moves.map(
+        (move: any) => this.pokedexService.getByFullUrl(move.move.url));
+
+      forkJoin(calls).subscribe(moveDetails => {
+        const dataSource = moveDetails.map((detail: any) => ({
           name: detail.name,
           type: detail.type.name,
           category: detail.damage_class.name,
           power: detail.power,
           accuracy: detail.accuracy,
           pp: detail.pp
-        }));
-      this.dataSource = new MatTableDataSource(moveDataSource)
-      this.dataSource.sort = this.sort;
-      this.isLoadingMove = false;
-    });
+        } as Move));
+
+        this.dataSource = new MatTableDataSource(dataSource)
+        this.dataSource.sort = this.sort;
+        this.isLoadingMove = false;
+      });
+    }
   }
 
   chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {

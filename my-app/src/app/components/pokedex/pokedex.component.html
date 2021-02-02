@@ -24,6 +24,9 @@
         {{ searchingByType }}
     </mat-chip>
 </div>
+<div *ngIf="pokemons.length === 0 && !isLoading" class="search-result-not-found-container">
+    Result not found
+</div>
 <div class="pokemon-card-container" pokemonClick>
     <mat-card *ngFor="let pokemon of pokemons;" id="{{ pokemon.url }}" class="mat-elevation-z2 pokemon-card"
         [class]="pokemon.details && pokemon.details.types[0].type.name + '-lighter'"

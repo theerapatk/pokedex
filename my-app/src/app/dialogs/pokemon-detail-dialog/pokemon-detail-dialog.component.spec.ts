@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { of } from 'rxjs';
-import { PokeApiPokemon } from 'src/app/models/poke-api-pokemon';
+import { PokemonDetail } from 'src/app/models/pokemon-detail';
 import { PokedexService } from 'src/app/services/pokedex.service';
 import { DetailDialogLoadingComponent } from '../detail-dialog-loading/detail-dialog-loading.component';
 import { PokemonDetailDialogComponent } from './pokemon-detail-dialog.component';
@@ -20,6 +20,7 @@ describe('PokemonDetailDialogComponent', () => {
       imports: [HttpClientTestingModule, MatCardModule, MatDialogModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} },
         { provide: PokedexService, useValue: serviceSpy }
       ]
     })
@@ -29,7 +30,7 @@ describe('PokemonDetailDialogComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PokemonDetailDialogComponent);
     component = fixture.componentInstance;
-    const expected: PokeApiPokemon = {
+    const expected: PokemonDetail = {
       id: 1, name: 'bulbasuar',
       sprites: { front_default: '' },
       types: [{ slot: 0, type: { name: '', url: '' } }],

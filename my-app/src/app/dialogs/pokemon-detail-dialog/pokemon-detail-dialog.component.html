@@ -7,32 +7,34 @@
 <ng-template #elseBlock>
   <h3 mat-dialog-title>#{{ pokemonDetail.id }} <span class="pokemon-name">{{ pokemonDetail.name }}</span>
   </h3>
-  <mat-tab-group>
+  <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
     <mat-dialog-content>
       <mat-tab label="Summary">
-        <div class="tab-content-flex-container">
-          <div class="main-flex-item">
-            <img mat-card-image [src]="pokemonDetail.sprites.front_default || 'assets/img/meltan_placeholder.png'"
-              alt="Sprite of Pokemon">
-            <ng-container *ngIf="pokemonDetail.abilities.length > 0">
-              <b>Abilities</b>
-              <ul>
-                <li *ngFor="let ability of pokemonDetail.abilities;">
-                  {{ ability.ability.name }}
-                  <span *ngIf="ability.is_hidden"><i> (hidden ability)</i></span>
-                </li>
-              </ul>
-            </ng-container>
+        <ng-template matTabContent>
+          <div class="tab-content-flex-container">
+            <div class="main-flex-item">
+              <img mat-card-image [src]="pokemonDetail.sprites.front_default || 'assets/img/meltan_placeholder.png'"
+                alt="Sprite of Pokemon">
+              <ng-container *ngIf="pokemonDetail.abilities.length > 0">
+                <b>Abilities</b>
+                <ul>
+                  <li *ngFor="let ability of pokemonDetail.abilities;">
+                    {{ ability.ability.name }}
+                    <span *ngIf="ability.is_hidden"><i> (hidden ability)</i></span>
+                  </li>
+                </ul>
+              </ng-container>
+            </div>
+            <div class="main-flex-item-chart">
+              <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions" [labels]="radarChartLabels"
+                [chartType]="radarChartType">
+              </canvas>
+            </div>
           </div>
-          <div class="main-flex-item-chart">
-            <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions" [labels]="radarChartLabels"
-              [chartType]="radarChartType">
-            </canvas>
-          </div>
-        </div>
+        </ng-template>
       </mat-tab>
       <mat-tab label="Moves">
-        <div>
+        <ng-template matTabContent>
           <div class="main-flex-item-table">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
               <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
@@ -44,11 +46,11 @@
               <tr></tr>
             </table>
             <div *ngIf="isLoadingMove" class="spinner-container">
-              <mat-progress-spinner color="primary" mode="indeterminate">
+              <mat-progress-spinner color="primary" mode="indeterminate" [diameter]="45">
               </mat-progress-spinner>
             </div>
           </div>
-        </div>
+        </ng-template>
       </mat-tab>
     </mat-dialog-content>
   </mat-tab-group>

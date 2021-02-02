@@ -1,8 +1,8 @@
-import { PokeApiResult } from "./poke-api-result";
+import { Pokemon } from "./pokemon";
 
 export interface PokeApi {
     count: number;
     next: string;
     previous: string;
-    results: PokeApiResult[]
+    results: Pokemon[]
 }

@@ -36,6 +36,14 @@ mat-progress-bar {
     font-size: larger;
 }
 
+.search-result-not-found-container {
+    top: 86px;
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+
 .pokemon-card-container {
     display: flex;
     flex-flow: row wrap;

@@ -1,7 +1,8 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { forkJoin, Observable, Subscription } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { PokeApi } from 'src/app/models/poke-api';
-import { PokeApiResult } from 'src/app/models/poke-api-result';
+import { Pokemon } from 'src/app/models/pokemon';
+import { PokemonDetail } from 'src/app/models/pokemon-detail';
 import { PokedexService } from 'src/app/services/pokedex.service';
 
 @Component({
@@ -14,13 +15,11 @@ export class PokedexComponent implements OnInit {
   searchingByType = '';
   isApplyingType = false;
   shouldShowScrollButton = false;
-  value = '';
   isLoading = false;
-  pokemons: PokeApiResult[] = [];
-  originalPokemons: PokeApiResult[] = [];
-  pokemonsByType: PokeApiResult[] = [];
+  pokemons: Pokemon[] = [];
+  originalPokemons: Pokemon[] = [];
+  pokemonsByType: Pokemon[] = [];
   nextUrl: string = '';
-  subscription: Subscription = new Subscription;
 
   @ViewChild('searchInput') input: any;
 
@@ -32,28 +31,42 @@ export class PokedexComponent implements OnInit {
 
   private getPokemons(): void {
     this.isLoading = true;
-    this.subscription = this.pokedexService.getPokemons(this.nextUrl).subscribe(
+    this.pokedexService.getPokemons(this.nextUrl).subscribe(
       response => this.handleSuccessfulGetPokemons(response),
       error => this.isLoading = false
     );
   }
 
   private handleSuccessfulGetPokemons(response: PokeApi): void {
-    this.pokemons = [...this.pokemons, ...response.results];
+    const partialPokemons = response.results as Pokemon[];
+    this.pokemons = [...this.pokemons, ...partialPokemons];
     this.originalPokemons = [...this.pokemons];
     this.nextUrl = response.next;
-    this.getPokemonDetails();
+    this.getPokemonDetails(partialPokemons);
   }
 
-  private getPokemonDetails() {
-    const calls: Observable<any>[] = [];
-    this.pokemons.forEach(pokemon => calls.push(this.pokedexService.getPokemon(pokemon.url)));
-    forkJoin(calls).subscribe(
-      pokemonDetails => this.pokemons.forEach((pokemon, index) => {
-        pokemon.details = pokemonDetails[index];
-        this.isLoading = false;
-      }),
-      error => this.isLoading = false);
+  private getPokemonDetails(pokemons: Pokemon[] = this.pokemons) {
+    if (pokemons.length > 0) {
+      const calls = pokemons.map((pokemon: any) => this.pokedexService.getPokemon(pokemon.url));
+      this.isLoading = true;
+      forkJoin(calls).subscribe(
+        pokemonDetails => {
+          pokemons.forEach((pokemon, index) =>
+            pokemon.details = this.buildPokemonDetails(pokemonDetails[index]));
+          this.isLoading = false;
+        },
+        error => this.isLoading = false
+      );
+    }
+  }
+
+  private buildPokemonDetails(pokemonDetail: PokemonDetail): PokemonDetail {
+    return {
+      types: pokemonDetail.types,
+      sprites: {
+        front_default: pokemonDetail.sprites.front_default
+      }
+    };
   }
 
   onScroll(): void {
@@ -72,8 +85,8 @@ export class PokedexComponent implements OnInit {
     this.isApplyingType = true;
     let previousType = this.searchingByType;
     this.searchingByType = type;
-    this.subscription = this.pokedexService.getPokemonByType(type).subscribe(
-      response => this.handleSuccessfulGetPokemonByType(response),
+    this.pokedexService.getPokemonByType(type).subscribe(
+      pokemonType => this.handleSuccessfulGetPokemonByType(pokemonType.pokemon),
       error => {
         this.isLoading = false;
         this.searchingByType = previousType;
@@ -81,11 +94,10 @@ export class PokedexComponent implements OnInit {
     );
   }
 
-  private handleSuccessfulGetPokemonByType(response: any): void {
-    this.pokemonsByType = [...response.pokemon.map((item: { pokemon: any; }) => item.pokemon)];
+  private handleSuccessfulGetPokemonByType(pokemon: any): void {
+    this.pokemonsByType = [...pokemon.map((item: { pokemon: Pokemon; }) => item.pokemon)];
     this.pokemons = [...this.pokemonsByType];
     this.applyFilterByType(this.input.nativeElement.value);
-    this.getPokemonDetails();
   }
 
   onResetClick() {
@@ -103,6 +115,7 @@ export class PokedexComponent implements OnInit {
     } else {
       this.pokemons = [...this.pokemonsByType];
     }
+    this.getPokemonDetails();
   }
 
   applyFilter(event: KeyboardEvent) {
@@ -110,21 +123,21 @@ export class PokedexComponent implements OnInit {
     if (filterValue !== '') {
       if (this.isApplyingType) {
         this.pokemons = this.pokemonsByType.filter(pokemon => pokemon.name.includes(filterValue));
+        this.getPokemonDetails();
       } else {
         this.pokemons = this.originalPokemons.filter(pokemon => pokemon.name.includes(filterValue));
       }
     } else {
-      if (this.isApplyingType) {
-        this.pokemons = [...this.pokemonsByType];
-        this.getPokemonDetails();
-      } else {
-        this.pokemons = [...this.originalPokemons];
-      }
+      this.applyNoFilter();
     }
   }
 
   onClearSearchClick(input: HTMLInputElement) {
     input.value = '';
+    this.applyNoFilter();
+  }
+
+  private applyNoFilter() {
     if (this.isApplyingType) {
       this.pokemons = [...this.pokemonsByType];
       this.getPokemonDetails();
@@ -137,12 +150,8 @@ export class PokedexComponent implements OnInit {
     window.scroll({ top: 0, behavior: 'smooth' });
   }
 
-  @HostListener('window:scroll', ['$event']) getScrollHeight(event: any) {
-    if (window.pageYOffset > 1500) {
-      this.shouldShowScrollButton = true;
-    } else {
-      this.shouldShowScrollButton = false;
-    }
+  @HostListener('window:scroll', ['$event']) getScrollHeight() {
+    this.shouldShowScrollButton = window.pageYOffset > 1500;
   }
 
 }
