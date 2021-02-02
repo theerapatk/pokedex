@@ -12,7 +12,8 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '14.x'
+    checkLatest: true
   displayName: 'Install Node.js'
 
 - script: |
@@ -20,3 +21,11 @@ steps:
     npm install
     ng build --prod
   displayName: 'npm install and build'
+  
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(d35dd99c-6df7-45bd-8391-e0065c821715)'
+    appType: 'webApp'
+    WebAppName: 
+    packageForLinux: 'dist/pokemon'
