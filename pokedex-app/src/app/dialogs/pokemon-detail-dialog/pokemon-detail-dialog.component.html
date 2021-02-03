@@ -11,18 +11,20 @@
     <mat-dialog-content>
       <mat-tab label="Summary">
         <ng-template matTabContent>
-          <div class="tab-content-flex-container">
+          <div class="summary-flex-container">
             <div class="main-flex-item">
-              <img mat-card-image [src]="pokemonDetail.sprites.front_default || 'assets/img/meltan_placeholder.png'"
-                alt="Sprite of Pokemon">
+              <img [src]="pokemonDetail.sprites.front_default || 'assets/img/meltan_placeholder.png'"
+                alt="Sprite of Pokemon" style="width: 150px;">
               <ng-container *ngIf="pokemonDetail.abilities.length > 0">
-                <b>Abilities</b>
-                <ul>
-                  <li *ngFor="let ability of pokemonDetail.abilities;">
-                    {{ ability.ability.name }}
-                    <span *ngIf="ability.is_hidden"><i> (hidden ability)</i></span>
-                  </li>
-                </ul>
+                <div class="ability-container">
+                  <b>Abilities</b>
+                  <ul>
+                    <li *ngFor="let ability of pokemonDetail.abilities;">
+                      {{ ability.ability.name }}
+                      <span *ngIf="ability.is_hidden"><i> (hidden ability)</i></span>
+                    </li>
+                  </ul>
+                </div>
               </ng-container>
             </div>
             <div class="main-flex-item-chart">
@@ -35,16 +37,35 @@
       </mat-tab>
       <mat-tab label="Moves">
         <ng-template matTabContent>
-          <div class="main-flex-item-table">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-              <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
-                <td mat-cell *matCellDef="let move">{{ move[column] }}</td>
+          <div class="move-table-flex-container mat-elevation-z5">
+            <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+              <ng-container matColumnDef="name" sticky>
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                <mat-cell *matCellDef="let move">{{ move.name }}</mat-cell>
               </ng-container>
-              <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
-              <tr></tr>
-            </table>
+              <ng-container matColumnDef="type">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Type </mat-header-cell>
+                <mat-cell *matCellDef="let move">{{ move.type }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="category">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Category </mat-header-cell>
+                <mat-cell *matCellDef="let move">{{ move.category }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="power">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Power </mat-header-cell>
+                <mat-cell *matCellDef="let move">{{ move.power }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="accuracy">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Accuracy </mat-header-cell>
+                <mat-cell *matCellDef="let move">{{ move.accuracy }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="pp">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> PP </mat-header-cell>
+                <mat-cell *matCellDef="let move">{{ move.pp }}</mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
+            </mat-table>
             <div *ngIf="isLoadingMove" class="spinner-container">
               <mat-progress-spinner color="primary" mode="indeterminate" [diameter]="45">
               </mat-progress-spinner>
@@ -55,13 +76,19 @@
     </mat-dialog-content>
   </mat-tab-group>
   <mat-dialog-actions class="mat-dialog-action">
-    <button *ngIf="data.previous" mat-button color="primary" (click)="onNextPokemonClick()">
+    <button *ngIf="data.previous" mat-button color="primary" (click)="onNextPokemonClick()"
+      class="previous-pokemon-button">
       <mat-icon>keyboard_arrow_left</mat-icon>Previous
-      <img class="pokemon-sprite" [src]="data.previous.dataset.imgsrc" alt="Sprite of Pokemon">
+      <img class="pokemon-sprite" [src]="data.previous.dataset.imgsrc" width="70" height="70" alt="Sprite of Pokemon">
     </button>
-    <button *ngIf="data.next" mat-button color="primary" (click)="onNextPokemonClick(true)">
-      <img class="pokemon-sprite" [src]="data.next.dataset.imgsrc" alt="Sprite of Pokemon">
+    <div *ngIf="!data.previous" class="next-button-placeholder"></div>
+    <button mat-mini-fab color="primary" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+    <button *ngIf="data.next" mat-button color="primary" (click)="onNextPokemonClick(true)" class="next-pokemon-button">
+      <img class="pokemon-sprite" [src]="data.next.dataset.imgsrc" width="70" height="70" alt="Sprite of Pokemon">
       Next<mat-icon>keyboard_arrow_right</mat-icon>
     </button>
+    <div *ngIf="!data.next" class="next-button-placeholder"></div>
   </mat-dialog-actions>
 </ng-template>

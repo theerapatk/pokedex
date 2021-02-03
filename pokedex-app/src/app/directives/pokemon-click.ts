@@ -18,6 +18,7 @@ export class PokemonClick {
   openDialog(element: HTMLElement) {
     let dialogRef = this.dialog.open(PokemonDetailDialogComponent, {
       width: '600px',
+      panelClass: 'dialog-responsive',
       data: {
         selfUrl: element.id,
         previous: element.previousElementSibling,

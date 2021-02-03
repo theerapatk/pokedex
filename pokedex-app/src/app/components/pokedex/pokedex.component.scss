@@ -17,7 +17,7 @@ mat-toolbar {
 mat-progress-bar {
     position: fixed;
     z-index: 2;
-    top: 64px;
+    top: 57px;
     left: -24px;
     width: calc(100% + 48px);
 }
@@ -47,15 +47,16 @@ mat-progress-bar {
 .pokemon-card-container {
     display: flex;
     flex-flow: row wrap;
-    top: 67px;
+    top: 60px;
     position: relative;
+    margin: 14px;
 }
 
 .pokemon-card {
-    margin: 2em;
+    margin: 1.5em;
     flex: 1 0 calc(11%);
     min-width: 75px;
-    max-width: 200px;
+    max-width: 210px;
     font-weight: bold;
     transition: 0.3s;
 
@@ -339,7 +340,20 @@ $unknown: #68a090;
 }
 
 @media only screen and (max-width: 599px) {
+    .search-form-field {
+        margin-left: 0.5em;
+        margin-right: 0;
+    }
     mat-progress-bar {
-        top: 56px;
+        top: 49px;
+    }
+    .search-result-container {
+        top: 70px;
+    }
+    .pokemon-card-container {
+        top: 52px;
+    }
+    .pokemon-card {
+        margin: 1em;
     }
 }

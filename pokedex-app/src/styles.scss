@@ -9,3 +9,10 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background-color: lighten(#3f51b5, 40);
 }
+
+@media only screen and (max-width: 599px) {
+    .dialog-responsive {
+        max-width: 100vw !important;
+        height: 100vh !important;
+    }
+}
