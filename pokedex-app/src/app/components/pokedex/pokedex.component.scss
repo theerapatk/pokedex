@@ -17,7 +17,7 @@ mat-toolbar {
 mat-progress-bar {
     position: fixed;
     z-index: 2;
-    top: 57px;
+    top: 64px;
     left: -24px;
     width: calc(100% + 48px);
 }
@@ -345,7 +345,7 @@ $unknown: #68a090;
         margin-right: 0;
     }
     mat-progress-bar {
-        top: 49px;
+        top: 56px;
     }
     .search-result-container {
         top: 70px;
