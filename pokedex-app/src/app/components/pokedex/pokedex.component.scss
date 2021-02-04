@@ -341,8 +341,9 @@ $unknown: #68a090;
 
 @media only screen and (max-width: 599px) {
     .search-form-field {
-        margin-left: 0.5em;
-        margin-right: 0;
+        margin-left: 8px;
+        margin-right: 8px;
+        width: 40vw;
     }
     mat-progress-bar {
         top: 56px;

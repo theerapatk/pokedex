@@ -75,14 +75,14 @@
       </mat-tab>
     </mat-dialog-content>
   </mat-tab-group>
-  <mat-dialog-actions class="mat-dialog-action">
+  <mat-dialog-actions>
     <button *ngIf="data.previous" mat-button color="primary" (click)="onNextPokemonClick()"
       class="previous-pokemon-button">
       <mat-icon>keyboard_arrow_left</mat-icon>Previous
       <img class="pokemon-sprite" [src]="data.previous.dataset.imgsrc" width="70" height="70" alt="Sprite of Pokemon">
     </button>
     <div *ngIf="!data.previous" class="next-button-placeholder"></div>
-    <button mat-mini-fab color="primary" mat-dialog-close>
+    <button mat-mini-fab color="primary" mat-dialog-close class="close-dialog-button">
       <mat-icon>close</mat-icon>
     </button>
     <button *ngIf="data.next" mat-button color="primary" (click)="onNextPokemonClick(true)" class="next-pokemon-button">

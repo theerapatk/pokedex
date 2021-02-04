@@ -6,6 +6,14 @@ h3 {
     text-transform: capitalize;
 }
 
+mat-dialog-content {
+    height: calc(100% - 96px);
+}
+
+mat-tab-group {
+    height: calc(100% - 112px);
+}
+
 .summary-flex-container {
     display: flex;
     flex-flow: row wrap;
@@ -43,7 +51,7 @@ h3 {
 .move-table-flex-container {
     margin: 1px 1em 1px 1em;
     overflow: auto;
-    height: 50vh;
+    height: 400px;
 }
 
 mat-table {
@@ -76,7 +84,7 @@ mat-table {
         0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
-.mat-dialog-action {
+mat-dialog-actions {
     justify-content: space-between;
 }
 
@@ -177,11 +185,8 @@ $unknown: #68a090;
 }
 
 @media only screen and (max-width: 599px) {
-    .summary-flex-container,
     .move-table-flex-container {
-        height: 71vh;
-    }
-    .move-table-flex-container {
+        height: 70vh;
         margin-left: 5px;
         margin-right: 5px;
     }
@@ -203,12 +208,15 @@ $unknown: #68a090;
         width: 50%;
         margin: 1em;
     }
-    .mat-dialog-action {
-        margin-bottom: 0;
-    }
     .previous-pokemon-button,
     .next-pokemon-button,
     .next-button-placeholder {
         width: 111px;
+    }
+}
+
+@media only screen and (max-width: 374px) {
+    mat-dialog-actions > .close-dialog-button {
+        margin-left: 0;
     }
 }
