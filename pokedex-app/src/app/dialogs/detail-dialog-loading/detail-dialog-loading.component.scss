@@ -75,11 +75,9 @@
         margin: 1em;
     }
     .footer-top {
-        top: 77vh;
-        height: 50px;
-    }
-    .footer-left, .footer-right {
-        display: none;
+        top: unset;
+        bottom: 0;
+        height: 100px;
     }
 }
 

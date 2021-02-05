@@ -19,17 +19,17 @@ mat-tab-group {
     flex-flow: row wrap;
     justify-content: center;
     align-items: center;
+    margin-top: 1em;
 }
 
 .main-flex-item {
-    margin: 1em;
     align-self: center;
     width: 135px;
 }
 
 .main-flex-item-chart {
+    margin-left: 14px;
     align-self: center;
-    margin: 1em;
     width: 320px;
     height: 300px;
 }
@@ -199,6 +199,9 @@ $unknown: #68a090;
         justify-content: center;
         align-items: center;
         width: 100%;
+    }
+    .main-flex-item-chart {
+        margin-left: 0;
     }
     .pokemon-sprite-container {
         width: 50%;

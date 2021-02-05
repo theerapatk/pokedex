@@ -40,7 +40,8 @@ export class PokemonDetailDialogComponent implements OnInit {
   // Radar
   radarChartOptions: RadialChartOptions = {
     responsive: true,
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    legend: { display: false }
   };
   radarChartLabels: Label[] = ['HP', 'Attack', 'Defense', 'Special-Attack', 'Special-Defense', 'Speed'];
 
