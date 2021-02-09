@@ -101,6 +101,7 @@ export class PokedexComponent implements OnInit {
   }
 
   onResetClick() {
+    this.onScrollToTopClick();
     this.pokemons.length = 0;
     this.nextUrl = '';
     this.isApplyingType = false;

@@ -26,7 +26,10 @@ import { TestComponent } from './components/test/test.component';
 import { DetailDialogLoadingComponent } from './dialogs/detail-dialog-loading/detail-dialog-loading.component';
 import { PokemonDetailDialogComponent } from './dialogs/pokemon-detail-dialog/pokemon-detail-dialog.component';
 import { PokemonClick } from './directives/pokemon-click';
+import { CachingInterceptor } from './interceptors/caching.interceptor';
 import { HttpResponseInterceptor } from './interceptors/http-response.interceptor';
+import { MessageService } from './services/message.service';
+import { RequestCache, RequestCacheWithMap } from './services/request-cache.service';
 
 @NgModule({
   declarations: [
@@ -68,7 +71,10 @@ import { HttpResponseInterceptor } from './interceptors/http-response.intercepto
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true }
+    MessageService,
+    { provide: RequestCache, useClass: RequestCacheWithMap },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
