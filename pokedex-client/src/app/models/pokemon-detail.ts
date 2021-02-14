@@ -1,17 +1,17 @@
 export interface PokemonDetail {
-    id?: number,
-    name?: string,
+    id?: number;
+    name?: string;
     types: {
-        slot?: number,
+        slot?: number;
         type: {
-            name: string,
+            name: string;
             url?: string
         }
-    }[],
+    }[];
     sprites: {
         front_default: string
-    },
-    stats?: any,
-    moves?: any,
-    abilities?: any,
+    };
+    stats?: any;
+    moves?: any;
+    abilities?: any;
 }

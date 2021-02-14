@@ -12,10 +12,10 @@ export class TestComponent implements OnInit {
   ngOnInit(): void { }
 
   findMissingNumber(inputs: number[] = []): number[] {
-    let maxNumber = Math.max(...inputs);
-    let results = [];
+    const maxNumber = Math.max(...inputs);
+    const results = [];
     for (let i = 0; i < maxNumber; i++) {
-      let positiveInt = i + 1;
+      const positiveInt = i + 1;
       if (!inputs.includes(positiveInt)) {
         results.push(positiveInt);
       }

@@ -1,7 +1,7 @@
-import { PokemonDetail } from "./pokemon-detail";
+import { PokemonDetail } from './pokemon-detail';
 
 export interface Pokemon {
-    name: string,
-    url: string,
-    details: PokemonDetail
+    name: string;
+    url: string;
+    details: PokemonDetail;
 }

@@ -2,21 +2,21 @@ import { Directive, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PokemonDetailDialogComponent } from '../dialogs/pokemon-detail-dialog/pokemon-detail-dialog.component';
 
-@Directive({ selector: '[pokemonClick]' })
-export class PokemonClick {
+@Directive({ selector: '[app-pokemonClick]' })
+export class PokemonClickDirective {
 
   constructor(public dialog: MatDialog) { }
 
-  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
-    let target = event.target as HTMLElement;
-    let closestMatCard = target.closest('mat-card') as HTMLElement;
+  @HostListener('click', ['$event']) onClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const closestMatCard = target.closest('mat-card') as HTMLElement;
     if (closestMatCard) {
       this.openDialog(closestMatCard);
     }
   }
 
-  openDialog(element: HTMLElement) {
-    let dialogRef = this.dialog.open(PokemonDetailDialogComponent, {
+  openDialog(element: HTMLElement): void {
+    const dialogRef = this.dialog.open(PokemonDetailDialogComponent, {
       width: '600px',
       panelClass: 'dialog-responsive',
       data: {
@@ -28,8 +28,7 @@ export class PokemonClick {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        let element: HTMLElement = document.getElementById(result.id) as HTMLElement;
-        element?.click();
+        (document.getElementById(result.id) as HTMLElement)?.click();
       }
     });
   }

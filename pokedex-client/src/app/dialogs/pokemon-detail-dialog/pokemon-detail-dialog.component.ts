@@ -49,9 +49,9 @@ export class PokemonDetailDialogComponent implements OnInit {
   radarChartType: ChartType = 'radar';
 
   columnsToDisplay = ['name', 'type', 'category', 'power', 'accuracy', 'pp'];
-  dataSource: MatTableDataSource<any> = new MatTableDataSource;
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort = new MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort = new MatSort();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -59,13 +59,13 @@ export class PokemonDetailDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<PokemonDetailDialogComponent>
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     setTimeout(() => {
       this.getPokemon();
     }, 1000);
   }
 
-  private getPokemon() {
+  private getPokemon(): void {
     this.pokedexService.getPokemon(this.data.selfUrl).subscribe(
       response => this.handleSuccessfulResponse(response),
       error => this.isLoading = false
@@ -74,7 +74,7 @@ export class PokemonDetailDialogComponent implements OnInit {
 
   handleSuccessfulResponse(response: PokemonDetail): void {
     this.isLoading = false;
-    let { id, name, sprites, types, stats, moves, abilities } = response;
+    const { id, name, sprites, types, stats, moves, abilities } = response;
     this.pokemonDetail = { id, name, sprites, types, stats, moves, abilities };
 
     this.radarChartData = [...this.radarChartData, ...[{
@@ -82,13 +82,13 @@ export class PokemonDetailDialogComponent implements OnInit {
     }]];
   }
 
-  onSelectedTabChange(event: MatTabChangeEvent) {
+  onSelectedTabChange(event: MatTabChangeEvent): void {
     if (event.index === 1 && this.isLoadingMove) {
       this.getMoves();
     }
   }
 
-  getMoves() {
+  getMoves(): void {
     if (this.pokemonDetail.moves.length > 0) {
       const calls = this.pokemonDetail.moves.map(
         (move: any) => this.pokedexService.getByFullUrl(move.move.url));
@@ -103,7 +103,7 @@ export class PokemonDetailDialogComponent implements OnInit {
           pp: detail.pp
         } as Move));
 
-        this.dataSource = new MatTableDataSource(dataSource)
+        this.dataSource = new MatTableDataSource(dataSource);
         this.dataSource.sort = this.sort;
         this.isLoadingMove = false;
       });
@@ -118,7 +118,7 @@ export class PokemonDetailDialogComponent implements OnInit {
     console.log(event, active);
   }
 
-  onNextPokemonClick(isNext: boolean = false) {
+  onNextPokemonClick(isNext: boolean = false): void {
     this.dialogRef.close({ id: isNext ? this.data.next?.id : this.data.previous?.id });
   }
 

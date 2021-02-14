@@ -14,19 +14,19 @@ export class PokedexService {
   constructor(private http: HttpClient) { }
 
   getPokemons(nextUrl: string = ''): Observable<any> {
-    let url = nextUrl.trim() === '' ? 'https://pokeapi.co/api/v2/pokemon' : nextUrl;
+    const url = nextUrl.trim() === '' ? 'https://pokeapi.co/api/v2/pokemon' : nextUrl;
     return this.http.get<PokeApi>(url);
   }
 
-  getPokemon(url: string) {
+  getPokemon(url: string): Observable<PokemonDetail> {
     return this.http.get<PokemonDetail>(url);
   }
 
-  getPokemonByType(type: string) {
+  getPokemonByType(type: string): Observable<any> {
     return this.http.get<any>(`https://pokeapi.co/api/v2/type/${type}`);
   }
 
-  getByFullUrl(url: string) {
+  getByFullUrl(url: string): Observable<any> {
     return this.http.get<any>(url);
   }
 

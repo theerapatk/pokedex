@@ -43,11 +43,10 @@ export class CachingInterceptor implements HttpInterceptor {
     }
 }
 
-
 /** Is this request cacheable? */
-function isCacheable(request: HttpRequest<any>) {
+function isCacheable(request: HttpRequest<any>): boolean {
     // Only GET requests are cacheable
-    if(request.url.indexOf('https://raw.githubusercontent.com/PokeAPI/sprites') === 0) {
+    if (request.url.indexOf('https://raw.githubusercontent.com/PokeAPI/sprites') === 0) {
         console.log(request.url);
     }
     return request.method === 'GET' &&

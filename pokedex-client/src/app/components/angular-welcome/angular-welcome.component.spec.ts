@@ -24,15 +24,15 @@ describe('AngularWelcomeComponent', () => {
   });
 
   it(`should have as title 'my-app'`, () => {
-    const fixture = TestBed.createComponent(AngularWelcomeComponent);
-    const app = fixture.componentInstance;
+    const componentFixture = TestBed.createComponent(AngularWelcomeComponent);
+    const app = componentFixture.componentInstance;
     expect(app.title).toEqual('my-app');
   });
 
   it('should render title', () => {
-    const fixture = TestBed.createComponent(AngularWelcomeComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
+    const componentFixture = TestBed.createComponent(AngularWelcomeComponent);
+    componentFixture.detectChanges();
+    const compiled = componentFixture.nativeElement;
     expect(compiled.querySelector('.content span').textContent).toContain('my-app app is running!');
   });
 });

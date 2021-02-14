@@ -19,7 +19,7 @@ export class PokedexComponent implements OnInit {
   pokemons: Pokemon[] = [];
   originalPokemons: Pokemon[] = [];
   pokemonsByType: Pokemon[] = [];
-  nextUrl: string = '';
+  nextUrl = '';
 
   @ViewChild('searchInput') input: any;
 
@@ -45,7 +45,7 @@ export class PokedexComponent implements OnInit {
     this.getPokemonDetails(partialPokemons);
   }
 
-  private getPokemonDetails(pokemons: Pokemon[] = this.pokemons) {
+  private getPokemonDetails(pokemons: Pokemon[] = this.pokemons): void {
     if (pokemons.length > 0) {
       const calls = pokemons.map((pokemon: any) => this.pokedexService.getPokemon(pokemon.url));
       this.isLoading = true;
@@ -79,11 +79,11 @@ export class PokedexComponent implements OnInit {
     return url.split('pokemon/')[1]?.split('/')[0];
   }
 
-  onTypeClick(type: string) {
+  onTypeClick(type: string): void {
     this.pokemons.length = 0;
     this.isLoading = true;
     this.isApplyingType = true;
-    let previousType = this.searchingByType;
+    const previousType = this.searchingByType;
     this.searchingByType = type;
     this.pokedexService.getPokemonByType(type).subscribe(
       pokemonType => this.handleSuccessfulGetPokemonByType(pokemonType.pokemon),
@@ -100,7 +100,7 @@ export class PokedexComponent implements OnInit {
     this.applyFilterByType(this.input.nativeElement.value);
   }
 
-  onResetClick() {
+  onResetClick(): void {
     this.onScrollToTopClick({ top: 0 });
     this.pokemons.length = 0;
     this.nextUrl = '';
@@ -111,7 +111,7 @@ export class PokedexComponent implements OnInit {
     }, 0);
   }
 
-  applyFilterByType(value: string) {
+  applyFilterByType(value: string): void {
     const filterValue = value.trim().toLowerCase();
     if (filterValue !== '') {
       this.pokemons = this.pokemonsByType.filter(pokemon => pokemon.name.includes(filterValue));
@@ -121,7 +121,7 @@ export class PokedexComponent implements OnInit {
     this.getPokemonDetails();
   }
 
-  applyFilter(event: KeyboardEvent) {
+  applyFilter(event: KeyboardEvent): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     if (filterValue !== '') {
       if (this.isApplyingType) {
@@ -135,12 +135,12 @@ export class PokedexComponent implements OnInit {
     }
   }
 
-  onClearSearchClick(input: HTMLInputElement) {
+  onClearSearchClick(input: HTMLInputElement): void {
     input.value = '';
     this.applyNoFilter();
   }
 
-  private applyNoFilter() {
+  private applyNoFilter(): void {
     if (this.isApplyingType) {
       this.pokemons = [...this.pokemonsByType];
       this.getPokemonDetails();
@@ -149,11 +149,11 @@ export class PokedexComponent implements OnInit {
     }
   }
 
-  onScrollToTopClick(options: ScrollToOptions = { top: 0, behavior: 'smooth' }) {
+  onScrollToTopClick(options: ScrollToOptions = { top: 0, behavior: 'smooth' }): void {
     window.scroll(options);
   }
 
-  @HostListener('window:scroll', ['$event']) getScrollHeight() {
+  @HostListener('window:scroll', ['$event']) getScrollHeight(): void {
     this.shouldShowScrollTopButton = window.pageYOffset > 1260;
   }
 

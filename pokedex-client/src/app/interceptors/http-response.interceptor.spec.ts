@@ -1,6 +1,6 @@
-import { TestBed } from "@angular/core/testing";
-import { ToastrService } from "ngx-toastr";
-import { HttpResponseInterceptor } from "./http-response.interceptor";
+import { TestBed } from '@angular/core/testing';
+import { ToastrService } from 'ngx-toastr';
+import { HttpResponseInterceptor } from './http-response.interceptor';
 
 describe('HttpResponseInterceptor', () => {
 

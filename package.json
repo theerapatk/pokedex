@@ -54,7 +54,7 @@
     "dev": "concurrently \"ng serve --open\" \"tsc -w -p pokedex-server\" \"nodemon dist/pokedex-server/app.js\"",
     "prod": "concurrently \"ng build --aot --prod && tsc -p pokedex-server && node dist/pokedex-server/app.js\"",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint && htmlhint \"pokedex-client/**/*.html\" && sass-lint \"pokedex-client/**/*.scss\" -v && tslint pokedex-server/**/**.ts{,x}",
     "e2e": "ng e2e"
   },
   "repository": {

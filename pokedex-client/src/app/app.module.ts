@@ -25,7 +25,7 @@ import { PokedexComponent } from './components/pokedex/pokedex.component';
 import { TestComponent } from './components/test/test.component';
 import { DetailDialogLoadingComponent } from './dialogs/detail-dialog-loading/detail-dialog-loading.component';
 import { PokemonDetailDialogComponent } from './dialogs/pokemon-detail-dialog/pokemon-detail-dialog.component';
-import { PokemonClick } from './directives/pokemon-click';
+import { PokemonClickDirective } from './directives/pokemon-click.directive.ts';
 import { CachingInterceptor } from './interceptors/caching.interceptor';
 import { HttpResponseInterceptor } from './interceptors/http-response.interceptor';
 import { MessageService } from './services/message.service';
@@ -38,7 +38,7 @@ import { RequestCache, RequestCacheWithMap } from './services/request-cache.serv
     PokedexComponent,
     AngularWelcomeComponent,
     PokemonDetailDialogComponent,
-    PokemonClick,
+    PokemonClickDirective,
     DetailDialogLoadingComponent
   ],
   entryComponents: [

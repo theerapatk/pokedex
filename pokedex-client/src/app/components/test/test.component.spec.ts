@@ -22,7 +22,7 @@ describe('TestComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  let testCases = [
+  const testCases = [
     { inputs: [4, 1, 2], results: [3] },
     { inputs: undefined, results: [] },
     { inputs: [], results: [] },
@@ -33,7 +33,7 @@ describe('TestComponent', () => {
   ];
   testCases.forEach(testCase => {
     it(`should findMissingNumber given the input is ${testCase.inputs}`, () => {
-      let results = component.findMissingNumber(testCase.inputs);
+      const results = component.findMissingNumber(testCase.inputs);
       expect(results).toEqual(testCase.results);
     });
   });
