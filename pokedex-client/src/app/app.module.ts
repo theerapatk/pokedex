@@ -25,7 +25,7 @@ import { PokedexComponent } from './components/pokedex/pokedex.component';
 import { TestComponent } from './components/test/test.component';
 import { DetailDialogLoadingComponent } from './dialogs/detail-dialog-loading/detail-dialog-loading.component';
 import { PokemonDetailDialogComponent } from './dialogs/pokemon-detail-dialog/pokemon-detail-dialog.component';
-import { PokemonClickDirective } from './directives/pokemon-click.directive.ts';
+import { PokemonClickDirective } from './directives/pokemon-click.directive';
 import { CachingInterceptor } from './interceptors/caching.interceptor';
 import { HttpResponseInterceptor } from './interceptors/http-response.interceptor';
 import { MessageService } from './services/message.service';

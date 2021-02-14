@@ -48,9 +48,10 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "node dist/pokedex-server/app.js",
     "build": "ng build && tsc -p pokedex-server",
     "buildprod": "ng build --aot --prod && tsc -p pokedex-server",
+    "start": "node dist/pokedex-server/app.js",
+    "predev": "tsc -p pokedex-server",
     "dev": "concurrently \"ng serve --open\" \"tsc -w -p pokedex-server\" \"nodemon dist/pokedex-server/app.js\"",
     "prod": "concurrently \"ng build --aot --prod && tsc -p pokedex-server && node dist/pokedex-server/app.js\"",
     "test": "ng test",
