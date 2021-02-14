@@ -17,25 +17,25 @@
         }
       },
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "pokedex-client",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/pokedex",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "outputPath": "dist/public",
+            "index": "pokedex-client/src/index.html",
+            "main": "pokedex-client/src/main.ts",
+            "polyfills": "pokedex-client/src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "pokedex-client/src/favicon.ico",
+              "pokedex-client/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss",
+              "pokedex-client/src/styles.scss",
               "./node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [],
@@ -47,8 +47,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "pokedex-client/src/environments/environment.ts",
+                  "with": "pokedex-client/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -76,7 +76,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "pokedex:build"
+            "browserTarget": "pokedex:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -93,17 +94,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "main": "pokedex-client/src/test.ts",
+            "polyfills": "pokedex-client/src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "pokedex-client/src/favicon.ico",
+              "pokedex-client/src/assets"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "pokedex-client/src/styles.scss"
             ],
             "scripts": []
           }

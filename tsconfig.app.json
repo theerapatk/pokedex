@@ -6,10 +6,10 @@
     "types": []
   },
   "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
+    "pokedex-client/src/main.ts",
+    "pokedex-client/src/polyfills.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "pokedex-client/src/**/*.d.ts"
   ]
 }

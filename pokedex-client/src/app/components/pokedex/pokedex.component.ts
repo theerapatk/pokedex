@@ -14,7 +14,7 @@ export class PokedexComponent implements OnInit {
 
   searchingByType = '';
   isApplyingType = false;
-  shouldShowScrollButton = false;
+  shouldShowScrollTopButton = false;
   isLoading = false;
   pokemons: Pokemon[] = [];
   originalPokemons: Pokemon[] = [];
@@ -101,12 +101,14 @@ export class PokedexComponent implements OnInit {
   }
 
   onResetClick() {
-    this.onScrollToTopClick();
+    this.onScrollToTopClick({ top: 0 });
     this.pokemons.length = 0;
     this.nextUrl = '';
     this.isApplyingType = false;
     this.input.nativeElement.value = '';
-    this.getPokemons();
+    setTimeout(() => {
+      this.getPokemons();
+    }, 0);
   }
 
   applyFilterByType(value: string) {
@@ -147,12 +149,12 @@ export class PokedexComponent implements OnInit {
     }
   }
 
-  onScrollToTopClick() {
-    window.scroll({ top: 0, behavior: 'smooth' });
+  onScrollToTopClick(options: ScrollToOptions = { top: 0, behavior: 'smooth' }) {
+    window.scroll(options);
   }
 
   @HostListener('window:scroll', ['$event']) getScrollHeight() {
-    this.shouldShowScrollButton = window.pageYOffset > 1500;
+    this.shouldShowScrollTopButton = window.pageYOffset > 1260;
   }
 
 }
