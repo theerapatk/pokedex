@@ -1,0 +1,23 @@
+.create-account-container {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+mat-dialog-content {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+form > mat-dialog-content {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+mat-dialog-content > mat-form-field {
+    margin: 10px 0;
+}

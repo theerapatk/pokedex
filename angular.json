@@ -17,7 +17,7 @@
         }
       },
       "root": "",
-      "sourceRoot": "pokedex-client",
+      "sourceRoot": "pokedex-client/src",
       "prefix": "app",
       "architect": {
         "build": {

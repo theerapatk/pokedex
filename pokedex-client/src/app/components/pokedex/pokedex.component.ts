@@ -1,5 +1,7 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
+import { LoginDialogComponent } from 'src/app/dialogs/login-dialog/login-dialog.component';
 import { PokeApi } from 'src/app/models/poke-api';
 import { Pokemon } from 'src/app/models/pokemon';
 import { PokemonDetail } from 'src/app/models/pokemon-detail';
@@ -12,6 +14,7 @@ import { PokedexService } from 'src/app/services/pokedex.service';
 })
 export class PokedexComponent implements OnInit {
 
+  isLoggedIn = false;
   searchingByType = '';
   isApplyingType = false;
   shouldShowScrollTopButton = false;
@@ -23,7 +26,7 @@ export class PokedexComponent implements OnInit {
 
   @ViewChild('searchInput') input: any;
 
-  constructor(private pokedexService: PokedexService) { }
+  constructor(private pokedexService: PokedexService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getPokemons();
@@ -155,6 +158,20 @@ export class PokedexComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event']) getScrollHeight(): void {
     this.shouldShowScrollTopButton = window.pageYOffset > 1260;
+  }
+
+  onLogInClick() {
+    const dialogRef = this.dialog.open(LoginDialogComponent, {
+      width: '460px',
+      panelClass: 'dialog-responsive',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+      }
+    });
   }
 
 }

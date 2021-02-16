@@ -1,0 +1,133 @@
+.login-bottom-footer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.form-container {
+    padding-top: 5px;
+    padding-bottom: 20px;
+    height: calc(100% - 112px);
+    overflow: hidden;
+}
+
+.invalid-credentials-text {
+    color: white;
+    margin-bottom: 0.5em;
+    place-content: stretch center;
+    align-items: stretch;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    border-radius: 4px;
+}
+
+.background-red {
+    background: #c62828;
+}
+
+mat-progress-bar {
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+form {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.anchor-container {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.anchor-container > a {
+    color: #1877f2;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+mat-divider {
+    margin: 20px 0;
+}
+
+.new-account-button {
+    background-color: #42b72a;
+    color: white;
+}
+
+.text-container {
+    margin: 10px 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.facebook-icon {
+    margin-right: 16px;
+}
+
+.fb-login-button-container {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+
+.fb-login-button {
+    width: 100%;
+}
+
+.facebook-login-button {
+    background-color: #1877f2;
+    color: white;
+}
+
+.login-bottom-footer {
+    height: 105px;
+}
+
+.login-bottom-footer .login-buttom-logo {
+    text-align: left;
+    padding: 8px 16px 8px 16px;
+}
+
+.login-bottom-footer .login-buttom-trademark {
+    text-align: right;
+    padding: 8px 16px 8px 16px;
+}
+
+mat-toolbar {
+    position: sticky;
+    top: 0;
+    height: 48px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    z-index: 99;
+    justify-content: space-between;
+}
+
+mat-toolbar > span {
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 14px;
+    margin-right: 14px;
+    text-transform: uppercase;
+    color: #369;
+}
+
+mat-dialog-actions {
+    display: none;
+}
+
+@media only screen and (max-width: 599px) {
+    mat-dialog-actions {
+        display: block;
+    }
+    mat-dialog-actions > .close-dialog-button {
+        margin-left: 0;
+    }
+}

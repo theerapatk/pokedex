@@ -1,0 +1,46 @@
+<mat-progress-bar mode="indeterminate" *ngIf="isShowingProgressBar"></mat-progress-bar>
+<div *ngIf="isFormSubmitted && !isCredentialsValid; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+    <div class="invalid-credentials-text background-red">
+        Invalid username and/or password.
+    </div>
+</ng-template>
+<ng-template #elseBlock>
+    <div class="invalid-credentials-text">&nbsp;</div>
+</ng-template>
+<div class="form-container" [@slideInOut]="animationState">
+    <form *ngIf="animationState === 0" [formGroup]="loginForm">
+        <mat-form-field>
+            <input matInput formControlName="username" placeholder="Username" #username>
+        </mat-form-field>
+        <mat-form-field formGroupName="credential">
+            <input matInput formControlName="password" type="password" placeholder="Password" autocomplete="off">
+        </mat-form-field>
+        <button mat-raised-button type="submit" color="primary" (click)="onLogIn()" class="login-button"
+            [disabled]="!loginForm.dirty || !loginForm.valid || isShowingProgressBar">Log In</button>
+        <div class="anchor-container"><a href="">Forgotten password?</a></div>
+        <mat-divider></mat-divider>
+        <button mat-raised-button type="button" (click)="onCreateNewAccount()" class="new-account-button"
+            [disabled]="isShowingProgressBar">
+            Creat New Account</button>
+        <div class="text-container">or</div>
+        <button mat-raised-button (click)="onFacebookLogIn()" class="facebook-login-button"
+            [disabled]="isShowingProgressBar">
+            <mat-icon class="facebook-icon">facebook</mat-icon>Login with Facebook
+        </button>
+        <!-- <div class="fb-login-button-container">
+            <div class="fb-login-button" data-width="100%" data-size="large" data-button-type="continue_with"
+                data-layout="default" data-auto-logout-link="true" data-use-continue-as="true"></div>
+        </div> -->
+        <!-- <div class="fb-login-button" data-max-rows="1" data-size="medium" data-button-type="continue_with"
+            data-width="100%">
+        </div> -->
+    </form>
+    <app-create-account [animationState]="animationState" (animationStateChange)="onAnimationStateChange($event)">
+    </app-create-account>
+</div>
+<mat-dialog-actions align="center">
+    <button mat-mini-fab color="primary" mat-dialog-close class="close-dialog-button">
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-dialog-actions>

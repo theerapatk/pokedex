@@ -13,6 +13,10 @@
             </button>
         </mat-form-field>
         <button mat-flat-button color="primary" (click)="onResetClick()" [disabled]="isLoading">Reset</button>
+        <div class="log-in-button-container">
+            <button mat-flat-button color="primary" (click)="onLogInClick()">
+                {{ isLoggedIn ? 'Log Out' : 'Log In'}}</button>
+        </div>
     </mat-toolbar-row>
 </mat-toolbar>
 <div class="progress-bar-container">

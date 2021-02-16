@@ -1,0 +1,55 @@
+<div *ngIf="animationState === 1" class="create-account-container">
+    <h2 mat-dialog-title>{{isCreatingNew ? 'Create New':'Edit'}} Account</h2>
+    <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit()">
+        <mat-dialog-content>
+            <mat-form-field>
+                <input matInput #username maxlength="32" placeholder="Username" formControlName="username">
+                <mat-hint>Required</mat-hint>
+                <mat-hint align="end">{{username.value.length}} / 32</mat-hint>
+                <mat-error *ngIf="createAccountForm.controls.username.hasError('required')">
+                    Required*
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field formGroupName="credential">
+                <input matInput formControlName="password" #password maxlength="64"
+                    [type]="hidePassword ? 'password' : 'text'"
+                    [placeholder]="isCreatingNew ? 'Password' : 'New password'"
+                    (keydown.space)="$event.preventDefault();" (paste)="$event.preventDefault();">
+                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword" type="button">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-hint>Required</mat-hint>
+                <mat-hint align="end">{{password.value.length}} / 64</mat-hint>
+                <mat-error *ngIf="createAccountForm.controls.credential.get('password')?.hasError('required')">
+                    Required*
+                </mat-error>
+                <mat-error *ngIf="createAccountForm.controls.credential.get('password')?.hasError('minlength')">
+                    The password must be at least 8 characters long
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field formGroupName="credential">
+                <input matInput formControlName="confirmPassword" #confirmPassword maxlength="64"
+                    [type]="hideConfirmPassword ? 'password' : 'text'" placeholder="Confirm password"
+                    (keydown.space)="$event.preventDefault();">
+                <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword" type="button">
+                    <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-hint>Required</mat-hint>
+                <mat-hint align="end">{{confirmPassword.value.length}} / 64</mat-hint>
+                <mat-error *ngIf="createAccountForm.controls.credential.get('confirmPassword')?.hasError('required')">
+                    Required*
+                </mat-error>
+                <mat-error *ngIf="createAccountForm.controls.credential.get('confirmPassword')?.hasError('passwordMismatch')
+            && !createAccountForm.controls.credential.get('confirmPassword')?.hasError('required')">
+                    The password does not match
+                </mat-error>
+            </mat-form-field>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button mat-flat-button type="button" (click)="onBackToLogIn()"> Back to Log In </button>
+            <button mat-flat-button type="submit" color="primary" mat-dialog-close> Create Account </button>
+        </mat-dialog-actions>
+    </form>
+</div>
