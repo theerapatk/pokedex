@@ -78,7 +78,6 @@ export class LoginDialogComponent implements OnInit {
   }
 
   private handleSuccessfulLogIn(user: any) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
     this.dialogRef.close();
     this.userService.getUser(this.authService.currentUser).subscribe(
       (response: any) => {

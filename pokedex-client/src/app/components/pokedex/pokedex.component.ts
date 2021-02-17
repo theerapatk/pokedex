@@ -4,6 +4,7 @@ import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.compone
 import { PokeApi } from '@models/poke-api';
 import { Pokemon } from '@models/pokemon';
 import { PokemonDetail } from '@models/pokemon-detail';
+import { AuthenticationService } from '@services/authentication.service';
 import { PokedexService } from '@services/pokedex.service';
 import { forkJoin } from 'rxjs';
 
@@ -26,7 +27,11 @@ export class PokedexComponent implements OnInit {
 
   @ViewChild('searchInput') input: any;
 
-  constructor(private pokedexService: PokedexService, public dialog: MatDialog) { }
+  constructor(
+    public authService: AuthenticationService,
+    private pokedexService: PokedexService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.getPokemons();
@@ -172,6 +177,10 @@ export class PokedexComponent implements OnInit {
 
       }
     });
+  }
+
+  onLogOutClick() {
+    this.authService.logout();
   }
 
 }

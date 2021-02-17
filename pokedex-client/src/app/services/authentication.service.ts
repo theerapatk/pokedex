@@ -15,7 +15,13 @@ export class AuthenticationService {
   constructor(
     private userService: UserService,
     private jwtHelper: JwtHelperService
-  ) { }
+  ) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedUser = this.decodeUserFromToken(token);
+      this.setCurrentUser(decodedUser);
+    }
+  }
 
   login(credentials: any): Observable<any> {
     return this.userService.login(credentials).pipe(

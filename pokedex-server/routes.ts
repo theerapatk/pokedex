@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as jwt from 'express-jwt';
 import UserController from './controllers/user';
 
 function setRoutes(app: any): void {
@@ -7,15 +8,31 @@ function setRoutes(app: any): void {
 
   // Users
   router.route('/login').post(userCtrl.login);
+  router.route('/user').post(userCtrl.insert);
+
+  applyJwtCheck(router);
   router.route('/users').get(userCtrl.getAll);
   router.route('/users/count').get(userCtrl.count);
-  router.route('/user').post(userCtrl.insert);
-  router.route('/user/:id').get(userCtrl.get);
-  router.route('/user/:id').put(userCtrl.update);
-  router.route('/user/:id').delete(userCtrl.delete);
+  router.route('/user/:id')
+    .get(userCtrl.get)
+    .put(userCtrl.update)
+    .delete(userCtrl.delete);
 
-  // Apply the routes to our application with the prefix /api
-  app.use('/api', router);
+  app.use('/api/v1', router);
+}
+
+function applyJwtCheck(router: any): void {
+  router.use(
+    jwt({ secret: process.env.SECRET_TOKEN as string, algorithms: ['HS256'] }),
+    handleAfterJwtChecked()
+  );
+}
+
+function handleAfterJwtChecked() {
+  return (error: any, req: any, res: any, next: any) => {
+    if (error) return res.sendStatus(401);
+    next();
+  };
 }
 
 export default setRoutes;
