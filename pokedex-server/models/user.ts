@@ -1,10 +1,8 @@
 import * as bcrypt from 'bcryptjs';
-import * as mongoose from 'mongoose';
-import { Document, Schema } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 
-export interface IUser extends Document {
+interface IUser extends Document {
   name: String,
-  username: String,
   email: { type: String, unique: true, lowercase: true, trim: true },
   password: string,
   role: String
@@ -12,7 +10,6 @@ export interface IUser extends Document {
 
 const userSchema = new Schema<IUser>({
   name: String,
-  username: String,
   email: { type: String, unique: true, lowercase: true, trim: true },
   password: String,
   role: String
@@ -47,7 +44,6 @@ userSchema.set('toJSON', {
   }
 });
 
-const User = mongoose.model('User', userSchema);
-// mongoose.model<user>("User", userSchema);
+const User = model('User', userSchema);
 
 export default User;

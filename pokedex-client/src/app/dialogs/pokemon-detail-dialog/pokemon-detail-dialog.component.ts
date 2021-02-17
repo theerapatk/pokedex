@@ -3,12 +3,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { Move } from '@models/move';
+import { PokemonDetail } from '@models/pokemon-detail';
+import { PokedexService } from '@services/pokedex.service';
 import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { forkJoin } from 'rxjs';
-import { Move } from 'src/app/models/move';
-import { PokemonDetail } from 'src/app/models/pokemon-detail';
-import { PokedexService } from 'src/app/services/pokedex.service';
 
 @Component({
   selector: 'app-pokemon-detail-dialog',

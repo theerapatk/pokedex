@@ -3,6 +3,35 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./pokedex-client/",
+    "paths": {
+      "@environments/*": [
+        "pokedex-client/src/environments/*"
+      ],
+      "@animations/*": [
+        "src/app/animations/*"
+      ],
+      "@components/*": [
+        "src/app/components/*"
+      ],
+      "@dialogs/*": [
+        "src/app/dialogs/*"
+      ],
+      "@directives/*": [
+        "src/app/directives/*"
+      ],
+      "@interceptors/*": [
+        "src/app/interceptors/*"
+      ],
+      "@models/*": [
+        "src/app/models/*"
+      ],
+      "@services/*": [
+        "src/app/services/*"
+      ],
+      "@utils/*": [
+        "src/app/utils/*"
+      ]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -26,9 +55,5 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  },
-  
-  //   "include": [
-  //     "**/*"
-  //  ]
+  }
 }

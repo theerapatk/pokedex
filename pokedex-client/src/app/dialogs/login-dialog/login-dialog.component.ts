@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SlideAnimation } from '@animations/slide-animation';
+import { AuthenticationService } from '@services/authentication.service';
 import { FacebookService, InitParams, LoginOptions, LoginResponse } from 'ngx-facebook';
-import { SlideAnimation } from 'src/app/animations/slide-animation';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-login-dialog',

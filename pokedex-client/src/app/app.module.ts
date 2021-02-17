@@ -17,31 +17,29 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CreateAccountComponent } from '@components/create-account/create-account.component';
+import { PokedexComponent } from '@components/pokedex/pokedex.component';
+import { TestComponent } from '@components/test/test.component';
+import { DetailDialogLoadingComponent } from '@dialogs/detail-dialog-loading/detail-dialog-loading.component';
+import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
+import { PokemonDetailDialogComponent } from '@dialogs/pokemon-detail-dialog/pokemon-detail-dialog.component';
+import { PokemonClickDirective } from '@directives/pokemon-click.directive';
+import { CachingInterceptor } from '@interceptors/caching.interceptor';
+import { HttpResponseInterceptor } from '@interceptors/http-response.interceptor';
+import { MessageService } from '@services/message.service';
+import { RequestCache, RequestCacheWithMap } from '@services/request-cache.service';
 import { ChartsModule } from 'ng2-charts';
 import { FacebookModule } from 'ngx-facebook';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AngularWelcomeComponent } from './components/angular-welcome/angular-welcome.component';
-import { CreateAccountComponent } from './components/create-account/create-account.component';
-import { PokedexComponent } from './components/pokedex/pokedex.component';
-import { TestComponent } from './components/test/test.component';
-import { DetailDialogLoadingComponent } from './dialogs/detail-dialog-loading/detail-dialog-loading.component';
-import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
-import { PokemonDetailDialogComponent } from './dialogs/pokemon-detail-dialog/pokemon-detail-dialog.component';
-import { PokemonClickDirective } from './directives/pokemon-click.directive';
-import { CachingInterceptor } from './interceptors/caching.interceptor';
-import { HttpResponseInterceptor } from './interceptors/http-response.interceptor';
-import { MessageService } from './services/message.service';
-import { RequestCache, RequestCacheWithMap } from './services/request-cache.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestComponent,
     PokedexComponent,
-    AngularWelcomeComponent,
     PokemonDetailDialogComponent,
     PokemonClickDirective,
     DetailDialogLoadingComponent,
@@ -57,23 +55,23 @@ import { RequestCache, RequestCacheWithMap } from './services/request-cache.serv
     BrowserAnimationsModule,
     HttpClientModule,
     InfiniteScrollModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatIconModule,
-    MatChipsModule,
-    ChartsModule,
-    MatInputModule,
     FormsModule,
-    MatFormFieldModule,
     ReactiveFormsModule,
-    MatTabsModule,
-    MatTableModule,
-    MatSortModule,
-    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatDialogModule,
     MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    ChartsModule,
     FacebookModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 4000,

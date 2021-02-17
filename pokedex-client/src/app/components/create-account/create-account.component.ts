@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SlideAnimation } from 'src/app/animations/slide-animation';
-import { CustomValidators } from 'src/app/utils/custom-validators';
+import { SlideAnimation } from '@animations/slide-animation';
+import { CustomValidators } from '@utils/custom-validators';
 
 @Component({
   selector: 'app-create-account',

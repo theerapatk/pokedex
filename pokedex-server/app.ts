@@ -2,8 +2,8 @@ import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as morgan from 'morgan';
 import * as path from 'path';
-import setRoutes from './routes';
 import setMongo from './mongo';
+import setRoutes from './routes';
 
 const app = express();
 dotenv.config();

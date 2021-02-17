@@ -2,10 +2,10 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DetailDialogLoadingComponent } from '@dialogs/detail-dialog-loading/detail-dialog-loading.component';
+import { PokemonDetail } from '@models/pokemon-detail';
+import { PokedexService } from '@services/pokedex.service';
 import { of } from 'rxjs';
-import { PokemonDetail } from 'src/app/models/pokemon-detail';
-import { PokedexService } from 'src/app/services/pokedex.service';
-import { DetailDialogLoadingComponent } from '../detail-dialog-loading/detail-dialog-loading.component';
 import { PokemonDetailDialogComponent } from './pokemon-detail-dialog.component';
 
 describe('PokemonDetailDialogComponent', () => {

@@ -1,11 +1,11 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
+import { PokeApi } from '@models/poke-api';
+import { Pokemon } from '@models/pokemon';
+import { PokemonDetail } from '@models/pokemon-detail';
+import { PokedexService } from '@services/pokedex.service';
 import { forkJoin } from 'rxjs';
-import { LoginDialogComponent } from 'src/app/dialogs/login-dialog/login-dialog.component';
-import { PokeApi } from 'src/app/models/poke-api';
-import { Pokemon } from 'src/app/models/pokemon';
-import { PokemonDetail } from 'src/app/models/pokemon-detail';
-import { PokedexService } from 'src/app/services/pokedex.service';
 
 @Component({
   selector: 'app-pokedex',
