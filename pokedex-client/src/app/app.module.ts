@@ -17,6 +17,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JwtModule } from '@auth0/angular-jwt';
 import { CreateAccountComponent } from '@components/create-account/create-account.component';
 import { PokedexComponent } from '@components/pokedex/pokedex.component';
 import { TestComponent } from '@components/test/test.component';
@@ -77,6 +78,12 @@ import { AppComponent } from './app.component';
       timeOut: 4000,
       positionClass: 'toast-bottom-center',
       preventDuplicates: true
+    }),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: (): string => localStorage.getItem('token') || '',
+        // allowedDomains: ['localhost:3000', 'localhost:4200']
+      }
     })
   ],
   providers: [

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { SlideAnimation } from '@animations/slide-animation';
 import { AuthenticationService } from '@services/authentication.service';
+import { UserService } from '@services/user.service';
 import { FacebookService, InitParams, LoginOptions, LoginResponse } from 'ngx-facebook';
 
 @Component({
@@ -27,8 +27,8 @@ export class LoginDialogComponent implements OnInit {
   });
 
   constructor(
-    private router: Router,
     private authService: AuthenticationService,
+    private userService: UserService,
     private fbService: FacebookService,
     public dialogRef: MatDialogRef<LoginDialogComponent>
   ) {
@@ -53,7 +53,7 @@ export class LoginDialogComponent implements OnInit {
   private login() {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.controls.credential.get('password')?.value;
-    this.authService.login(email, password).subscribe(
+    this.authService.login({ email, password }).subscribe(
       (response: any) => {
         console.log(response);
         this.isShowingProgressBar = false;
@@ -80,6 +80,14 @@ export class LoginDialogComponent implements OnInit {
   private handleSuccessfulLogIn(user: any) {
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.dialogRef.close();
+    this.userService.getUser(this.authService.currentUser).subscribe(
+      (response: any) => {
+        console.log(response);
+      },
+      (errorResponse: any) => {
+        console.log(errorResponse);
+      }
+    );
   }
 
   onCreateNewAccount() {

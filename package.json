@@ -26,6 +26,7 @@
     "@angular/platform-browser": "~11.1.0",
     "@angular/platform-browser-dynamic": "~11.1.0",
     "@angular/router": "~11.1.0",
+    "@auth0/angular-jwt": "^5.0.2",
     "bcryptjs": "^2.4.3",
     "chart.js": "^2.9.4",
     "concurrently": "^5.3.0",

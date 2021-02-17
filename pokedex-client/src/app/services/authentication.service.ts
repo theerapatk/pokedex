@@ -1,18 +1,51 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/operators';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) { }
+  isLoggedIn = false;
+  currentUser: any = {};
 
-  login(email: string, password: string): Observable<any> {
-    const url = `${environment.apiUrl}/login`;
-    return this.http.post<any>(url, { email, password });
+  constructor(
+    private userService: UserService,
+    private jwtHelper: JwtHelperService
+  ) { }
+
+  login(credentials: any): Observable<any> {
+    return this.userService.login(credentials).pipe(
+      tap(response => {
+        localStorage.setItem('token', response.token);
+        const decodedUser = this.decodeUserFromToken(response.token);
+        this.setCurrentUser(decodedUser);
+        console.log(this.currentUser);
+        this.isLoggedIn = true;
+      })
+    );
+  };
+
+  logout(): void {
+    localStorage.removeItem('token');
+    this.isLoggedIn = false;
+    this.currentUser = {};
+  }
+
+  decodeUserFromToken(token: any): object {
+    return this.jwtHelper.decodeToken(token).user;
+  }
+
+  setCurrentUser(decodedUser: any): void {
+    this.isLoggedIn = true;
+    this.currentUser._id = decodedUser._id;
+    this.currentUser.name = decodedUser.name;
+    this.currentUser.email = decodedUser.email;
+    this.currentUser.role = decodedUser.role;
+    delete decodedUser.role;
   }
 
   // postLogin(username: string, password: string): Observable<User> {
