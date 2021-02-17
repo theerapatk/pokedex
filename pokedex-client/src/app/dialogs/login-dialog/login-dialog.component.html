@@ -1,15 +1,15 @@
 <mat-progress-bar mode="indeterminate" *ngIf="isShowingProgressBar"></mat-progress-bar>
-<div *ngIf="isFormSubmitted && !isCredentialsValid; then thenBlock else elseBlock"></div>
-<ng-template #thenBlock>
-    <div class="invalid-credentials-text background-red">
-        Invalid username and/or password.
-    </div>
-</ng-template>
-<ng-template #elseBlock>
-    <div class="invalid-credentials-text">&nbsp;</div>
-</ng-template>
 <div class="form-container" [@slideInOut]="animationState">
     <form *ngIf="animationState === 0" [formGroup]="loginForm">
+        <div *ngIf="isFormSubmitted && !isCredentialsValid; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+            <div class="invalid-credentials-text background-red">
+                Invalid username and/or password.
+            </div>
+        </ng-template>
+        <ng-template #elseBlock>
+            <div class="invalid-credentials-text">&nbsp;</div>
+        </ng-template>
         <mat-form-field>
             <input matInput formControlName="username" placeholder="Username" #username>
         </mat-form-field>

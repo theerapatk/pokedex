@@ -5,19 +5,12 @@
     height: 100%;
 }
 
-mat-dialog-content {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-}
-
-form > mat-dialog-content {
+form {
     flex-direction: column;
     display: flex;
-    justify-content: center;
-    height: 100%;
 }
 
-mat-dialog-content > mat-form-field {
+mat-form-field,
+button[type="submit"] {
     margin: 10px 0;
 }

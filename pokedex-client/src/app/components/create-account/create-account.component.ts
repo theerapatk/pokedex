@@ -23,7 +23,7 @@ export class CreateAccountComponent implements OnInit {
     }, CustomValidators.passwordMatchValidator)
   });
 
-  @Input() animationState = 1;
+  @Input() animationState = 0;
   @Output() animationStateChange = new EventEmitter<number>();
 
   constructor() { }
@@ -33,6 +33,7 @@ export class CreateAccountComponent implements OnInit {
   onSubmit(): void { }
 
   onBackToLogIn(): void {
+    this.createAccountForm.reset();
     this.animationStateChange.emit(0);
   }
 

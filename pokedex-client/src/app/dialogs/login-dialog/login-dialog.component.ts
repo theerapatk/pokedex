@@ -13,8 +13,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class LoginDialogComponent implements OnInit {
 
-  showLeftSide = true;
-  showRightSide = false;
   animationState = 0;
   isShowingProgressBar = false;
   isFormSubmitted = false;
@@ -82,7 +80,9 @@ export class LoginDialogComponent implements OnInit {
   }
 
   onCreateNewAccount() {
-    this.animationState++;
+    this.isFormSubmitted = false;
+    this.loginForm.reset();
+    this.animationState = 1;
   }
 
   onAnimationStateChange(stateNumber: number) {

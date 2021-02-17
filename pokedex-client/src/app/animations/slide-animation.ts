@@ -6,15 +6,11 @@ const left = [
     query(':enter', [
       style({ transform: 'translateX(-100%)' }),
       animate('.3s ease-out', style({ transform: 'translateX(0%)' }))
-    ], {
-      optional: true,
-    }),
+    ], { optional: true }),
     query(':leave', [
       style({ transform: 'translateX(0%)', display: 'none' }),
       animate('.3s ease-out', style({ transform: 'translateX(100%)' }))
-    ], {
-      optional: true,
-    }),
+    ], { optional: true }),
   ]),
 ];
 
@@ -24,15 +20,11 @@ const right = [
     query(':enter', [
       style({ transform: 'translateX(100%)' }),
       animate('.3s ease-out', style({ transform: 'translateX(0%)' }))
-    ], {
-      optional: true,
-    }),
+    ], { optional: true }),
     query(':leave', [
       style({ transform: 'translateX(0%)', display: 'none' }),
       animate('.3s ease-out', style({ transform: 'translateX(-100%)' }))
-    ], {
-      optional: true,
-    }),
+    ], { optional: true }),
   ]),
 ];
 
