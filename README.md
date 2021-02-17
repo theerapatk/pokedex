@@ -1,6 +1,7 @@
 # Pokédex
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
+Most of server setup is from https://github.com/davideviolante/Angular-Full-Stack/
 
 ## Development server
 
