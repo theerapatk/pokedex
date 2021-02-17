@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SlideAnimation } from '@animations/slide-animation';
 import { AuthenticationService } from '@services/authentication.service';
@@ -19,7 +20,7 @@ export class LoginDialogComponent implements OnInit {
   isCredentialsValid = true;
 
   loginForm = new FormGroup({
-    username: new FormControl({ value: '', disabled: false }, Validators.required),
+    email: new FormControl({ value: '', disabled: false }, Validators.required),
     credential: new FormGroup({
       password: new FormControl({ value: '', disabled: false }, Validators.required),
     })
@@ -28,7 +29,8 @@ export class LoginDialogComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthenticationService,
-    private fbService: FacebookService
+    private fbService: FacebookService,
+    public dialogRef: MatDialogRef<LoginDialogComponent>
   ) {
     const initParams: InitParams = {
       appId: '2985699581717032',
@@ -49,10 +51,11 @@ export class LoginDialogComponent implements OnInit {
   }
 
   private login() {
-    const username = this.loginForm.get('username')?.value;
-    const password = this.loginForm.controls.credential.get('username')?.value;
-    this.authService.postLogin(username, password).subscribe(
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.controls.credential.get('password')?.value;
+    this.authService.login(email, password).subscribe(
       (response: any) => {
+        console.log(response);
         this.isShowingProgressBar = false;
         this.handleSuccessfulLogIn(response);
       },
@@ -76,7 +79,7 @@ export class LoginDialogComponent implements OnInit {
 
   private handleSuccessfulLogIn(user: any) {
     localStorage.setItem('currentUser', JSON.stringify(user));
-    this.router.navigate(['/main']);
+    this.dialogRef.close();
   }
 
   onCreateNewAccount() {

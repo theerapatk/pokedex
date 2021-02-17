@@ -16,7 +16,7 @@ export class CreateAccountComponent implements OnInit {
   hideConfirmPassword = true;
 
   createAccountForm = new FormGroup({
-    username: new FormControl({ value: '', disabled: false }, Validators.required),
+    email: new FormControl({ value: '', disabled: false }, Validators.required),
     credential: new FormGroup({
       password: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl({ value: '', disabled: false }, Validators.required),

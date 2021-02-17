@@ -3,10 +3,10 @@
     <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit()">
         <!-- <mat-dialog-content> -->
         <mat-form-field>
-            <input matInput maxlength="32" placeholder="Username" formControlName="username" #newUsername>
+            <input matInput maxlength="32" placeholder="Email" formControlName="email" #newEmail>
             <mat-hint>Required</mat-hint>
-            <mat-hint align="end">{{newUsername.value.length}} / 32</mat-hint>
-            <mat-error *ngIf="createAccountForm.controls.username.hasError('required')">
+            <mat-hint align="end">{{newEmail.value.length}} / 32</mat-hint>
+            <mat-error *ngIf="createAccountForm.controls.email.hasError('required')">
                 Required*
             </mat-error>
         </mat-form-field>

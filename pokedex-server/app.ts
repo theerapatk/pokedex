@@ -20,7 +20,7 @@ async function main(): Promise<any> {
         await setMongo();
         setRoutes(app);
         app.get('/*', (req, res) => res.sendFile(path.join(__dirname, '../public/index.html')));
-        if (!module.parent) {
+        if (require.main === module) {
             const port = app.get('port');
             app.listen(port, () => console.log(`** Pokedex server is listening on port ${port}, (http://localhost:${port}/) **`));
         }

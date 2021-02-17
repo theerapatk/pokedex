@@ -1,7 +1,20 @@
 {
   "name": "pokedex",
   "version": "1.0.0",
+  "author": "Jojo Theerapat",
   "description": "The Pokedex App",
+  "scripts": {
+    "ng": "ng",
+    "build": "ng build && tsc -p pokedex-server",
+    "buildprod": "ng build --aot --prod && tsc -p pokedex-server",
+    "start": "node dist/pokedex-server/app.js",
+    "predev": "tsc -p pokedex-server",
+    "dev": "concurrently \"ng serve --open\" \"tsc -w -p pokedex-server\" \"nodemon dist/pokedex-server/app.js\"",
+    "prod": "concurrently \"ng build --aot --prod && tsc -p pokedex-server && node dist/pokedex-server/app.js\"",
+    "test": "ng test",
+    "lint": "ng lint && htmlhint \"pokedex-client/**/*.html\" && sass-lint \"pokedex-client/**/*.scss\" -v && tslint pokedex-server/**/**.ts{,x}",
+    "e2e": "ng e2e"
+  },
   "dependencies": {
     "@angular/animations": "~11.1.0",
     "@angular/cdk": "^11.1.0",
@@ -55,23 +68,10 @@
     "tslint": "~6.1.0",
     "typescript": "~4.1.2"
   },
-  "scripts": {
-    "ng": "ng",
-    "build": "ng build && tsc -p pokedex-server",
-    "buildprod": "ng build --aot --prod && tsc -p pokedex-server",
-    "start": "node dist/pokedex-server/app.js",
-    "predev": "tsc -p pokedex-server",
-    "dev": "concurrently \"ng serve --open\" \"tsc -w -p pokedex-server\" \"nodemon dist/pokedex-server/app.js\"",
-    "prod": "concurrently \"ng build --aot --prod && tsc -p pokedex-server && node dist/pokedex-server/app.js\"",
-    "test": "ng test",
-    "lint": "ng lint && htmlhint \"pokedex-client/**/*.html\" && sass-lint \"pokedex-client/**/*.scss\" -v && tslint pokedex-server/**/**.ts{,x}",
-    "e2e": "ng e2e"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/theerapatk/pokedex.git"
   },
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/theerapatk/pokedex/issues"

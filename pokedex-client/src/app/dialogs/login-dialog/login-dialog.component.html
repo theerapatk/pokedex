@@ -4,14 +4,14 @@
         <div *ngIf="isFormSubmitted && !isCredentialsValid; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
             <div class="invalid-credentials-text background-red">
-                Invalid username and/or password.
+                Invalid email and/or password.
             </div>
         </ng-template>
         <ng-template #elseBlock>
             <div class="invalid-credentials-text">&nbsp;</div>
         </ng-template>
         <mat-form-field>
-            <input matInput formControlName="username" placeholder="Username" #username>
+            <input matInput formControlName="email" placeholder="Email" #email>
         </mat-form-field>
         <mat-form-field formGroupName="credential">
             <input matInput formControlName="password" type="password" placeholder="Password" autocomplete="off">
