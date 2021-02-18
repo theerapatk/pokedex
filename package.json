@@ -9,12 +9,15 @@
     "buildprod": "ng build --aot --prod && tsc -p pokedex-server",
     "start": "node dist/pokedex-server/app.js",
     "predev": "tsc -p pokedex-server",
-    "debugserver": "concurrently \"tsc -w -p pokedex-server\" \"nodemon dist/pokedex-server/app.js\"",
-    "dev": "concurrently \"ng serve --open\" \"tsc -w -p pokedex-server\" \"nodemon dist/pokedex-server/app.js\"",
-    "prod": "concurrently \"ng build --aot --prod && tsc -p pokedex-server && node dist/pokedex-server/app.js\"",
+    "dev": "concurrently \"mongod\" \"ng serve --open\" \"tsc -w -p pokedex-server\" \"nodemon dist/pokedex-server/app.js\"",
+    "prod": "concurrently \"mongod\" \"ng build --aot --prod && tsc -p pokedex-server && node dist/pokedex-server/app.js\"",
     "test": "ng test",
     "lint": "ng lint && htmlhint \"pokedex-client/**/*.html\" && sass-lint \"pokedex-client/**/*.scss\" -v && tslint pokedex-server/**/**.ts{,x}",
     "e2e": "ng e2e"
+  },
+  "engines": {
+    "node": "14.15.4",
+    "npm": "6.14.10"
   },
   "dependencies": {
     "@angular/animations": "~11.1.0",

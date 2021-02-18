@@ -5,7 +5,6 @@ async function setMongo(): Promise<any> {
   if (process.env.NODE_ENV === 'test') {
     mongodbURI = process.env.MONGODB_TEST_URI;
   }
-  mongodbURI = 'mongodb+srv://jojo-pokedex:aJH8s418h9T1FINU@cluster-pokedex.zdt3m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
   (mongoose as any).Promise = global.Promise;
   mongoose.set('useCreateIndex', true);
   mongoose.set('useNewUrlParser', true);
