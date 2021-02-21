@@ -165,7 +165,7 @@ export class PokedexComponent implements OnInit {
     this.shouldShowScrollTopButton = window.pageYOffset > 1260;
   }
 
-  onLogInClick() {
+  onLogInClick(): void {
     const dialogRef = this.dialog.open(LoginDialogComponent, {
       width: '460px',
       panelClass: 'dialog-responsive',
@@ -179,7 +179,7 @@ export class PokedexComponent implements OnInit {
     });
   }
 
-  onLogOutClick() {
+  onLogOutClick(): void {
     this.authService.logout();
   }
 

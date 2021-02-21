@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SlideAnimation } from '@animations/slide-animation';
-import { UserService } from '@services/user.service';
+import { AuthenticationService } from '@services/authentication.service';
 import { CustomValidators } from '@utils/custom-validators';
 
 @Component({
@@ -25,25 +25,34 @@ export class CreateAccountComponent implements OnInit {
   });
 
   @Input() animationState = 0;
+  @Input() isLoading = false;
   @Output() animationStateChange = new EventEmitter<number>();
+  @Output() accountIsCreating = new EventEmitter<boolean>(false);
 
-  constructor(private userService: UserService) { }
+  constructor(private service: AuthenticationService) { }
 
   ngOnInit(): void { }
 
   onSubmit(): void {
+    this.accountIsCreating.emit(true);
     const creatUser = {
       email: this.createAccountForm.get('email')?.value,
       password: this.createAccountForm.controls.credential.get('password')?.value
     };
-    this.userService.createUser(creatUser).subscribe(
-      (response: any) => this.onBackToLogIn(),
-      (errorResponse: any) => console.log(errorResponse)
-    );
+    setTimeout(() => {
+      this.service.register(creatUser).subscribe(
+        (response: any) => this.onBackToLogIn(),
+        (errorResponse: any) => {
+          this.accountIsCreating.emit(false);
+          console.log(errorResponse);
+        }
+      );
+    }, 1000);
   }
 
   onBackToLogIn(): void {
     this.createAccountForm.reset();
+    this.accountIsCreating.emit(false);
     this.animationStateChange.emit(0);
   }
 

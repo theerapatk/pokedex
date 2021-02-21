@@ -2,6 +2,7 @@ import * as bcrypt from 'bcryptjs';
 import { Document, model, Schema } from 'mongoose';
 
 interface IUser extends Document {
+  isPasswordMatched(password: any): Promise<boolean>;
   name: String,
   email: { type: String, unique: true, lowercase: true, trim: true },
   password: string,
@@ -29,12 +30,13 @@ userSchema.pre('save', function (next): void {
   });
 });
 
-userSchema.methods.comparePassword = function (candidatePassword, callback): void {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    if (err) { return callback(err); }
-    callback(null, isMatch);
-  });
-};
+userSchema.methods.isPasswordMatched = async function (password) {
+  try {
+    return await bcrypt.compare(password, this.password)
+  } catch (error) {
+    throw error
+  }
+}
 
 // Omit the password when returning a user
 userSchema.set('toJSON', {

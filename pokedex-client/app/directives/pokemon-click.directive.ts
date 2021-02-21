@@ -2,7 +2,7 @@ import { Directive, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PokemonDetailDialogComponent } from '../dialogs/pokemon-detail-dialog/pokemon-detail-dialog.component';
 
-@Directive({ selector: '[app-pokemonClick]' })
+@Directive({ selector: '[appPokemonClick]' })
 export class PokemonClickDirective {
 
   constructor(public dialog: MatDialog) { }

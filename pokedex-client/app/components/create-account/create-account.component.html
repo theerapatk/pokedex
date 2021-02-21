@@ -1,7 +1,6 @@
 <div *ngIf="animationState === 1" class="create-account-container">
     <h2 mat-dialog-title>{{isCreatingNew ? 'Create New':'Edit'}} Account</h2>
     <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit()">
-        <!-- <mat-dialog-content> -->
         <mat-form-field>
             <input matInput maxlength="32" placeholder="Email" formControlName="email" #newEmail>
             <mat-hint>Required</mat-hint>
@@ -46,7 +45,7 @@
             </mat-error>
         </mat-form-field>
         <button mat-flat-button type="submit" color="primary"
-            [disabled]="!createAccountForm.dirty || !createAccountForm.valid "> Create Account </button>
+            [disabled]="!createAccountForm.dirty || !createAccountForm.valid || isLoading"> Create Account </button>
         <button mat-flat-button type="button" (click)="onBackToLogIn()"> Back to Log In </button>
     </form>
 </div>

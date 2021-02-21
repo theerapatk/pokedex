@@ -15,7 +15,7 @@ import { FacebookService, InitParams, LoginOptions, LoginResponse } from 'ngx-fa
 export class LoginDialogComponent implements OnInit {
 
   animationState = 0;
-  isShowingProgressBar = false;
+  isLoading = false;
   isFormSubmitted = false;
   isCredentialsValid = true;
 
@@ -41,32 +41,33 @@ export class LoginDialogComponent implements OnInit {
     this.fbService.init(initParams);
   }
 
-  ngOnInit() { }
+  ngOnInit(): void { }
 
-  onLogIn() {
-    this.isShowingProgressBar = true;
+  onLogIn(): void {
+    this.isLoading = true;
     this.isFormSubmitted = true;
     this.isCredentialsValid = true;
     this.login();
   }
 
-  private login() {
+  private login(): void {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.controls.credential.get('password')?.value;
-    this.authService.login({ email, password }).subscribe(
-      (response: any) => {
-        console.log(response);
-        this.isShowingProgressBar = false;
-        this.handleSuccessfulLogIn(response);
-      },
-      (errorResponse: any) => {
-        this.isShowingProgressBar = false;
-        this.isCredentialsValid = false;
-      }
-    );
+    setTimeout(() => {
+      this.authService.login({ email, password }).subscribe(
+        (response: any) => {
+          this.isLoading = false;
+          this.handleSuccessfulLogIn(response);
+        },
+        (errorResponse: any) => {
+          this.isLoading = false;
+          this.isCredentialsValid = false;
+        }
+      );
+    }, 1000);
   }
 
-  onFacebookLogIn() {
+  onFacebookLogIn(): void {
     const options: LoginOptions = {
       scope: 'public_profile',
       return_scopes: true,
@@ -77,7 +78,7 @@ export class LoginDialogComponent implements OnInit {
       .catch(e => console.error('Error logging in'));
   }
 
-  private handleSuccessfulLogIn(user: any) {
+  private handleSuccessfulLogIn(user: any): void {
     this.dialogRef.close();
     this.userService.getUser(this.authService.currentUser).subscribe(
       (response: any) => {
@@ -89,14 +90,18 @@ export class LoginDialogComponent implements OnInit {
     );
   }
 
-  onCreateNewAccount() {
+  onCreateNewAccount(): void {
     this.isFormSubmitted = false;
     this.loginForm.reset();
     this.animationState = 1;
   }
 
-  onAnimationStateChange(stateNumber: number) {
+  onAnimationStateChange(stateNumber: number): void {
     this.animationState = stateNumber;
+  }
+
+  onAccountIsCreating(isLoading: boolean): void {
+    this.isLoading = isLoading;
   }
 
 }

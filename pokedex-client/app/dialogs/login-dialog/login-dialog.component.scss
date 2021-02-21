@@ -1,3 +1,15 @@
+.progress-bar-container {
+    height: 4px;
+}
+
+mat-progress-bar {
+    position: relative;
+    z-index: 2;
+    top: -24px;
+    left: -24px;
+    width: calc(100% + 48px);
+}
+
 .login-bottom-footer {
     display: flex;
     justify-content: space-between;
@@ -25,12 +37,6 @@
 
 .background-red {
     background: #c62828;
-}
-
-mat-progress-bar {
-    top: 0;
-    left: 0;
-    position: absolute;
 }
 
 form {

@@ -88,7 +88,7 @@ import { AppComponent } from './app.component';
     }),
     JwtModule.forRoot({
       config: {
-        tokenGetter: (): string => localStorage.getItem('token') || '',
+        tokenGetter: (): string => localStorage.getItem('accessToken') || '',
         // allowedDomains: ['localhost:3000', 'localhost:4200']
       }
     })

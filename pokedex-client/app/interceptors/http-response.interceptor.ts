@@ -11,10 +11,18 @@ export class HttpResponseInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
-            catchError((error: HttpErrorResponse) => {
-                const errorMessage = `Error Code: ${error.status}, Message: ${error.message}`;
-                this.toastrService.error(errorMessage);
-                return throwError(errorMessage);
+            catchError((errorResponse: HttpErrorResponse) => {
+                let errorStatus = errorResponse.status;
+                let errorMessage = errorResponse.message;
+
+                if (errorResponse && errorResponse.error) {
+                    errorStatus = errorResponse.error.error.status;
+                    errorMessage = errorResponse.error.error.message;
+                }
+
+                const errorText = `Error Code: ${errorStatus}, Message: ${errorMessage}`;
+                this.toastrService.error(errorText);
+                return throwError(errorText);
             })
         );
     }

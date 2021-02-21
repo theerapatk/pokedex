@@ -1,8 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,36 +13,40 @@ export class AuthenticationService {
   currentUser: any = {};
 
   constructor(
-    private userService: UserService,
+    private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedUser = this.decodeUserFromToken(token);
-      this.setCurrentUser(decodedUser);
-    }
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) { this.decodeUserFromToken(accessToken); }
+  }
+
+  register(user: any): Observable<any> {
+    return this.http.post<any>('/auth/register', user);
   }
 
   login(credentials: any): Observable<any> {
-    return this.userService.login(credentials).pipe(
+    return this.http.post<any>('/auth/login', credentials).pipe(
       tap(response => {
-        localStorage.setItem('token', response.token);
-        const decodedUser = this.decodeUserFromToken(response.token);
-        this.setCurrentUser(decodedUser);
-        console.log(this.currentUser);
+        localStorage.setItem('accessToken', response.accessToken);
+        this.decodeUserFromToken(response.accessToken);
         this.isLoggedIn = true;
       })
     );
-  };
+  }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
     this.isLoggedIn = false;
     this.currentUser = {};
   }
 
-  decodeUserFromToken(token: any): object {
-    return this.jwtHelper.decodeToken(token).user;
+  decodeUserFromToken(accessToken: string): void {
+    try {
+      const decodedUser = this.jwtHelper.decodeToken(accessToken).user;
+      this.setCurrentUser(decodedUser);
+    } catch (error) {
+      this.isLoggedIn = false;
+    }
   }
 
   setCurrentUser(decodedUser: any): void {
@@ -53,18 +57,5 @@ export class AuthenticationService {
     this.currentUser.role = decodedUser.role;
     delete decodedUser.role;
   }
-
-  // postLogin(username: string, password: string): Observable<User> {
-  //   const url = `${environment.apiUrl}/login`;
-  //   const body = `username=${username}&password=${encodeURIComponent(password)}`;
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/x-www-form-urlencoded'
-  //     })
-  //   };
-  //   return this.http.post(url, body, httpOptions).pipe(
-  //     mergeMap(() => this.userService.getCurrentUser())
-  //   );
-  // }
 
 }

@@ -44,7 +44,7 @@
 <div *ngIf="pokemons.length === 0 && !isLoading" class="search-result-not-found-container">
     Result not found
 </div>
-<div class="pokemon-card-container" app-pokemonClick>
+<div class="pokemon-card-container" appPokemonClick>
     <mat-card *ngFor="let pokemon of pokemons;" id="{{ pokemon.url }}" class="mat-elevation-z2 pokemon-card"
         [class]="pokemon.details && pokemon.details.types[0].type.name + '-lighter'"
         [attr.data-imgsrc]="pokemon.details && pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'">
