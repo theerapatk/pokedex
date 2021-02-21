@@ -5,31 +5,31 @@
     "baseUrl": "./pokedex-client/",
     "paths": {
       "@environments/*": [
-        "pokedex-client/src/environments/*"
+        "environments/*"
       ],
       "@animations/*": [
-        "src/app/animations/*"
+        "app/animations/*"
       ],
       "@components/*": [
-        "src/app/components/*"
+        "app/components/*"
       ],
       "@dialogs/*": [
-        "src/app/dialogs/*"
+        "app/dialogs/*"
       ],
       "@directives/*": [
-        "src/app/directives/*"
+        "app/directives/*"
       ],
       "@interceptors/*": [
-        "src/app/interceptors/*"
+        "app/interceptors/*"
       ],
       "@models/*": [
-        "src/app/models/*"
+        "app/models/*"
       ],
       "@services/*": [
-        "src/app/services/*"
+        "app/services/*"
       ],
       "@utils/*": [
-        "src/app/utils/*"
+        "app/utils/*"
       ]
     },
     "outDir": "./dist/out-tsc",

@@ -9,9 +9,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -36,6 +38,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +77,9 @@ import { AppComponent } from './app.component';
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
+    MatSidenavModule,
     ChartsModule,
+    MatListModule,
     FacebookModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 4000,

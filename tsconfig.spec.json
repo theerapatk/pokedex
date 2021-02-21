@@ -8,11 +8,11 @@
     ]
   },
   "files": [
-    "pokedex-client/src/test.ts",
-    "pokedex-client/src/polyfills.ts"
+    "pokedex-client/test.ts",
+    "pokedex-client/polyfills.ts"
   ],
   "include": [
-    "pokedex-client/src/**/*.spec.ts",
-    "pokedex-client/src/**/*.d.ts"
+    "pokedex-client/**/*.spec.ts",
+    "pokedex-client/**/*.d.ts"
   ]
 }
