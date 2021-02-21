@@ -8,6 +8,7 @@ function setRoutes(app: any): void {
 
   router.route('/register').post(userCtrl.register);
   router.route('/login').post(userCtrl.login);
+  router.route('/refresh-token').post(userCtrl.refreshToken);
   app.use('/auth', router);
 
   router.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }));

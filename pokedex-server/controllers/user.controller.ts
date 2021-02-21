@@ -33,15 +33,38 @@ class UserController extends BaseController {
       const isMatched = await user.isPasswordMatched(req.body.password);
       if (!isMatched) throw new createError.Unauthorized('Invalid Email/Password');
 
-      // const accessToken = jwt.sign({ user }, process.env.SECRET_TOKEN as string, { expiresIn: '1d' });
       const accessToken = jwt.sign({ user }, process.env.SECRET_ACCESS_TOKEN as string, {
         issuer: 'jojo-pokedex',
-        expiresIn: '1d'
+        expiresIn: '15m'
       });
-      res.status(200).json({ accessToken });
+      const refreshToken = jwt.sign({ user }, process.env.SECRET_REFRESH_TOKEN as string, {
+        issuer: 'jojo-pokedex',
+        expiresIn: '1y'
+      });
+      res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
       if (error.isJoi === true) return next(new createError.BadRequest('Invalid Email/Password'))
       next(error)
+    }
+  };
+
+  refreshToken = async (req: any, res: any, next: any) => {
+    try {
+      const { refreshToken } = req.body;
+      if (!refreshToken) throw new createError.BadRequest();
+      const user = jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN as string);
+
+      const accessToken = jwt.sign({ user }, process.env.SECRET_ACCESS_TOKEN as string, {
+        issuer: 'jojo-pokedex',
+        expiresIn: '15m'
+      });
+      const newRefreshToken = jwt.sign({ user }, process.env.SECRET_REFRESH_TOKEN as string, {
+        issuer: 'jojo-pokedex',
+        expiresIn: '1y'
+      });
+      res.status(200).json({ accessToken, refreshToken: newRefreshToken });
+    } catch (error) {
+      next(error);
     }
   };
 

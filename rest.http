@@ -29,7 +29,7 @@ POST http://localhost:3000/auth/refresh-token
 Content-Type: application/json
 
 {
-  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTI5OTYxMzcsImV4cCI6MTYyNDU1MzczNywiYXVkIjoiNWVlYTBlOTlkMTU3ZjYzZjNlMzYxYjQxIiwiaXNzIjoicGlja3VycGFnZS5jb20ifQ.9kFX7LEzyh6eopqF_TGZQRwYqrIPUUdN441ekfKxu7Q"
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJhZG1pbiIsIl9pZCI6IjYwMzI5YTQzZTU4YjRjNTZkOGFlZjAwZiIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW4ifSwiaWF0IjoxNjEzOTM3OTA1LCJleHAiOjE2NDU0OTU1MDUsImlzcyI6Impvam8tcG9rZWRleCJ9.jDtG-hCtlFR1gc4KCyAR2wrapie2zN6AEXsMrtJqZdY"
 }
 
 ### Logout Route
@@ -43,3 +43,4 @@ Content-Type: application/json
 ### Get users
 GET http://localhost:3000/api/v1/users
 Authorization: Bearer {{accessToken}}
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJhZG1pbiIsIl9pZCI6IjYwMzI5YTQzZTU4YjRjNTZkOGFlZjAwZiIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW4ifSwiaWF0IjoxNjEzOTMwMTM5LCJleHAiOjE2MTM5MzEwMzksImlzcyI6Impvam8tcG9rZWRleCJ9.k-sij8bmjx9UmZDTBuEasSr2B8b9Vs-2E5DINCwDnCk
