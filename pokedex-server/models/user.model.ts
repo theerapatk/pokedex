@@ -1,33 +1,38 @@
-import * as bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 import { Document, model, Schema } from 'mongoose';
 
 interface IUser extends Document {
-  isPasswordMatched(password: any): Promise<boolean>;
-  name: String,
-  email: { type: String, unique: true, lowercase: true, trim: true },
   password: string,
-  role: String
+  isPasswordMatched(password: any): Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>({
   name: String,
-  email: { type: String, unique: true, lowercase: true, trim: true },
-  password: String,
+  email: {
+    type: String,
+    require: true,
+    lowercase: true,
+    unique: true,
+    trim: true
+  },
+  password: {
+    type: String,
+    require: true
+  },
   role: String
 });
 
-// Before saving the user, hash the password
-userSchema.pre('save', function (next): void {
-  const user = this;
-  if (!user.isModified('password')) { return next(); }
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) { return next(err); }
-    bcrypt.hash(user.password, salt, (error, hash) => {
-      if (error) { return next(error); }
-      user.password = hash;
-      next();
-    });
-  });
+userSchema.pre('save', async function (next): Promise<void> {
+  try {
+    if (this.isModified('password')) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(this.password, salt);
+      this.password = hashedPassword;
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 userSchema.methods.isPasswordMatched = async function (password) {

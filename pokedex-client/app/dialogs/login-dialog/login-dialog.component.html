@@ -6,7 +6,7 @@
         <div *ngIf="isFormSubmitted && !isCredentialsValid; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
             <div class="invalid-credentials-text background-red">
-                Invalid email and/or password.
+                Invalid Email/Password
             </div>
         </ng-template>
         <ng-template #elseBlock>

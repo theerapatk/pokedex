@@ -10,7 +10,7 @@ function setRoutes(app: any): void {
   router.route('/login').post(userCtrl.login);
   app.use('/auth', router);
 
-  router.use(jwt({ secret: process.env.SECRET_TOKEN as string, algorithms: ['HS256'] }));
+  router.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }));
   router.route('/users').get(userCtrl.getAll);
   router.route('/users/count').get(userCtrl.count);
   router.route('/user/:id')

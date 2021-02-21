@@ -9,7 +9,7 @@ const jwtHelper = {
       const secret = process.env.ACCESS_TOKEN_SECRET
       const options = {
         expiresIn: '1h',
-        issuer: 'pickurpage.com',
+        issuer: 'jojo-pokedex',
         audience: userId,
       }
       JWT.sign(payload, secret, options, (err: any, token: any) => {
@@ -20,21 +20,6 @@ const jwtHelper = {
         }
         resolve(token)
       })
-    })
-  },
-  verifyAccessToken: (req: any, res: any, next: any) => {
-    if (!req.headers['authorization']) return next(createError.Unauthorized())
-    const authHeader = req.headers['authorization']
-    const bearerToken = authHeader.split(' ')
-    const token = bearerToken[1]
-    JWT.verify(token, process.env.ACCESS_TOKEN_SECRET, (err: any, payload: any) => {
-      if (err) {
-        const message =
-          err.name === 'JsonWebTokenError' ? 'Unauthorized' : err.message
-        return next(createError.Unauthorized(message))
-      }
-      req.payload = payload
-      next()
     })
   },
   signRefreshToken: (userId: string) => {
