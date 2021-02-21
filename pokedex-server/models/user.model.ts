@@ -3,11 +3,11 @@ import { Document, model, Schema } from 'mongoose';
 
 interface IUser extends Document {
   password: string,
+  name: String,
   isPasswordMatched(password: any): Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>({
-  name: String,
   email: {
     type: String,
     require: true,
@@ -15,11 +15,9 @@ const userSchema = new Schema<IUser>({
     unique: true,
     trim: true
   },
-  password: {
-    type: String,
-    require: true
-  },
-  role: String
+  password: { type: String, require: true },
+  name: { type: String },
+  role: { type: String, default: 'trainer' }
 });
 
 userSchema.pre('save', async function (next): Promise<void> {
@@ -29,6 +27,7 @@ userSchema.pre('save', async function (next): Promise<void> {
       const hashedPassword = await bcrypt.hash(this.password, salt);
       this.password = hashedPassword;
     }
+    this.name = this._id;
     next();
   } catch (error) {
     next(error);
