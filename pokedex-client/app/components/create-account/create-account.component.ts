@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SlideAnimation } from '@animations/slide-animation';
 import { AuthenticationService } from '@services/authentication.service';
 import { CustomValidators } from '@utils/custom-validators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-account',
@@ -29,7 +30,10 @@ export class CreateAccountComponent implements OnInit {
   @Output() animationStateChange = new EventEmitter<number>();
   @Output() accountIsCreating = new EventEmitter<boolean>(false);
 
-  constructor(private service: AuthenticationService) { }
+  constructor(
+    private toastrService: ToastrService,
+    private service: AuthenticationService
+  ) { }
 
   ngOnInit(): void { }
 
@@ -51,6 +55,7 @@ export class CreateAccountComponent implements OnInit {
   }
 
   onBackToLogIn(): void {
+    this.toastrService.success('Successful, you can now log in with your new account');
     this.createAccountForm.reset();
     this.accountIsCreating.emit(false);
     this.animationStateChange.emit(0);

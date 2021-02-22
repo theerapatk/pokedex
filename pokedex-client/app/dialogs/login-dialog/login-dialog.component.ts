@@ -5,6 +5,7 @@ import { SlideAnimation } from '@animations/slide-animation';
 import { AuthenticationService } from '@services/authentication.service';
 import { UserService } from '@services/user.service';
 import { FacebookService, InitParams, LoginOptions, LoginResponse } from 'ngx-facebook';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-dialog',
@@ -30,6 +31,7 @@ export class LoginDialogComponent implements OnInit {
     private authService: AuthenticationService,
     private userService: UserService,
     private fbService: FacebookService,
+    private toastrService: ToastrService,
     public dialogRef: MatDialogRef<LoginDialogComponent>
   ) {
     const initParams: InitParams = {
@@ -79,6 +81,7 @@ export class LoginDialogComponent implements OnInit {
   }
 
   private handleSuccessfulLogIn(user: any): void {
+    this.toastrService.success('Logged in successful');
     this.dialogRef.close();
     this.userService.getUser(this.authService.currentUser).subscribe(
       (response: any) => {

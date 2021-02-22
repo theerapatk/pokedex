@@ -15,11 +15,12 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService
-  ) {
-    const accessToken = localStorage.getItem('accessToken') || '';
-    const isExpired = this.jwtHelper.isTokenExpired(accessToken);
-    if (!isExpired && accessToken) {
-      this.decodeAccessToken(accessToken);
+  ) { }
+
+  getRefreshToken(): void {
+    const refreshToken = localStorage.getItem('refreshToken') || '';
+    if (refreshToken) {
+      this.refreshToken().subscribe();
     } else {
       this.logout();
     }
@@ -42,10 +43,12 @@ export class AuthenticationService {
   refreshToken(): Observable<any> {
     const refreshToken = localStorage.getItem('refreshToken') || '';
     return this.http.post<any>('/auth/refresh-token', { refreshToken }).pipe(
-      tap(response => {
-        localStorage.setItem('accessToken', response.accessToken);
-        localStorage.setItem('refreshToken', response.refreshToken);
-        this.decodeAccessToken(response.accessToken);
+      tap({
+        next: response => {
+          localStorage.setItem('accessToken', response.accessToken);
+          localStorage.setItem('refreshToken', response.refreshToken);
+          this.decodeAccessToken(response.accessToken);
+        }
       })
     );
   }
@@ -57,7 +60,7 @@ export class AuthenticationService {
     this.currentUser = {};
   }
 
-  private decodeAccessToken(accessToken: string): void {
+  decodeAccessToken(accessToken: string): void {
     try {
       this.isLoggedIn = true;
 

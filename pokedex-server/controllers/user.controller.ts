@@ -21,14 +21,14 @@ class UserController extends BaseController {
       res.status(201).json(savedUser);
     } catch (error) {
       if (error.isJoi === true) error.status = 422
-      next(error)
+      next(error);
     }
   };
 
   login = async (req: any, res: any, next: any) => {
     try {
       const user = await User.findOne({ email: req.body.email });
-      if (!user) throw new createError.NotFound('User not registered');
+      if (!user) throw new createError.NotFound(`${req.body.email} has not been registered`);
 
       const isMatched = await user.isPasswordMatched(req.body.password);
       if (!isMatched) throw new createError.Unauthorized('Invalid Email/Password');
@@ -44,7 +44,7 @@ class UserController extends BaseController {
       res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
       if (error.isJoi === true) return next(new createError.BadRequest('Invalid Email/Password'))
-      next(error)
+      next(error);
     }
   };
 
@@ -65,6 +65,7 @@ class UserController extends BaseController {
       });
       res.status(200).json({ accessToken, refreshToken: newRefreshToken });
     } catch (error) {
+      if (error.name === 'JsonWebTokenError') return next(new createError.Unauthorized())
       next(error);
     }
   };

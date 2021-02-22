@@ -2,8 +2,8 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from '@angular/core';
 import { AuthenticationService } from '@services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, filter, finalize, switchMap, take } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, finalize, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class HttpResponseInterceptor implements HttpInterceptor {
@@ -33,7 +33,15 @@ export class HttpResponseInterceptor implements HttpInterceptor {
         }
 
         const errorText = `Error Code: ${errorStatus}, Message: ${errorMessage}`;
-        this.toastrService.error(errorText);
+        const regex = new RegExp('/auth/(refresh-token|register)');
+
+        if (request.url.includes('/auth/refresh-token')) {
+          this.authService.logout();
+          this.toastrService.warning('Your login credentials expired, please log in again');
+        } else if (request.url.includes('/auth/register')) {
+          this.toastrService.warning(errorMessage);
+        }
+
         return throwError(errorText);
       })
     );
@@ -58,7 +66,6 @@ export class HttpResponseInterceptor implements HttpInterceptor {
       } else {
         this.isRefreshingToken = true;
         // this.refreshTokenSubject.next(null);
-
         return this.authService.refreshToken().pipe(
           switchMap((response: any) => {
             // this.refreshTokenSubject.next(response);

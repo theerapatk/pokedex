@@ -29,13 +29,6 @@
         <button mat-raised-button (click)="onFacebookLogIn()" class="facebook-login-button" [disabled]="isLoading">
             <mat-icon class="facebook-icon">facebook</mat-icon>Login with Facebook
         </button>
-        <!-- <div class="fb-login-button-container">
-            <div class="fb-login-button" data-width="100%" data-size="large" data-button-type="continue_with"
-                data-layout="default" data-auto-logout-link="true" data-use-continue-as="true"></div>
-        </div> -->
-        <!-- <div class="fb-login-button" data-max-rows="1" data-size="medium" data-button-type="continue_with"
-            data-width="100%">
-        </div> -->
     </form>
     <app-create-account (accountIsCreating)="onAccountIsCreating($event)" [isLoading]="isLoading"
         [animationState]="animationState" (animationStateChange)="onAnimationStateChange($event)">
