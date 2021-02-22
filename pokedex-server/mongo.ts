@@ -1,18 +1,40 @@
 import * as mongoose from 'mongoose';
 
-async function setMongo(): Promise<any> {
-  let mongodbURI = process.env.MONGODB_URI;
+async function setMongo() {
+
+  let uri = process.env.MONGODB_URI;
   if (process.env.NODE_ENV === 'test') {
-    mongodbURI = process.env.MONGODB_TEST_URI;
+    uri = process.env.MONGODB_TEST_URI;
   }
-  (mongoose as any).Promise = global.Promise;
-  mongoose.set('useCreateIndex', true);
-  mongoose.set('useNewUrlParser', true);
-  mongoose.set('useFindAndModify', false);
-  mongoose.set('useUnifiedTopology', true);
-  // Connect to MongoDB using Mongoose
-  await mongoose.connect(mongodbURI as string);
-  console.log('Connected to MongoDB');
+
+  const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  };
+
+  await mongoose.connect(uri!, options)
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.log(err.message));
+
+  mongoose.connection.on('connected', () => {
+    console.log('mongoose connected');
+  });
+
+  mongoose.connection.on('error', (err) => {
+    console.log(err.message);
+  });
+
+  mongoose.connection.on('disconnected', () => {
+    console.log('mongoose disconnected');
+  });
+
+  process.on('SIGINT', async () => {
+    await mongoose.connection.close()
+    process.exit(0)
+  });
+
 }
 
 export default setMongo;

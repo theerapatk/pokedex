@@ -3,22 +3,23 @@ import * as jwt from 'express-jwt';
 import UserController from './controllers/user.controller';
 
 function setRoutes(app: any): void {
-  const router = express.Router();
   const userCtrl = new UserController();
 
-  router.route('/register').post(userCtrl.register);
-  router.route('/login').post(userCtrl.login);
-  router.route('/refresh-token').post(userCtrl.refreshToken);
-  app.use('/auth', router);
+  const authRouter = express.Router();
+  authRouter.route('/register').post(userCtrl.register);
+  authRouter.route('/login').post(userCtrl.login);
+  authRouter.route('/refresh-token').post(userCtrl.refreshToken);
+  app.use('/auth', authRouter);
 
-  router.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }));
-  router.route('/users').get(userCtrl.getAll);
-  router.route('/users/count').get(userCtrl.count);
-  router.route('/user/:id')
+  const apiRouter = express.Router();
+  apiRouter.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN!, algorithms: ['HS256'] }));
+  apiRouter.route('/users').get(userCtrl.getAll);
+  apiRouter.route('/users/count').get(userCtrl.count);
+  apiRouter.route('/users/:id')
     .get(userCtrl.get)
     .put(userCtrl.update)
     .delete(userCtrl.delete);
-  app.use('/api/v1', router);
+  app.use('/api/v1', apiRouter);
 }
 
 export default setRoutes;
