@@ -1,9 +1,11 @@
 import * as bcrypt from 'bcrypt';
-import { Document, model, Schema } from 'mongoose';
+import { Document, Model, model, Schema } from 'mongoose';
 
 interface IUser extends Document {
-  password: string,
-  name: String,
+  email: string;
+  password: string;
+  name: string;
+  role: string;
   isPasswordMatched(password: any): Promise<boolean>;
 }
 
@@ -34,13 +36,13 @@ userSchema.pre('save', async function (next): Promise<void> {
   }
 });
 
-userSchema.methods.isPasswordMatched = async function (password) {
+userSchema.methods.isPasswordMatched = async function (password): Promise<boolean> {
   try {
-    return await bcrypt.compare(password, this.password)
+    return await bcrypt.compare(password, this.password);
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
 
 // Omit the password when returning a user
 userSchema.set('toJSON', {
@@ -50,6 +52,6 @@ userSchema.set('toJSON', {
   }
 });
 
-const User = model('User', userSchema);
+const User: Model<IUser> = model('User', userSchema);
 
 export default User;

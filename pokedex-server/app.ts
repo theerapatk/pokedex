@@ -21,13 +21,13 @@ async function main(): Promise<any> {
     setRoutes(app);
     app.get('/*', (req, res) => res.sendFile(path.join(__dirname, '../public/index.html')));
     app.use((err: any, req: any, res: any, next: any) => {
-      res.status(err.status || 500)
+      res.status(err.status || 500);
       res.send({
         error: {
           status: err.status || 500,
           message: err.message,
         },
-      })
+      });
     });
     if (require.main === module) {
       const port = app.get('port');

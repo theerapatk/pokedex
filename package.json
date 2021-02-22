@@ -13,7 +13,8 @@
     "prod": "concurrently \"mongod\" \"ng build --aot --prod && tsc -p pokedex-server && node dist/pokedex-server/app.js\"",
     "test": "ng test",
     "lint": "ng lint && htmlhint \"pokedex-client/**/*.html\" && sass-lint \"pokedex-client/**/*.scss\" -v && tslint pokedex-server/**/**.ts{,x}",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "tslint": "tslint --project tsconfig.json"
   },
   "engines": {
     "node": "14.15.4",
