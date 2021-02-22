@@ -29,7 +29,6 @@ export class LoginDialogComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
-    private userService: UserService,
     private fbService: FacebookService,
     private toastrService: ToastrService,
     public dialogRef: MatDialogRef<LoginDialogComponent>
@@ -83,14 +82,6 @@ export class LoginDialogComponent implements OnInit {
   private handleSuccessfulLogIn(user: any): void {
     this.toastrService.success('Logged in successful');
     this.dialogRef.close();
-    this.userService.getUser(this.authService.currentUser).subscribe(
-      (response: any) => {
-        console.log(response);
-      },
-      (errorResponse: any) => {
-        console.log(errorResponse);
-      }
-    );
   }
 
   onCreateNewAccount(): void {

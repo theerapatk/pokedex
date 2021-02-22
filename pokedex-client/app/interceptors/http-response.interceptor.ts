@@ -26,15 +26,13 @@ export class HttpResponseInterceptor implements HttpInterceptor {
           errorStatus = errorResponse.error.error.status;
           errorMessage = errorResponse.error.error.message;
 
-          const regex = new RegExp('(?=.*/api/).*');
-          if (regex.test(request.url)) {
+          const apiRegex = new RegExp('(?=.*/api/).*');
+          if (apiRegex.test(request.url)) {
             return this.handleUnauthorizedError(errorResponse, request, next);
           }
         }
 
         const errorText = `Error Code: ${errorStatus}, Message: ${errorMessage}`;
-        const regex = new RegExp('/auth/(refresh-token|register)');
-
         if (request.url.includes('/auth/refresh-token')) {
           this.authService.logout();
           this.toastrService.warning('Your login credentials expired, please log in again');
@@ -48,7 +46,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
   }
 
 
-  private handleUnauthorizedError(errorResponse: HttpErrorResponse, request: HttpRequest<any>, next: HttpHandler) {
+  private handleUnauthorizedError(errorResponse: HttpErrorResponse, request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const errorStatus = errorResponse.error.error.status;
     const errorMessage = errorResponse.error.error.message;
     if (errorStatus === 401) {
@@ -70,7 +68,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
           switchMap((response: any) => {
             // this.refreshTokenSubject.next(response);
             return next.handle(request.clone({
-              setHeaders: { 'Authorization': `Bearer ${response.accessToken}` }
+              setHeaders: { Authorization: `Bearer ${response.accessToken}` }
             }));
           }),
           finalize(() => this.isRefreshingToken = false)

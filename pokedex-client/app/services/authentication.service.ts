@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { User } from '@models/user.model';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -10,7 +11,7 @@ import { tap } from 'rxjs/operators';
 export class AuthenticationService {
 
   isLoggedIn = false;
-  currentUser: any = {};
+  currentUser: User = { _id: '', email: '', name: '', role: '' };
 
   constructor(
     private http: HttpClient,
@@ -35,7 +36,7 @@ export class AuthenticationService {
       tap(response => {
         localStorage.setItem('accessToken', response.accessToken);
         localStorage.setItem('refreshToken', response.refreshToken);
-        this.decodeAccessToken(response.accessToken);
+        this.decodeAccessToken();
       })
     );
   }
@@ -47,7 +48,7 @@ export class AuthenticationService {
         next: response => {
           localStorage.setItem('accessToken', response.accessToken);
           localStorage.setItem('refreshToken', response.refreshToken);
-          this.decodeAccessToken(response.accessToken);
+          this.decodeAccessToken();
         }
       })
     );
@@ -57,13 +58,13 @@ export class AuthenticationService {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     this.isLoggedIn = false;
-    this.currentUser = {};
+    this.currentUser = { _id: '', email: '', name: '', role: '' };
   }
 
-  decodeAccessToken(accessToken: string): void {
+  decodeAccessToken(): void {
     try {
       this.isLoggedIn = true;
-
+      const accessToken = localStorage.getItem('accessToken') || '';
       const decodedUser = this.jwtHelper.decodeToken(accessToken).user;
       const { _id, name, email, role } = decodedUser;
       this.currentUser = { _id, name, email, role };
