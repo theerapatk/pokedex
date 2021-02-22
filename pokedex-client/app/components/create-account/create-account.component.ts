@@ -45,7 +45,10 @@ export class CreateAccountComponent implements OnInit {
     };
     setTimeout(() => {
       this.service.register(creatUser).subscribe(
-        (response: any) => this.onBackToLogIn(),
+        (response: any) => {
+          this.toastrService.success('Successful, you can now log in with your new account');
+          this.onBackToLogIn();
+        },
         (errorResponse: any) => {
           this.accountIsCreating.emit(false);
           console.log(errorResponse);
@@ -55,7 +58,6 @@ export class CreateAccountComponent implements OnInit {
   }
 
   onBackToLogIn(): void {
-    this.toastrService.success('Successful, you can now log in with your new account');
     this.createAccountForm.reset();
     this.accountIsCreating.emit(false);
     this.animationStateChange.emit(0);
