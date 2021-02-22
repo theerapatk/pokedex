@@ -16,8 +16,13 @@ export class AuthenticationService {
     private http: HttpClient,
     private jwtHelper: JwtHelperService
   ) {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) { this.decodeUserFromToken(accessToken); }
+    const accessToken = localStorage.getItem('accessToken') || '';
+    const isExpired = this.jwtHelper.isTokenExpired(accessToken);
+    if (!isExpired && accessToken) {
+      this.decodeAccessToken(accessToken);
+    } else {
+      this.logout();
+    }
   }
 
   register(user: any): Observable<any> {
@@ -28,34 +33,40 @@ export class AuthenticationService {
     return this.http.post<any>('/auth/login', credentials).pipe(
       tap(response => {
         localStorage.setItem('accessToken', response.accessToken);
-        this.decodeUserFromToken(response.accessToken);
-        this.isLoggedIn = true;
+        localStorage.setItem('refreshToken', response.refreshToken);
+        this.decodeAccessToken(response.accessToken);
+      })
+    );
+  }
+
+  refreshToken(): Observable<any> {
+    const refreshToken = localStorage.getItem('refreshToken') || '';
+    return this.http.post<any>('/auth/refresh-token', { refreshToken }).pipe(
+      tap(response => {
+        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem('refreshToken', response.refreshToken);
+        this.decodeAccessToken(response.accessToken);
       })
     );
   }
 
   logout(): void {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     this.isLoggedIn = false;
     this.currentUser = {};
   }
 
-  decodeUserFromToken(accessToken: string): void {
+  private decodeAccessToken(accessToken: string): void {
     try {
-      const decodedUser = this.jwtHelper.decodeToken(accessToken).user;
-      this.setCurrentUser(decodedUser);
-    } catch (error) {
-      this.isLoggedIn = false;
-    }
-  }
+      this.isLoggedIn = true;
 
-  setCurrentUser(decodedUser: any): void {
-    this.isLoggedIn = true;
-    this.currentUser._id = decodedUser._id;
-    this.currentUser.name = decodedUser.name;
-    this.currentUser.email = decodedUser.email;
-    this.currentUser.role = decodedUser.role;
-    delete decodedUser.role;
+      const decodedUser = this.jwtHelper.decodeToken(accessToken).user;
+      const { _id, name, email, role } = decodedUser;
+      this.currentUser = { _id, name, email, role };
+    } catch (error) {
+      this.logout();
+    }
   }
 
 }

@@ -39,7 +39,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,6 +88,7 @@ import { AppComponent } from './app.component';
     JwtModule.forRoot({
       config: {
         tokenGetter: (): string => localStorage.getItem('accessToken') || '',
+        disallowedRoutes: [new RegExp('\/auth')]
         // allowedDomains: ['localhost:3000', 'localhost:4200']
       }
     })

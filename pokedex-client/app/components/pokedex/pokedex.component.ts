@@ -6,6 +6,7 @@ import { Pokemon } from '@models/pokemon';
 import { PokemonDetail } from '@models/pokemon-detail';
 import { AuthenticationService } from '@services/authentication.service';
 import { PokedexService } from '@services/pokedex.service';
+import { UserService } from '@services/user.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -28,8 +29,9 @@ export class PokedexComponent implements OnInit {
   @ViewChild('searchInput') input: any;
 
   constructor(
-    public authService: AuthenticationService,
     private pokedexService: PokedexService,
+    private userService: UserService,
+    public authService: AuthenticationService,
     public dialog: MatDialog
   ) { }
 
@@ -181,6 +183,27 @@ export class PokedexComponent implements OnInit {
 
   onLogOutClick(): void {
     this.authService.logout();
+  }
+
+  onMenuClicked(): void {
+    this.userService.getUser(this.authService.currentUser).subscribe(
+      (response: any) => {
+        console.log(response);
+        setTimeout(() => {
+          this.userService.getUser(this.authService.currentUser).subscribe(
+            (response: any) => {
+              console.log(response);
+            },
+            (errorResponse: any) => {
+              console.log(errorResponse);
+            }
+          );
+        }, 1000);
+      },
+      (errorResponse: any) => {
+        console.log(errorResponse);
+      }
+    );
   }
 
 }

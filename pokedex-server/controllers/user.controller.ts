@@ -52,8 +52,9 @@ class UserController extends BaseController {
     try {
       const { refreshToken } = req.body;
       if (!refreshToken) throw new createError.BadRequest();
-      const user = jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN as string);
+      const decodedToken = jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN as string) as any;
 
+      const user = decodedToken.user;
       const accessToken = jwt.sign({ user }, process.env.SECRET_ACCESS_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '15m'

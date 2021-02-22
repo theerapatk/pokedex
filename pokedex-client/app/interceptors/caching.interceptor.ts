@@ -1,7 +1,7 @@
 import {
-    HttpEvent,
-    HttpHandler, HttpHeaders,
-    HttpInterceptor, HttpRequest, HttpResponse
+  HttpEvent,
+  HttpHandler, HttpHeaders,
+  HttpInterceptor, HttpRequest, HttpResponse
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -22,36 +22,36 @@ import { RequestCache } from '../services/request-cache.service';
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {
 
-    constructor(private cache: RequestCache) { }
+  constructor(private cache: RequestCache) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // continue if not cacheable.
-        // return next.handle(request);
-        if (!isCacheable(request)) { return next.handle(request); }
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // continue if not cacheable.
+    // return next.handle(request);
+    if (!isCacheable(request)) { return next.handle(request); }
 
-        const cachedResponse = this.cache.get(request);
-        // cache-then-refresh
-        if (request.headers.get('x-refresh')) {
-            const results$ = sendRequest(request, next, this.cache);
-            return cachedResponse ?
-                results$.pipe(startWith(cachedResponse)) :
-                results$;
-        }
-        // cache-or-fetch
-        return cachedResponse ?
-            of(cachedResponse) : sendRequest(request, next, this.cache);
+    const cachedResponse = this.cache.get(request);
+    // cache-then-refresh
+    if (request.headers.get('x-refresh')) {
+      const results$ = sendRequest(request, next, this.cache);
+      return cachedResponse ?
+        results$.pipe(startWith(cachedResponse)) :
+        results$;
     }
+    // cache-or-fetch
+    return cachedResponse ?
+      of(cachedResponse) : sendRequest(request, next, this.cache);
+  }
 }
 
 /** Is this request cacheable? */
 function isCacheable(request: HttpRequest<any>): boolean {
-    // Only GET requests are cacheable
-    if (request.url.indexOf('https://raw.githubusercontent.com/PokeAPI/sprites') === 0) {
-        console.log(request.url);
-    }
-    return request.method === 'GET' &&
-        // Only npm package search is cacheable in this app
-        -1 < request.url.indexOf(pokeApiUrl);
+  // Only GET requests are cacheable
+  if (request.url.indexOf('https://raw.githubusercontent.com/PokeAPI/sprites') === 0) {
+    console.log(request.url);
+  }
+  return request.method === 'GET' &&
+    // Only npm package search is cacheable in this app
+    -1 < request.url.indexOf(pokeApiUrl);
 }
 
 /**
@@ -59,21 +59,21 @@ function isCacheable(request: HttpRequest<any>): boolean {
  * Will add the response to the cache on the way out.
  */
 function sendRequest(
-    req: HttpRequest<any>,
-    next: HttpHandler,
-    cache: RequestCache): Observable<HttpEvent<any>> {
+  req: HttpRequest<any>,
+  next: HttpHandler,
+  cache: RequestCache): Observable<HttpEvent<any>> {
 
-    // No headers allowed in npm search request
-    const noHeaderReq = req.clone({ headers: new HttpHeaders() });
+  // No headers allowed in npm search request
+  const noHeaderReq = req.clone({ headers: new HttpHeaders() });
 
-    return next.handle(noHeaderReq).pipe(
-        tap(event => {
-            // There may be other events besides the response.
-            if (event instanceof HttpResponse) {
-                cache.put(req, event); // Update the cache.
-            }
-        })
-    );
+  return next.handle(noHeaderReq).pipe(
+    tap(event => {
+      // There may be other events besides the response.
+      if (event instanceof HttpResponse) {
+        cache.put(req, event); // Update the cache.
+      }
+    })
+  );
 }
 
 

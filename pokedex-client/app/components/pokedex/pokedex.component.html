@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <button *ngIf="authService.isLoggedIn" mat-icon-button>
+        <button *ngIf="authService.isLoggedIn" mat-icon-button (click)="onMenuClicked()">
             <mat-icon>menu</mat-icon>
         </button>
         <span class="app-name">Pokédex</span>
