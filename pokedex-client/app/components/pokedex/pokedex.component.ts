@@ -48,11 +48,26 @@ export class PokedexComponent implements OnInit {
   }
 
   private handleSuccessfulGetPokemons(response: PokeApi): void {
-    const partialPokemons = response.results as Pokemon[];
-    this.pokemons = [...this.pokemons, ...partialPokemons];
-    this.originalPokemons = [...this.pokemons];
     this.nextUrl = response.next;
-    this.getPokemonDetails(partialPokemons);
+
+    const partialPokemons = response.results as Pokemon[];
+    if (partialPokemons.length > 0) {
+      this.getPokemonDetails(partialPokemons);
+    }
+
+    const filterValue = this.input.nativeElement.value;
+    if (filterValue !== '' && !this.isApplyingType) {
+      this.originalPokemons = [...this.originalPokemons, ...partialPokemons];
+      const filteredPartialPokemons = partialPokemons.filter(pokemon => pokemon.name.includes(filterValue));
+      if (filteredPartialPokemons.length === 0) {
+        this.onScroll();
+      } else {
+        this.pokemons = [...this.pokemons, ...filteredPartialPokemons];
+      }
+    } else {
+      this.pokemons = [...this.pokemons, ...partialPokemons];
+      this.originalPokemons = [...this.pokemons];
+    }
   }
 
   private getPokemonDetails(pokemons: Pokemon[] = this.pokemons): void {
@@ -187,22 +202,8 @@ export class PokedexComponent implements OnInit {
 
   onMenuClicked(): void {
     this.userService.getUser(this.authService.currentUser).subscribe(
-      (response: any) => {
-        console.log(response);
-        setTimeout(() => {
-          this.userService.getUser(this.authService.currentUser).subscribe(
-            (response: any) => {
-              console.log(response);
-            },
-            (errorResponse: any) => {
-              console.log(errorResponse);
-            }
-          );
-        }, 1000);
-      },
-      (errorResponse: any) => {
-        console.log(errorResponse);
-      }
+      response => console.log(response),
+      errorResponse => console.log(errorResponse)
     );
   }
 
