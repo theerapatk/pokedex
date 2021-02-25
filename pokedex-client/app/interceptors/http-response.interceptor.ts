@@ -46,7 +46,10 @@ export class HttpResponseInterceptor implements HttpInterceptor {
   }
 
 
-  private handleUnauthorizedError(errorResponse: HttpErrorResponse, request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  private handleUnauthorizedError(
+    errorResponse: HttpErrorResponse,
+    request: HttpRequest<any>,
+    next: HttpHandler): Observable<HttpEvent<any>> {
     const errorStatus = errorResponse.error.error.status;
     const errorMessage = errorResponse.error.error.message;
     if (errorStatus === 401) {
