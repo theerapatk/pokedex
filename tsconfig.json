@@ -3,6 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./pokedex-client/",
+    // "baseUrl": "./",
     "paths": {
       "@environments/*": [
         "environments/*"
@@ -24,6 +25,9 @@
       ],
       "@models/*": [
         "app/models/*"
+      ],
+      "@modules/*": [
+        "app/modules/*"
       ],
       "@services/*": [
         "app/services/*"

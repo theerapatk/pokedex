@@ -1,0 +1,49 @@
+<div class="progress-bar-container">
+    <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"> </mat-progress-bar>
+</div>
+<h2 mat-dialog-title id="user-dialog-title"> {{isCreatingNew ? 'Create New':'Edit'}} Trainer</h2>
+<form [formGroup]="trainerForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+        <fieldset class="user-dialog-fieldset">
+            <legend>Trainer Information</legend>
+            <div>
+                <mat-form-field class="flex-item-email">
+                    <input matInput #email maxlength="254" placeholder="Email" formControlName="email">
+                    <mat-hint>Required</mat-hint>
+                    <mat-hint align="end">{{email.value.length}} / 254</mat-hint>
+                    <mat-error
+                        *ngIf="trainerForm.controls.email.hasError('email') && !trainerForm.controls.email.hasError('required')">
+                        Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="trainerForm.controls.email.hasError('required')">
+                        Required*
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="flex-item-name">
+                    <input matInput #name maxlength="256" placeholder="Trainer Name" formControlName="name">
+                    <mat-hint>Required</mat-hint>
+                    <mat-hint align="end">{{name.value.length}} / 256</mat-hint>
+                    <mat-error *ngIf="trainerForm.controls.name.hasError('required')">
+                        Required*
+                    </mat-error>
+                    <mat-error *ngIf="trainerForm.controls.name.hasError('duplicateField')">
+                        {{errorMessage}}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="flex-item-type">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="role">
+                        <mat-option *ngFor="let roleOption of roleOptions" [value]="roleOption.value">
+                            {{roleOption.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </fieldset>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button mat-dialog-close>Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!trainerForm.dirty || !trainerForm.valid || isLoading"
+            type="submit">{{isCreatingNew ? 'Create' : 'Save'}}</button>
+    </mat-dialog-actions>
+</form>

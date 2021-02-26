@@ -1,0 +1,58 @@
+<div class="trainer-container">
+    <div class="trainer-top-action">
+        <app-column-filter [selectColumnOptions]="selectColumnOptions" [defaultSelectedColumn]="selectedFilterColumn"
+            [isLoading]="isLoading" (selectColumnChanged)="onSelectColumnChanged($event)"
+            (filterTextChanged)="onFilterTextChanged($event)" (filterTextCleared)="onFilterTextCleared($event)">
+        </app-column-filter>
+        <button mat-raised-button color="primary" (click)="onCreateOrEditClicked()" [disabled]="isLoading"
+            title="Create New Trainer">
+            Create New Trainer
+        </button>
+    </div>
+    <div class="mat-elevation-z5">
+        <div class="trainer-table-container">
+            <mat-progress-bar *ngIf="isLoading" color="primary" mode="indeterminate"> </mat-progress-bar>
+            <table mat-table [dataSource]="dataSource" matSort matSortActive="_id" matSortDirection="asc"
+                matSortDisableClear>
+                <ng-container matColumnDef="email" class="first-column">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                    <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Trainer ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row._id}} </td>
+                </ng-container>
+                <ng-container matColumnDef="role">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                    <td mat-cell *matCellDef="let row"> {{row.role}} </td>
+                </ng-container>
+                <ng-container matColumnDef="action" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" title="More actions">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" id="matMenu">
+                            <button mat-menu-item (click)="onCreateOrEditClicked(row)" title="Edit Trainer">
+                                <mat-icon>edit</mat-icon>
+                                <span>Edit Trainer</span>
+                            </button>
+                            <button mat-menu-item (click)="onDeleteClientClicked(row)" title="Delete Trainer">
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete Trainer</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+        </mat-paginator>
+    </div>
+</div>

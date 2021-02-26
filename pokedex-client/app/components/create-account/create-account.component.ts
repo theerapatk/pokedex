@@ -26,9 +26,8 @@ export class CreateAccountComponent implements OnInit {
   });
 
   @Input() animationState = 0;
-  @Input() isLoading = false;
   @Output() animationStateChange = new EventEmitter<number>();
-  @Output() accountIsCreating = new EventEmitter<boolean>(false);
+  @Output() isCreatingAccount = new EventEmitter<boolean>(false);
 
   constructor(
     private toastrService: ToastrService,
@@ -38,28 +37,25 @@ export class CreateAccountComponent implements OnInit {
   ngOnInit(): void { }
 
   onSubmit(): void {
-    this.accountIsCreating.emit(true);
+    this.isCreatingAccount.emit(true);
     const creatUser = {
       email: this.createAccountForm.get('email')?.value,
       password: this.createAccountForm.controls.credential.get('password')?.value
     };
     setTimeout(() => {
       this.service.register(creatUser).subscribe(
-        (response: any) => {
+        response => {
           this.toastrService.success('Successful, you can now log in with your new account');
           this.onBackToLogIn();
         },
-        (errorResponse: any) => {
-          this.accountIsCreating.emit(false);
-          console.log(errorResponse);
-        }
+        errorResponse => this.isCreatingAccount.emit(false)
       );
     }, 1000);
   }
 
   onBackToLogIn(): void {
     this.createAccountForm.reset();
-    this.accountIsCreating.emit(false);
+    this.isCreatingAccount.emit(false);
     this.animationStateChange.emit(0);
   }
 

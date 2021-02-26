@@ -1,13 +1,9 @@
 import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
 import { PokeApi } from '@models/poke-api';
 import { Pokemon } from '@models/pokemon';
 import { PokemonDetail } from '@models/pokemon-detail';
-import { AuthenticationService } from '@services/authentication.service';
 import { PokedexService } from '@services/pokedex.service';
 import { UserService } from '@services/user.service';
-import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -33,9 +29,6 @@ export class PokedexComponent implements AfterViewInit {
   constructor(
     private pokedexService: PokedexService,
     private userService: UserService,
-    private toastrService: ToastrService,
-    public authService: AuthenticationService,
-    public dialog: MatDialog
   ) { }
 
   ngAfterViewInit(): void {
@@ -186,32 +179,6 @@ export class PokedexComponent implements AfterViewInit {
   @HostListener('window:scroll', ['$event']) getScrollHeight(): void {
     this.shouldShowScrollTopButton = window.pageYOffset > 1260;
     this.shouldShowElevation = window.pageYOffset > 20;
-  }
-
-  onLogInClick(): void {
-    const dialogRef = this.dialog.open(LoginDialogComponent, {
-      width: '100%',
-      panelClass: 'login-dialog-responsive',
-      data: {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-
-      }
-    });
-  }
-
-  onLogOutClick(): void {
-    this.authService.logout();
-    this.toastrService.success('Logged out successfully')
-  }
-
-  onMenuClicked(): void {
-    this.userService.getUser(this.authService.currentUser).subscribe(
-      response => console.log(response),
-      errorResponse => console.log(errorResponse)
-    );
   }
 
 }

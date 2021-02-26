@@ -1,8 +1,5 @@
 <mat-toolbar color="primary" [class.mat-elevation-z8]="shouldShowElevation">
     <mat-toolbar-row>
-        <button *ngIf="authService.isLoggedIn" mat-icon-button (click)="onMenuClicked()">
-            <mat-icon>menu</mat-icon>
-        </button>
         <span class="app-name">Pokédex</span>
         <span class="mat-toolbar-spacer"></span>
         <mat-form-field class="search-form-field" floatLabel="never">
@@ -13,28 +10,7 @@
             </button>
         </mat-form-field>
         <button mat-flat-button color="primary" (click)="onResetClick()" [disabled]="isLoading">Reset</button>
-        <button *ngIf="!authService.isLoggedIn" mat-flat-button color="primary" (click)="onLogInClick()">Log In</button>
-        <span *ngIf="authService.isLoggedIn" class="app-toolbar-user">
-            <button mat-icon-button [matMenuTriggerFor]="menu" [title]="authService.currentUser.name">
-                <mat-icon>account_circle</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" id="matMenu">
-                <div mat-menu-item readonly>
-                    <mat-icon>person</mat-icon>
-                    <span>{{authService.currentUser.name}}</span>
-                </div>
-                <div *ngIf="authService.currentUser?.role === 'admin'" mat-menu-item
-                    routerLink="/admin/manage-trainers">
-                    <mat-icon>groups</mat-icon>
-                    <span>Manage Trainers</span>
-                </div>
-                <mat-divider></mat-divider>
-                <button mat-menu-item (click)="onLogOutClick()">
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>Log Out</span>
-                </button>
-            </mat-menu>
-        </span>
+        <app-account-menu></app-account-menu>
     </mat-toolbar-row>
 </mat-toolbar>
 <div class="progress-bar-container">
@@ -59,7 +35,7 @@
                 <div class="pokemon-sprite-container">
                     <img class="pokemon-sprite"
                         [src]="pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'"
-                        alt="Sprite of Pokemon">
+                        alt="Sprite of Pokemon" width="96" height="96">
                 </div>
                 <mat-chip-list>
                     <mat-chip *ngFor="let type of pokemon.details.types;" class="white-text" [ngClass]="type.type.name"

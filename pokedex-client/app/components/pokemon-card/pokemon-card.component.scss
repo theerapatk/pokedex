@@ -1,0 +1,197 @@
+.pokemon-name {
+  text-transform: capitalize;
+  margin-bottom: 0.5em;
+}
+
+.details-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+
+.pokemon-card {
+  margin: 1em;
+  flex: 1 0 calc(11%);
+  min-width: 75px;
+  max-width: 210px;
+  font-weight: bold;
+  transition: 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.6;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.6);
+  }
+}
+
+.pokemon-sprite-container {
+  flex: 1 1 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.white-text {
+  color: #fff;
+  cursor: pointer;
+}
+
+$lightenAmount: 22;
+$normal: #a8a878;
+.normal {
+  background-color: $normal;
+}
+.normal-lighter {
+  background-color: lighten($normal, $lightenAmount);
+}
+
+$fighting: #c03028;
+.fighting {
+  background-color: $fighting;
+}
+.fighting-lighter {
+  background-color: lighten($fighting, $lightenAmount);
+}
+
+$flying: #a890f0;
+.flying {
+  background-color: $flying;
+}
+.flying-lighter {
+  background-color: lighten($flying, $lightenAmount);
+}
+
+$poison: #a040a0;
+.poison {
+  background-color: $poison;
+}
+.poison-lighter {
+  background-color: lighten($poison, $lightenAmount);
+}
+
+$ground: #e0c068;
+.ground {
+  background-color: $ground;
+}
+.ground-lighter {
+  background-color: lighten($ground, $lightenAmount);
+}
+
+$rock: #b8a038;
+.rock {
+  background-color: $rock;
+}
+.rock-lighter {
+  background-color: lighten($rock, $lightenAmount);
+}
+
+$bug: #a8b820;
+.bug {
+  background-color: $bug;
+}
+.bug-lighter {
+  background-color: lighten($bug, $lightenAmount);
+}
+
+$ghost: #705898;
+.ghost {
+  background-color: $ghost;
+}
+.ghost-lighter {
+  background-color: lighten($ghost, $lightenAmount);
+}
+
+$steel: #b8b8d0;
+.steel {
+  background-color: $steel;
+}
+.steel-lighter {
+  background-color: lighten($steel, $lightenAmount);
+}
+
+$fire: #f08030;
+.fire {
+  background-color: $fire;
+}
+.fire-lighter {
+  background-color: lighten($fire, $lightenAmount);
+}
+
+$water: #6890f0;
+.water {
+  background-color: $water;
+}
+.water-lighter {
+  background-color: lighten($water, $lightenAmount);
+}
+
+$grass: #78c850;
+.grass {
+  background-color: $grass;
+}
+.grass-lighter {
+  background-color: lighten($grass, $lightenAmount);
+}
+
+$electric: #f8d030;
+.electric {
+  background-color: $electric;
+}
+.electric-lighter {
+  background-color: lighten($electric, $lightenAmount);
+}
+
+$psychic: #f85888;
+.psychic {
+  background-color: $psychic;
+}
+.psychic-lighter {
+  background-color: lighten($psychic, $lightenAmount);
+}
+
+$ice: #98d8d8;
+.ice {
+  background-color: $ice;
+}
+.ice-lighter {
+  background-color: lighten($ice, $lightenAmount);
+}
+
+$dragon: #7038f8;
+.dragon {
+  background-color: $dragon;
+}
+.dragon-lighter {
+  background-color: lighten($dragon, $lightenAmount);
+}
+
+$dark: #705848;
+.dark {
+  background-color: $dark;
+}
+.dark-lighter {
+  background-color: lighten($dark, $lightenAmount);
+}
+
+$fairy: #ee99ac;
+.fairy {
+  background-color: $fairy;
+}
+.fairy-lighter {
+  background-color: lighten($fairy, $lightenAmount);
+}
+
+$unknown: #68a090;
+.unknown {
+  background-color: $unknown;
+}
+.unknown-lighter {
+  background-color: lighten($unknown, $lightenAmount);
+}
+
+@media only screen and (min-width: 600px) {
+  .pokemon-card {
+    margin: 1.5em;
+  }
+}

@@ -45,7 +45,8 @@
             </mat-error>
         </mat-form-field>
         <button mat-flat-button type="submit" color="primary"
-            [disabled]="!createAccountForm.dirty || !createAccountForm.valid || isLoading"> Create Account </button>
-        <button mat-flat-button type="button" (click)="onBackToLogIn()"> Back to Log In </button>
+            [disabled]="!createAccountForm.dirty || !createAccountForm.valid || (isCreatingAccount | async )">
+            Create Account
+        </button>
     </form>
 </div>

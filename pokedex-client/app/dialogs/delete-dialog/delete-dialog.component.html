@@ -1,0 +1,16 @@
+<div class="progress-bar-container">
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+</div>
+<div class="content-container">
+    <h2 mat-dialog-title id="delete-dialog-title">{{data.title}}</h2>
+    <mat-dialog-content class="mat-typography">
+        <p [innerHTML]="data.content"></p>
+    </mat-dialog-content>
+    <button mat-raised-button color="primary" (mouseup)="onDeleteClicked()" [disabled]="isLoading"
+        (keyup.enter)="onDeleteClicked()">Delete</button>
+</div>
+<mat-dialog-actions align="center">
+    <button mat-mini-fab color="primary" mat-dialog-close class="close-dialog-button">
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-dialog-actions>
