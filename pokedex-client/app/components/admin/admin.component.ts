@@ -10,7 +10,13 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   mobileQuery: MediaQueryList;
 
-  fillerNav = Array.from({ length: 50 }, (_, i) => `Nav Item ${i + 1}`);
+  // fillerNav = Array.from({ length: 50 }, (_, i) => `Nav Item ${i + 1}`);
+
+  fillerNav = [{
+    relativePath: './pokedex',
+    label: 'Pokédex App',
+    description: '- the Pokédex App'
+  }];
 
   fillerContent = Array.from({ length: 50 }, () =>
     `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
