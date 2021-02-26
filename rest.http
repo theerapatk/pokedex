@@ -57,3 +57,19 @@ Content-Type: application/json
 {
   "name": "test"
 }
+
+
+### Insert Role
+POST http://localhost:4200/api/v1/roles
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "value": 4,
+  "text": "Pokémon Champion"
+}
+
+### Get Roles
+GET http://localhost:4200/api/v1/roles
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json

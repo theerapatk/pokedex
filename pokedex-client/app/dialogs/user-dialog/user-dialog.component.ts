@@ -21,7 +21,7 @@ export class UserDialogComponent implements OnInit {
   trainerForm = this.fb.group({
     email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
     name: [{ value: '', disabled: true }, [Validators.required]],
-    role: [{ value: 2, disabled: true }, [Validators.required]]
+    role: [{ value: 0, disabled: true }, [Validators.required]]
   });
 
   constructor(
@@ -34,8 +34,11 @@ export class UserDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.roleOptions = [
-      { value: 1, viewValue: 'Admin' },
-      { value: 2, viewValue: 'Trainer' }
+      { value: 0, viewValue: 'Pokémon Trainer' },
+      { value: 1, viewValue: 'Pokémon Master' },
+      { value: 2, viewValue: 'Gym Leader' },
+      { value: 3, viewValue: 'Elite Four' },
+      { value: 4, viewValue: 'Pokémon Champion' }
     ];
     this.trainerForm.enable();
     this.initForm();

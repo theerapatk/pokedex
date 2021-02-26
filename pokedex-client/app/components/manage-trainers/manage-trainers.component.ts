@@ -24,7 +24,7 @@ export class ManageTrainersComponent implements OnInit {
     email: 'Email',
     name: 'Name',
     _id: 'Trainer ID',
-    role: 'Type'
+    role: 'Rank'
   };
 
   isLoading = false;

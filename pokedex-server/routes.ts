@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as jwt from 'express-jwt';
+import RoleController from './controllers/role.controller';
 import UserController from './controllers/user.controller';
 
 function setRoutes(app: any): void {
@@ -20,6 +21,15 @@ function setRoutes(app: any): void {
     .get(userCtrl.get)
     .put(userCtrl.update)
     .delete(userCtrl.delete);
+
+  const roleCtrl = new RoleController();
+  apiRouter.route('/roles').get(roleCtrl.getAll);
+  apiRouter.route('/roles').post(roleCtrl.insert);
+  apiRouter.route('/roles/count').get(roleCtrl.count);
+  apiRouter.route('/roles/:id')
+    .get(roleCtrl.get)
+    .put(roleCtrl.update)
+    .delete(roleCtrl.delete);
   app.use('/api/v1', apiRouter);
 }
 
