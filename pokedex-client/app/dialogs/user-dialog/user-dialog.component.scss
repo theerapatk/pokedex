@@ -20,8 +20,12 @@ mat-dialog-content {
   flex-flow: row wrap;
 }
 
+form {
+  overflow: auto;
+}
+
 mat-dialog-content > mat-form-field {
-  flex: 1;
+  flex: 1 0 100%;
   margin: 8px 0;
 }
 

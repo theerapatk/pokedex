@@ -26,17 +26,10 @@ mat-progress-bar {
 .invalid-credentials-text {
     color: white;
     margin-bottom: 0.5em;
-    place-content: stretch center;
-    align-items: stretch;
-    flex-direction: row;
-    box-sizing: border-box;
-    display: flex;
     border-radius: 4px;
     line-height: 36px;
-}
-
-.background-red {
     background: #c62828;
+    text-align: center;
 }
 
 form {
@@ -44,6 +37,12 @@ form {
     display: flex;
     justify-content: center;
     height: 100%;
+    overflow: auto;
+}
+
+.form-field-container {
+    display: flex;
+    flex-flow: column;
 }
 
 mat-form-field.mat-form-field {
@@ -111,24 +110,6 @@ mat-divider {
     padding: 8px 16px 8px 16px;
 }
 
-mat-toolbar {
-    position: sticky;
-    top: 0;
-    height: 48px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    z-index: 99;
-    justify-content: space-between;
-}
-
-mat-toolbar > span {
-    font-size: 24px;
-    font-weight: 400;
-    margin-left: 14px;
-    margin-right: 14px;
-    text-transform: uppercase;
-    color: #369;
-}
-
 .back-to-login-button {
     flex: 1;
     text-align: left;
@@ -137,4 +118,23 @@ mat-toolbar > span {
 .cancel-button {
     flex: 1;
     text-align: right;
+}
+
+@media only screen and (orientation: landscape) and (max-width: 768px) {
+    .form-field-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    mat-divider {
+        display: none;
+    }
+
+    .form-field-container > mat-form-field {
+        width: 45%;
+    }
+
+    .anchor-container {
+        margin-bottom: 16px;
+    }
 }

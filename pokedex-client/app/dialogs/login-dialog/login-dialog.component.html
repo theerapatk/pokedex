@@ -2,18 +2,18 @@
     <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 </div>
 <div class="form-container" [@slideInOut]="animationState">
-    <ng-container *ngIf="isFormSubmitted && !isCredentialsValid">
-        <div class="invalid-credentials-text background-red">
+    <form *ngIf="animationState === 0" [formGroup]="loginForm">
+        <div *ngIf="isFormSubmitted && !isCredentialsValid" class="invalid-credentials-text">
             Invalid Email/Password
         </div>
-    </ng-container>
-    <form *ngIf="animationState === 0" [formGroup]="loginForm">
-        <mat-form-field>
-            <input matInput formControlName="email" placeholder="Email" #email>
-        </mat-form-field>
-        <mat-form-field formGroupName="credential">
-            <input matInput formControlName="password" type="password" placeholder="Password" autocomplete="off">
-        </mat-form-field>
+        <div class="form-field-container">
+            <mat-form-field>
+                <input matInput formControlName="email" placeholder="Email" #email>
+            </mat-form-field>
+            <mat-form-field formGroupName="credential">
+                <input matInput formControlName="password" type="password" placeholder="Password" autocomplete="off">
+            </mat-form-field>
+        </div>
         <button mat-raised-button type="submit" color="primary" (click)="onLogIn()" class="login-button"
             [disabled]="!loginForm.dirty || !loginForm.valid || isLoading">Log In</button>
         <div class="anchor-container"><a href="">Forgotten password?</a></div>
