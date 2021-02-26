@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-async function setMongo() {
+async function setMongo(): Promise<void> {
 
   let uri = process.env.MONGODB_URI;
   if (process.env.NODE_ENV === 'test') {
@@ -14,7 +14,7 @@ async function setMongo() {
     useFindAndModify: false
   };
 
-  await mongoose.connect(uri!, options)
+  await mongoose.connect(uri as string, options)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err.message));
 
@@ -31,8 +31,8 @@ async function setMongo() {
   });
 
   process.on('SIGINT', async () => {
-    await mongoose.connection.close()
-    process.exit(0)
+    await mongoose.connection.close();
+    process.exit(0);
   });
 
 }

@@ -12,7 +12,7 @@ function setRoutes(app: any): void {
   app.use('/auth', authRouter);
 
   const apiRouter = express.Router();
-  apiRouter.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN!, algorithms: ['HS256'] }));
+  apiRouter.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }));
   apiRouter.route('/users').get(userCtrl.getAll);
   apiRouter.route('/users/count').get(userCtrl.count);
   apiRouter.route('/users/:id')

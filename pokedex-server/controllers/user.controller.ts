@@ -41,11 +41,11 @@ class UserController extends BaseController {
         throw new createError.Unauthorized('Invalid Email/Password');
       }
 
-      const accessToken = jwt.sign({ user }, process.env.SECRET_ACCESS_TOKEN!, {
+      const accessToken = jwt.sign({ user }, process.env.SECRET_ACCESS_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '15m'
       });
-      const refreshToken = jwt.sign({ user }, process.env.SECRET_REFRESH_TOKEN!, {
+      const refreshToken = jwt.sign({ user }, process.env.SECRET_REFRESH_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '1y'
       });
@@ -65,13 +65,13 @@ class UserController extends BaseController {
         throw new createError.BadRequest();
       }
 
-      const decodedToken = jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN!) as any;
+      const decodedToken = jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN as string) as any;
       const user = decodedToken.user;
-      const accessToken = jwt.sign({ user }, process.env.SECRET_ACCESS_TOKEN!, {
+      const accessToken = jwt.sign({ user }, process.env.SECRET_ACCESS_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '15m'
       });
-      const newRefreshToken = jwt.sign({ user }, process.env.SECRET_REFRESH_TOKEN!, {
+      const newRefreshToken = jwt.sign({ user }, process.env.SECRET_REFRESH_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '1y'
       });

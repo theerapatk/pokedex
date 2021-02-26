@@ -81,7 +81,7 @@ export class LoginDialogComponent implements OnInit {
 
   private handleSuccessfulLogIn(user: any): void {
     this.isLoading = false;
-    this.toastrService.success('Logged in successfully')
+    this.toastrService.success('Logged in successfully');
     this.dialogRef.close();
   }
 

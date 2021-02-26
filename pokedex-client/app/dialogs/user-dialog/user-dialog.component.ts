@@ -84,7 +84,7 @@ export class UserDialogComponent implements OnInit {
   }
 
   private updateUser(): void {
-    this.userService.updateUser(this.data.row?._id!, this.buildRequestBody()).subscribe(
+    this.userService.updateUser(this.data.row?._id as string, this.buildRequestBody()).subscribe(
       response => this.handleSuccessfulResponse(this.trainerForm, this.data.row?._id),
       errorResponse => this.handleErrorResponse(this.trainerForm, errorResponse,
         { errorCode: 'duplicate', controlName: 'name' })
