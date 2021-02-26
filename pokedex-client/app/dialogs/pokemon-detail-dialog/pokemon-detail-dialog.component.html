@@ -5,77 +5,19 @@
 </ng-template>
 
 <ng-template #elseBlock>
-  <h3 mat-dialog-title>#{{ pokemonDetail.id }} <span class="pokemon-name">{{ pokemonDetail.name }}</span>
-  </h3>
-  <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
-    <mat-dialog-content>
-      <mat-tab label="Summary">
-        <ng-template matTabContent>
-          <div class="summary-flex-container">
-            <div class="main-flex-item">
-              <img [src]="pokemonDetail.sprites.front_default || 'assets/img/meltan_placeholder.png'"
-                alt="Sprite of Pokemon" style="width: 150px;">
-              <ng-container *ngIf="pokemonDetail.abilities.length > 0">
-                <div class="ability-container">
-                  <b>Abilities</b>
-                  <ul>
-                    <li *ngFor="let ability of pokemonDetail.abilities;">
-                      {{ ability.ability.name }}
-                      <span *ngIf="ability.is_hidden"><i> (hidden ability)</i></span>
-                    </li>
-                  </ul>
-                </div>
-              </ng-container>
-            </div>
-            <div class="main-flex-item-chart">
-              <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions" [labels]="radarChartLabels"
-                [chartType]="radarChartType">
-              </canvas>
-            </div>
-          </div>
-        </ng-template>
-      </mat-tab>
-      <mat-tab label="Moves">
-        <ng-template matTabContent>
-          <div class="move-table-flex-container mat-elevation-z5">
-            <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-              <ng-container matColumnDef="name" sticky>
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-                <mat-cell *matCellDef="let move">{{ move.name }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="type">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Type </mat-header-cell>
-                <mat-cell *matCellDef="let move">{{ move.type }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="category">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Category </mat-header-cell>
-                <mat-cell *matCellDef="let move">{{ move.category }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="power">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Power </mat-header-cell>
-                <mat-cell *matCellDef="let move">{{ move.power }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="accuracy">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Accuracy </mat-header-cell>
-                <mat-cell *matCellDef="let move">{{ move.accuracy }}</mat-cell>
-              </ng-container>
-              <ng-container matColumnDef="pp">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> PP </mat-header-cell>
-                <mat-cell *matCellDef="let move">{{ move.pp }}</mat-cell>
-              </ng-container>
-              <mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
-            </mat-table>
-            <div *ngIf="isLoadingMove" class="spinner-container">
-              <mat-progress-spinner color="primary" mode="indeterminate" [diameter]="45">
-              </mat-progress-spinner>
-            </div>
-          </div>
-        </ng-template>
-      </mat-tab>
-    </mat-dialog-content>
+  <mat-tab-group>
+    <mat-tab label="Summary">
+      <ng-template matTabContent>
+        <app-pokemon-summary [pokemonDetail]="pokemonDetail"></app-pokemon-summary>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Moves">
+      <ng-template matTabContent>
+        <app-pokemon-move [pokemonMoves]="pokemonDetail.moves"></app-pokemon-move>
+      </ng-template>
+    </mat-tab>
   </mat-tab-group>
-  <mat-dialog-actions>
+  <mat-dialog-actions align="center">
     <button *ngIf="data.previous" mat-button color="primary" (click)="onNextPokemonClick()"
       class="previous-pokemon-button">
       <mat-icon>keyboard_arrow_left</mat-icon>Previous

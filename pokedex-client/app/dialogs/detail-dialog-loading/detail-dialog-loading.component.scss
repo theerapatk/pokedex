@@ -16,7 +16,8 @@
     background: #f6f7f8;
     background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
     background-size: 970px 104px;
-    height: 500px;
+    height: 88vh;
+    margin: 1em;
     position: relative;
 }
 
@@ -27,7 +28,6 @@
 
 .detail-loading-container {
     background: #ffffff;
-    max-width: 599px;
     font-size: 1.4em;
     margin-left: 3px;
     margin-right: 3px;
@@ -49,9 +49,10 @@
 }
 
 .footer-top {
-    top: 400px;
+    top: unset;
+    bottom: 0;
+    height: 100px;
     left: 0;
-    height: 60px;
     width: 100%;
 }
 
@@ -69,14 +70,13 @@
     width: 139px;
 }
 
-@media only screen and (max-width: 599px) {
+@media only screen and (min-width: 600px) {
     .animated-background {
-        height: 88vh;
-        margin: 1em;
+        height: 500px;
     }
+
     .footer-top {
-        top: unset;
-        bottom: 0;
-        height: 100px;
+        top: 400px;
+        height: 60px;
     }
 }

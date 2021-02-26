@@ -17,7 +17,7 @@ export class PokemonClickDirective {
 
   openDialog(element: HTMLElement): void {
     const dialogRef = this.dialog.open(PokemonDetailDialogComponent, {
-      width: '600px',
+      width: '100%',
       panelClass: 'dialog-responsive',
       data: {
         selfUrl: element.id,

@@ -1,225 +1,30 @@
-h3 {
-    font-weight: bold;
-}
-
-.pokemon-name {
-    text-transform: capitalize;
-}
-
-mat-dialog-content {
-    height: calc(100% - 96px);
-}
-
 mat-tab-group {
-    height: calc(100% - 112px);
+    height: calc(100% - 80px);
 }
 
-.summary-flex-container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1em;
-}
-
-.main-flex-item {
-    align-self: center;
-    width: 135px;
-}
-
-.main-flex-item-chart {
-    margin-left: 14px;
-    align-self: center;
-    width: 320px;
-    height: 300px;
+.pokemon-sprite {
+    display: none;
 }
 
 .previous-pokemon-button {
+    flex: 1;
     text-align: left;
 }
 
 .next-pokemon-button {
+    flex: 1;
     text-align: right;
 }
 
-.previous-pokemon-button,
-.next-pokemon-button,
 .next-button-placeholder {
-    width: 185px;
+    flex: 1 0 3em;
 }
 
-.move-table-flex-container {
-    margin: 1px 1em 1px 1em;
-    overflow: auto;
-    height: 400px;
-}
-
-mat-table {
-    min-width: 500px;
-}
-
-.mat-column-name {
-    flex: 0 0 120px;
-}
-
-.mat-column-type,
-.mat-column-category {
-    flex: 0 0 80px;
-}
-
-.mat-column-type {
-    padding-left: 7px;
-}
-
-.mat-table-sticky-border-elem-left {
-    border-right: 1px solid #e0e0e0;
-}
-
-.spinner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fafafa;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
-        0 3px 14px 2px rgba(0, 0, 0, 0.12);
-}
-
-mat-dialog-actions {
-    justify-content: space-between;
-}
-
-$lightenAmount: 22;
-$normal: #a8a878;
-.normal-lighter {
-    background-color: lighten($normal, $lightenAmount);
-}
-
-$fighting: #c03028;
-.fighting-lighter {
-    background-color: lighten($fighting, $lightenAmount);
-}
-
-$flying: #a890f0;
-.flying-lighter {
-    background-color: lighten($flying, $lightenAmount);
-}
-
-$poison: #a040a0;
-.poison-lighter {
-    background-color: lighten($poison, $lightenAmount);
-}
-
-$ground: #e0c068;
-.ground-lighter {
-    background-color: lighten($ground, $lightenAmount);
-}
-
-$rock: #b8a038;
-.rock-lighter {
-    background-color: lighten($rock, $lightenAmount);
-}
-
-$bug: #a8b820;
-.bug-lighter {
-    background-color: lighten($bug, $lightenAmount);
-}
-
-$ghost: #705898;
-.ghost-lighter {
-    background-color: lighten($ghost, $lightenAmount);
-}
-
-$steel: #b8b8d0;
-.steel-lighter {
-    background-color: lighten($steel, $lightenAmount);
-}
-
-$fire: #f08030;
-.fire-lighter {
-    background-color: lighten($fire, $lightenAmount);
-}
-
-$water: #6890f0;
-.water-lighter {
-    background-color: lighten($water, $lightenAmount);
-}
-
-$grass: #78c850;
-.grass-lighter {
-    background-color: lighten($grass, $lightenAmount);
-}
-
-$electric: #f8d030;
-.electric-lighter {
-    background-color: lighten($electric, $lightenAmount);
-}
-
-$psychic: #f85888;
-.psychic-lighter {
-    background-color: lighten($psychic, $lightenAmount);
-}
-
-$ice: #98d8d8;
-.ice-lighter {
-    background-color: lighten($ice, $lightenAmount);
-}
-
-$dragon: #7038f8;
-.dragon-lighter {
-    background-color: lighten($dragon, $lightenAmount);
-}
-
-$dark: #705848;
-.dark-lighter {
-    background-color: lighten($dark, $lightenAmount);
-}
-
-$fairy: #ee99ac;
-.fairy-lighter {
-    background-color: lighten($fairy, $lightenAmount);
-}
-
-$unknown: #68a090;
-.unknown-lighter {
-    background-color: lighten($unknown, $lightenAmount);
-}
-
-@media only screen and (max-width: 599px) {
-    .move-table-flex-container {
-        height: 70vh;
-        margin-left: 5px;
-        margin-right: 5px;
-    }
+@media only screen and (min-width: 600px) {
     .pokemon-sprite {
-        display: none;
+        display: inline-block;
     }
-    .main-flex-item {
-        display: flex;
+    .summary-flex-container {
         flex-flow: row;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-    }
-    .main-flex-item-chart {
-        margin-left: 0;
-    }
-    .pokemon-sprite-container {
-        width: 50%;
-    }
-    .mat-card-image,
-    .ability-container {
-        width: 50%;
-        margin: 1em;
-    }
-    .previous-pokemon-button,
-    .next-pokemon-button,
-    .next-button-placeholder {
-        width: 111px;
-    }
-}
-
-@media only screen and (max-width: 374px) {
-    mat-dialog-actions > .close-dialog-button {
-        margin-left: 0;
     }
 }

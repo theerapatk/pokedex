@@ -68,7 +68,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
         this.isRefreshingToken = true;
         // this.refreshTokenSubject.next(null);
         return this.authService.refreshToken().pipe(
-          switchMap((response: any) => {
+          switchMap(response => {
             // this.refreshTokenSubject.next(response);
             return next.handle(request.clone({
               setHeaders: { Authorization: `Bearer ${response.accessToken}` }

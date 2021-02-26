@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" [class.mat-elevation-z8]="shouldShowElevation">
     <mat-toolbar-row>
         <button *ngIf="authService.isLoggedIn" mat-icon-button (click)="onMenuClicked()">
             <mat-icon>menu</mat-icon>
@@ -21,7 +21,12 @@
             <mat-menu #menu="matMenu" id="matMenu">
                 <div mat-menu-item readonly>
                     <mat-icon>person</mat-icon>
-                    <span id="mat-menu-item-user-name">{{authService.currentUser.name}}</span>
+                    <span>{{authService.currentUser.name}}</span>
+                </div>
+                <div *ngIf="authService.currentUser?.role === 'admin'" mat-menu-item
+                    routerLink="/admin/manage-trainers">
+                    <mat-icon>groups</mat-icon>
+                    <span>Manage Trainers</span>
                 </div>
                 <mat-divider></mat-divider>
                 <button mat-menu-item (click)="onLogOutClick()">

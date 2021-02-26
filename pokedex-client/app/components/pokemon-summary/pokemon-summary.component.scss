@@ -1,0 +1,28 @@
+.summary-flex-container {
+  display: flex;
+  flex-flow: column;
+  margin: 20px 0;
+}
+
+.sprite-ability-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.pokemon-name {
+  text-transform: capitalize;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.sprite-ability-container,
+.stat-chart-container {
+  align-self: center;
+}
+
+.stat-chart-container {
+  width: 320px;
+  height: 300px;
+}

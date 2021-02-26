@@ -1,0 +1,25 @@
+<div class="summary-flex-container">
+  <div class="sprite-ability-container">
+    <img [src]="pokemonDetail.sprites.front_default || 'assets/img/meltan_placeholder.png'" alt="Sprite of Pokemon"
+      style="width: 150px;">
+    <ng-container *ngIf="pokemonDetail.abilities.length > 0">
+      <div>
+        <h3>
+          <b>Name:</b><span class="pokemon-name"> {{ pokemonDetail.name }} (#{{ pokemonDetail.id }})</span>
+        </h3>
+        <b>Abilities</b>
+        <ul>
+          <li *ngFor="let ability of pokemonDetail.abilities;">
+            {{ ability.ability.name }}
+            <span *ngIf="ability.is_hidden"><i> (hidden ability)</i></span>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+  </div>
+  <div class="stat-chart-container">
+    <canvas baseChart [datasets]="radarChartData" [options]="radarChartOptions" [labels]="radarChartLabels"
+      [chartType]="radarChartType">
+    </canvas>
+  </div>
+</div>

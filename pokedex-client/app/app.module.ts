@@ -38,6 +38,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PokemonSummaryComponent } from './components/pokemon-summary/pokemon-summary.component';
+import { PokemonMoveComponent } from './components/pokemon-move/pokemon-move.component';
+import { PokemonCardComponent } from './components/pokemon-card/pokemon-card.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,10 @@ import { AppComponent } from './app.component';
     PokemonClickDirective,
     DetailDialogLoadingComponent,
     LoginDialogComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    PokemonSummaryComponent,
+    PokemonMoveComponent,
+    PokemonCardComponent
   ],
   entryComponents: [
     PokemonDetailDialogComponent
