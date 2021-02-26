@@ -20,8 +20,7 @@ mat-progress-bar {
 .form-container {
     padding-top: 5px;
     padding-bottom: 20px;
-    height: calc(100% - 112px);
-    overflow: hidden;
+    height: calc(100% - 80px);
 }
 
 .invalid-credentials-text {
@@ -33,6 +32,7 @@ mat-progress-bar {
     box-sizing: border-box;
     display: flex;
     border-radius: 4px;
+    line-height: 36px;
 }
 
 .background-red {
@@ -129,15 +129,12 @@ mat-toolbar > span {
     color: #369;
 }
 
-mat-dialog-actions {
-    display: none;
+.back-to-login-button {
+    flex: 1;
+    text-align: left;
 }
 
-@media only screen and (max-width: 599px) {
-    mat-dialog-actions {
-        display: block;
-    }
-    mat-dialog-actions > .close-dialog-button {
-        margin-left: 0;
-    }
+.cancel-button {
+    flex: 1;
+    text-align: right;
 }

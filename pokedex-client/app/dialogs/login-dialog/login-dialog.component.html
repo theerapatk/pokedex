@@ -2,16 +2,12 @@
     <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 </div>
 <div class="form-container" [@slideInOut]="animationState">
+    <ng-container *ngIf="isFormSubmitted && !isCredentialsValid">
+        <div class="invalid-credentials-text background-red">
+            Invalid Email/Password
+        </div>
+    </ng-container>
     <form *ngIf="animationState === 0" [formGroup]="loginForm">
-        <div *ngIf="isFormSubmitted && !isCredentialsValid; then thenBlock else elseBlock"></div>
-        <ng-template #thenBlock>
-            <div class="invalid-credentials-text background-red">
-                Invalid Email/Password
-            </div>
-        </ng-template>
-        <ng-template #elseBlock>
-            <div class="invalid-credentials-text">&nbsp;</div>
-        </ng-template>
         <mat-form-field>
             <input matInput formControlName="email" placeholder="Email" #email>
         </mat-form-field>
@@ -25,17 +21,22 @@
         <button mat-raised-button type="button" (click)="onCreateNewAccount()" class="new-account-button"
             [disabled]="isLoading">
             Creat New Account</button>
-        <div class="text-container">or</div>
+        <!-- <div class="text-container">or</div>
         <button mat-raised-button (click)="onFacebookLogIn()" class="facebook-login-button" [disabled]="isLoading">
             <mat-icon class="facebook-icon">facebook</mat-icon>Login with Facebook
-        </button>
+        </button> -->
     </form>
-    <app-create-account (accountIsCreating)="onAccountIsCreating($event)" [isLoading]="isLoading"
-        [animationState]="animationState" (animationStateChange)="onAnimationStateChange($event)">
+    <app-create-account (isCreatingAccount)="onAccountIsCreating($event)" [animationState]="animationState"
+        (animationStateChange)="onAnimationStateChange($event)">
     </app-create-account>
 </div>
 <mat-dialog-actions align="center">
-    <button mat-mini-fab color="primary" mat-dialog-close class="close-dialog-button">
-        <mat-icon>close</mat-icon>
-    </button>
+    <div class="back-to-login-button">
+        <button *ngIf="animationState === 1" mat-button color="primary" type="button" (click)="onBackToLogIn()">
+            Back to Log In
+        </button>
+    </div>
+    <div class="cancel-button">
+        <button mat-button color="primary" type="button" mat-dialog-close>Cancel</button>
+    </div>
 </mat-dialog-actions>

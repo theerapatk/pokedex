@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SlideAnimation } from '@animations/slide-animation';
+import { CreateAccountComponent } from '@components/create-account/create-account.component';
 import { AuthenticationService } from '@services/authentication.service';
-import { UserService } from '@services/user.service';
 import { FacebookService, InitParams, LoginOptions, LoginResponse } from 'ngx-facebook';
 import { ToastrService } from 'ngx-toastr';
 
@@ -27,19 +27,22 @@ export class LoginDialogComponent implements OnInit {
     })
   });
 
+  @ViewChild(CreateAccountComponent)
+  private createAccountComponent!: CreateAccountComponent;
+
   constructor(
     private authService: AuthenticationService,
     private fbService: FacebookService,
     private toastrService: ToastrService,
     public dialogRef: MatDialogRef<LoginDialogComponent>
   ) {
-    const initParams: InitParams = {
-      appId: '2985699581717032',
-      xfbml: true,
-      version: 'v9.0'
-    };
+    // const initParams: InitParams = {
+    //   appId: '2985699581717032',
+    //   xfbml: true,
+    //   version: 'v9.0'
+    // };
 
-    this.fbService.init(initParams);
+    // this.fbService.init(initParams);
   }
 
   ngOnInit(): void { }
@@ -56,11 +59,8 @@ export class LoginDialogComponent implements OnInit {
     const password = this.loginForm.controls.credential.get('password')?.value;
     setTimeout(() => {
       this.authService.login({ email, password }).subscribe(
-        (response: any) => {
-          this.isLoading = false;
-          this.handleSuccessfulLogIn(response);
-        },
-        (errorResponse: any) => {
+        response => this.handleSuccessfulLogIn(response),
+        errorResponse => {
           this.isLoading = false;
           this.isCredentialsValid = false;
         }
@@ -80,7 +80,8 @@ export class LoginDialogComponent implements OnInit {
   }
 
   private handleSuccessfulLogIn(user: any): void {
-    this.toastrService.success('Logged in successful');
+    this.isLoading = false;
+    this.toastrService.success('Logged in successfully')
     this.dialogRef.close();
   }
 
@@ -96,6 +97,10 @@ export class LoginDialogComponent implements OnInit {
 
   onAccountIsCreating(isLoading: boolean): void {
     this.isLoading = isLoading;
+  }
+
+  onBackToLogIn(): void {
+    this.createAccountComponent.onBackToLogIn();
   }
 
 }
