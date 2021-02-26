@@ -40,11 +40,20 @@ Content-Type: application/json
   "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTI1ODcyOTIsImV4cCI6MTYyNDE0NDg5MiwiYXVkIjoiNWVlYTBlOTlkMTU3ZjYzZjNlMzYxYjQxIiwiaXNzIjoicGlja3VycGFnZS5jb20ifQ.OGfV-n2fsuV2D5nvUGEzU7KLtkbIy1Pmm4DwxB75MKU"
 }
 
-### Get users
+### Get Users
 GET http://localhost:4200/api/v1/users
 Authorization: Bearer {{accessToken}}
 # Authorization: Bearer eyJhbGciOiJIUzI1I6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJhZG1pbiIsIl9pZCI6IjYwMzI5YTQzZTU4YjRjNTZkOGFlZjAwZiIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW4ifSwiaWF0IjoxNjEzOTMwMTM5LCJleHAiOjE2MTM5MzEwMzksImlzcyI6Impvam8tcG9rZWRleCJ9.k-sij8bmjx9UmZDTBuEasSr2B8b9Vs-2E5DINCwDnCk
 
-### Get user
+### Get User
 GET http://localhost:4200/api/v1/users/602ca84fc497115784d49c27
 Authorization: Bearer {{accessToken}}
+
+### Update User
+PUT http://localhost:4200/api/v1/users/603356aa20bcf3ac047ad988
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "name": "test"
+}

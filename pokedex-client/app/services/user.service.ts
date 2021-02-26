@@ -20,15 +20,15 @@ export class UserService {
   }
 
   createUser(user: User): Observable<User> {
-    throw new Error('Method not implemented.');
+    return this.http.post<User>(`${environment.apiUrl}/users`, user);
   }
 
-  updateUser(id: string, user: User): Observable<User> {
-    throw new Error('Method not implemented.');
+  updateUser(id: string, user: User): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/users/${id}`, user);
   }
 
-  deleteUser(id: string): Observable<User> {
-    throw new Error('Method not implemented.');
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/users/${id}`);
   }
 
 }

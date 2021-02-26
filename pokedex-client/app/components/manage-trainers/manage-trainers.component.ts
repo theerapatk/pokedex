@@ -123,8 +123,8 @@ export class ManageTrainersComponent implements OnInit {
       data: { row },
       autoFocus,
       disableClose: true,
-      width: width || '460px',
-      panelClass: 'dialog-responsive',
+      width: '100%',
+      panelClass: 'login-dialog-responsive',
     });
   }
 

@@ -14,6 +14,7 @@ function setRoutes(app: any): void {
   const apiRouter = express.Router();
   apiRouter.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }));
   apiRouter.route('/users').get(userCtrl.getAll);
+  apiRouter.route('/users').post(userCtrl.insert);
   apiRouter.route('/users/count').get(userCtrl.count);
   apiRouter.route('/users/:id')
     .get(userCtrl.get)

@@ -1,3 +1,30 @@
+.progress-bar-container {
+  height: 4px;
+}
+
+mat-progress-bar {
+  position: relative;
+  z-index: 2;
+  top: -24px;
+  left: -24px;
+  width: calc(100% + 48px);
+}
+
+.mat-dialog-title {
+  color: #369;
+  margin-top: -4px;
+}
+
+mat-dialog-content {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+mat-dialog-content > mat-form-field {
+  flex: 1;
+  margin: 8px 0;
+}
+
 mat-form-field.mat-form-field {
   font-size: 16px;
 }

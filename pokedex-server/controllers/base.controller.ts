@@ -46,7 +46,7 @@ abstract class BaseController {
   update = async (req: any, res: any) => {
     try {
       await this.model.findOneAndUpdate({ _id: req.params.id }, req.body);
-      res.sendStatus(200);
+      res.status(200).send({ success: true });
     } catch (err) {
       return res.status(400).json({ error: err.message });
     }
@@ -56,7 +56,7 @@ abstract class BaseController {
   delete = async (req: any, res: any) => {
     try {
       await this.model.findOneAndRemove({ _id: req.params.id });
-      res.sendStatus(200);
+      res.status(200).send({ success: true });
     } catch (err) {
       return res.status(400).json({ error: err.message });
     }

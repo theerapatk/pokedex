@@ -37,7 +37,7 @@ export class UserDialogComponent implements OnInit {
       { value: 1, viewValue: 'Admin' },
       { value: 2, viewValue: 'Trainer' }
     ];
-
+    this.trainerForm.enable();
     this.initForm();
   }
 
