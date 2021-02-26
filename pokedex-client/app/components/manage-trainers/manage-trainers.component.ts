@@ -131,7 +131,7 @@ export class ManageTrainersComponent implements OnInit {
   onDeleteClientClicked(row: User): void {
     const dialogRef = this.openDeleteDialog({
       title: 'Delete Trainer',
-      content: `Are you sure you want to delete the <em>Trainer ID ${row._id}: ${row.name}</em> ?`,
+      content: `Are you sure you want to delete the trainer whose email is <em><u>${row.email}</u></em> ?`,
       dataType: 'trainer',
       row
     });

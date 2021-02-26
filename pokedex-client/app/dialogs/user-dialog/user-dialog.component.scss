@@ -10,25 +10,31 @@ mat-progress-bar {
   width: calc(100% + 48px);
 }
 
-.mat-dialog-title {
-  color: #369;
-  margin-top: -4px;
-}
-
-mat-dialog-content {
+.user-container {
+  flex-direction: column;
   display: flex;
-  flex-flow: row wrap;
+  justify-content: center;
+  height: 100%;
 }
 
 form {
+  flex-direction: column;
+  display: flex;
   overflow: auto;
 }
 
-mat-dialog-content > mat-form-field {
-  flex: 1 0 100%;
-  margin: 8px 0;
+mat-form-field,
+button[type="submit"] {
+  margin: 10px 0;
 }
 
-mat-form-field.mat-form-field {
-  font-size: 16px;
+.form-container {
+  padding-top: 5px;
+  padding-bottom: 20px;
+  height: calc(100% - 80px);
+}
+
+.cancel-button {
+  flex: 1;
+  text-align: right;
 }

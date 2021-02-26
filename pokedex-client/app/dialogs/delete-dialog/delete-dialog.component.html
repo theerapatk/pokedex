@@ -6,9 +6,11 @@
     <mat-dialog-content class="mat-typography">
         <p [innerHTML]="data.content"></p>
     </mat-dialog-content>
+    <button mat-raised-button type="submit" color="primary" (mouseup)="onDeleteClicked()" [disabled]="isLoading"
+        (keyup.enter)="onDeleteClicked()">Delete</button>
 </div>
 <mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button color="primary" (mouseup)="onDeleteClicked()" [disabled]="isLoading"
-        (keyup.enter)="onDeleteClicked()">Delete</button>
+    <div class="cancel-button">
+        <button mat-button color="primary" type="button" mat-dialog-close>Cancel</button>
+    </div>
 </mat-dialog-actions>

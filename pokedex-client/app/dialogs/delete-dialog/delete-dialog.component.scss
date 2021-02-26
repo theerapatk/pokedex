@@ -13,9 +13,18 @@ mat-progress-bar {
 .content-container {
     flex-direction: column;
     display: flex;
-    justify-content: center;
     padding-top: 5px;
     padding-bottom: 20px;
-    height: calc(100% - 112px);
-    overflow: hidden;
+    height: calc(100% - 80px);
+    justify-content: center;
+}
+
+mat-form-field,
+button[type="submit"] {
+    margin: 10px 0;
+}
+
+.cancel-button {
+    flex: 1;
+    text-align: right;
 }
