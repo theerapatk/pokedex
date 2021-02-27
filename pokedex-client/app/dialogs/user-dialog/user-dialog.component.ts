@@ -71,7 +71,7 @@ export class UserDialogComponent implements OnInit {
 
   private initUpdateForm(): void {
     const { _id, email, name, role } = this.data.row as User;
-    this.trainerForm.patchValue({ _id, email, name, role: (role as Role).value });
+    this.trainerForm.patchValue({ _id, email, name, role: (role as Role)?.value });
   }
 
   onSubmit(): void {

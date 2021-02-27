@@ -58,7 +58,7 @@ export class LoginDialogComponent implements OnInit {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.controls.credential.get('password')?.value;
     this.authService.login({ email, password }).subscribe(
-      response => this.handleSuccessfulLogIn(response),
+      response => this.handleSuccessfulLogIn(),
       errorResponse => {
         this.isLoading = false;
         this.isCredentialsValid = false;
@@ -79,10 +79,10 @@ export class LoginDialogComponent implements OnInit {
       .catch(e => console.error('Error logging in'));
   }
 
-  private handleSuccessfulLogIn(user: any): void {
+  private handleSuccessfulLogIn(): void {
     this.isLoading = false;
     this.toastrService.success('Logged in successfully');
-    this.dialogRef.close();
+    this.dialogRef.close({ success: true });
   }
 
   onCreateNewAccount(): void {

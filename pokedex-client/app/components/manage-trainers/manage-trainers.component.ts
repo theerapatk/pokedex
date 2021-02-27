@@ -102,7 +102,7 @@ export class ManageTrainersComponent implements OnInit {
     const dialogRef = this.openUpdateDialog(UserDialogComponent, row);
     dialogRef.afterClosed().subscribe(
       result => {
-        if (result && result.success) {
+        if (result && result.success === true) {
           this.getUsers(result.isCreatingNew);
           let toastMessage = `The new trainer has been created`;
           if (!result.isCreatingNew) {

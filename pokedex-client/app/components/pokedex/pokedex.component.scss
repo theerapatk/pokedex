@@ -49,6 +49,10 @@ mat-progress-bar {
     font-size: larger;
 }
 
+.reset-button {
+    top: 1px;
+}
+
 .pokemon-card-container {
     display: flex;
     flex-flow: row wrap;
@@ -61,7 +65,7 @@ mat-progress-bar {
     margin: 1em;
     flex: 1 0 calc(11%);
     min-width: 75px;
-    max-width: 210px;
+    max-width: 216px;
     font-weight: bold;
     transition: 0.3s;
 
@@ -368,6 +372,6 @@ $unknown: #68a090;
     }
 
     .pokemon-card {
-        margin: 1.2em;
+        margin: 1.3em;
     }
 }

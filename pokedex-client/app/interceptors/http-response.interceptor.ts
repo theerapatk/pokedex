@@ -28,8 +28,8 @@ export class HttpResponseInterceptor implements HttpInterceptor {
             }
           } else {
             if (request.url.includes('/auth/refresh-token')) {
-              this.authService.logout();
               this.toastrService.warning('Your login credentials expired, please log in again');
+              this.authService.logout();
             }
           }
         }

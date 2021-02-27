@@ -16,7 +16,7 @@ export class AccountMenuComponent implements OnInit {
     private toastrService: ToastrService,
     private router: Router,
     public authService: AuthenticationService,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -30,16 +30,15 @@ export class AccountMenuComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-
+      if (result && result.success === true) {
+        this.router.navigate(['/admin/manage-trainers']);
       }
     });
   }
 
   onLogOutClick(): void {
-    this.authService.logout();
     this.toastrService.success('Logged out successfully');
-    this.router.navigate(['/pokedex']);
+    this.authService.logout();
   }
 
 }
