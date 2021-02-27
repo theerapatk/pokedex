@@ -16,7 +16,19 @@ body {
     height: 100vh !important;
 }
 
-@media only screen and (orientation: landscape) and (min-width: 768px) {
+@media only screen and (orientation: portrait) and (min-width: 600px) {
+    .dialog-responsive {
+        width: 600px !important;
+        height: auto !important;
+    }
+
+    .login-dialog-responsive {
+        width: 400px !important;
+        height: auto !important;
+    }
+}
+
+@media only screen and (orientation: landscape) and (min-width: 820px) {
     .dialog-responsive {
         width: 600px !important;
         height: auto !important;
