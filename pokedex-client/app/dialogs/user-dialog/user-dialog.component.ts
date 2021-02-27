@@ -35,6 +35,9 @@ export class UserDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if (!this.data || !this.data.row) {
+      this.isCreatingNew = true;
+    }
     this.initRoleOptions();
   }
 
@@ -64,8 +67,6 @@ export class UserDialogComponent implements OnInit {
   private initForm(): void {
     if (this.data && this.data.row) {
       this.initUpdateForm();
-    } else {
-      this.isCreatingNew = true;
     }
   }
 
