@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
@@ -16,7 +17,8 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   getRefreshToken(): void {
@@ -60,6 +62,7 @@ export class AuthenticationService {
     localStorage.removeItem('refreshToken');
     this.isLoggedIn = false;
     this.currentUser = { _id: '', email: '', name: '', role: '' };
+    this.dialog.closeAll();
     this.router.navigate(['/pokedex']);
   }
 
