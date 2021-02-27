@@ -42,15 +42,18 @@ export class CreateAccountComponent implements OnInit {
       email: this.createAccountForm.get('email')?.value,
       password: this.createAccountForm.controls.credential.get('password')?.value
     };
-    setTimeout(() => {
-      this.service.register(creatUser).subscribe(
-        response => {
-          this.toastrService.success('Successful, you can now log in with your new account');
-          this.onBackToLogIn();
-        },
-        errorResponse => this.isCreatingAccount.emit(false)
-      );
-    }, 1000);
+    this.service.register(creatUser).subscribe(
+      response => {
+        this.toastrService.success('Successful, you can now log in with your new account');
+        this.onBackToLogIn();
+      },
+      errorResponse => {
+        this.toastrService.warning(errorResponse?.error?.error?.message);
+        this.isCreatingAccount.emit(false);
+      }
+    );
+    // setTimeout(() => {
+    // }, 500);
   }
 
   onBackToLogIn(): void {

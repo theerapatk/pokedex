@@ -36,7 +36,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <button mat-raised-button color="primary" [disabled]="!trainerForm.dirty || !trainerForm.valid || isLoading"
+            <button mat-flat-button color="primary" [disabled]="!trainerForm.dirty || !trainerForm.valid || isLoading"
                 type="submit">{{isCreatingNew ? 'Create' : 'Save'}}</button>
         </form>
     </div>

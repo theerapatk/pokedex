@@ -1,8 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Role } from '@models/role.model';
 import { User } from '@models/user.model';
+import { RoleService } from '@services/role.service';
 import { UserService } from '@services/user.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -25,6 +26,7 @@ export class UserDialogComponent implements OnInit {
   });
 
   constructor(
+    private roleService: RoleService,
     private userService: UserService,
     private fb: FormBuilder,
     private toastrService: ToastrService,
@@ -33,15 +35,30 @@ export class UserDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.roleOptions = [
-      { value: 0, viewValue: 'Pokémon Trainer' },
-      { value: 1, viewValue: 'Pokémon Master' },
-      { value: 2, viewValue: 'Gym Leader' },
-      { value: 3, viewValue: 'Elite Four' },
-      { value: 4, viewValue: 'Pokémon Champion' }
-    ];
+    this.initRoleOptions();
+  }
+
+  private initRoleOptions() {
+    this.isLoading = true;
+    this.roleService.getRoles().subscribe(
+      response => this.handleSuccessfulGetRoles(response as Role[]),
+      errorResponse => this.handleErrorGetRoles()
+    );
+  }
+
+  private handleSuccessfulGetRoles(roles: Role[]) {
+    roles.forEach(role => {
+      const { value, text } = role;
+      this.roleOptions.push({ value, viewValue: text });
+    });
+    this.isLoading = false;
     this.trainerForm.enable();
     this.initForm();
+  }
+
+  private handleErrorGetRoles() {
+    this.isLoading = false;
+    this.trainerForm.enable();
   }
 
   private initForm(): void {
@@ -53,8 +70,8 @@ export class UserDialogComponent implements OnInit {
   }
 
   private initUpdateForm(): void {
-    const { _id, email, name } = this.data.row as User;
-    this.trainerForm.patchValue({ _id, email, name, role: 2 });
+    const { _id, email, name, role } = this.data.row as User;
+    this.trainerForm.patchValue({ _id, email, name, role: (role as Role).value });
   }
 
   onSubmit(): void {
@@ -80,21 +97,19 @@ export class UserDialogComponent implements OnInit {
 
   private createUser(): void {
     this.userService.createUser(this.buildRequestBody()).subscribe(
-      response => this.handleSuccessfulResponse(this.trainerForm),
-      errorResponse => this.handleErrorResponse(this.trainerForm, errorResponse,
-        { errorCode: 'duplicate', controlName: 'name' })
+      response => this.handleSuccessfulUpdate(this.trainerForm),
+      errorResponse => this.handleErrorUpdate(this.trainerForm, errorResponse)
     );
   }
 
   private updateUser(): void {
     this.userService.updateUser(this.data.row?._id as string, this.buildRequestBody()).subscribe(
-      response => this.handleSuccessfulResponse(this.trainerForm, this.data.row?._id),
-      errorResponse => this.handleErrorResponse(this.trainerForm, errorResponse,
-        { errorCode: 'duplicate', controlName: 'name' })
+      response => this.handleSuccessfulUpdate(this.trainerForm, this.data.row?._id),
+      errorResponse => this.handleErrorUpdate(this.trainerForm, errorResponse)
     );
   }
 
-  handleSuccessfulResponse(formGroup: FormGroup, entityId?: string): void {
+  handleSuccessfulUpdate(formGroup: FormGroup, entityId?: string): void {
     this.isLoading = false;
     formGroup.enable();
     this.dialogRef.close({
@@ -104,30 +119,10 @@ export class UserDialogComponent implements OnInit {
     });
   }
 
-  handleErrorResponse(
-    formGroup: FormGroup, errorResponse: HttpErrorResponse,
-    duplicateEntity?: { errorCode: string, controlName: string }): void {
-
+  handleErrorUpdate(formGroup: FormGroup, errorResponse: any): void {
     this.isLoading = false;
-
-    if (errorResponse && errorResponse.error && errorResponse.error.errors) {
-      const error = errorResponse.error.errors[0];
-      if (duplicateEntity) {
-        if (error.errorCode === duplicateEntity.errorCode) {
-          formGroup.controls[duplicateEntity.controlName].setErrors({ duplicateField: true });
-          this.errorMessage = error.errorMessage;
-        }
-      } else {
-        this.errorMessage = error.errorMessage;
-      }
-    }
-
-    this.popupWarningToast();
-  }
-
-  popupWarningToast(): void {
-    const toastTitle = this.isCreatingNew ? 'Create Failed' : 'Update Failed';
-    this.toastrService.warning(this.errorMessage, toastTitle);
+    formGroup.enable();
+    this.toastrService.warning(errorResponse?.error?.error?.message);
   }
 
 }

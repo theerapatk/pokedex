@@ -14,15 +14,15 @@
                 <input matInput formControlName="password" type="password" placeholder="Password" autocomplete="off">
             </mat-form-field>
         </div>
-        <button mat-raised-button type="submit" color="primary" (click)="onLogIn()" class="login-button"
+        <button mat-flat-button type="submit" color="primary" (click)="onLogIn()" class="login-button"
             [disabled]="!loginForm.dirty || !loginForm.valid || isLoading">Log In</button>
         <div class="anchor-container"><a href="">Forgotten password?</a></div>
         <mat-divider></mat-divider>
-        <button mat-raised-button type="button" (click)="onCreateNewAccount()" class="new-account-button"
+        <button mat-flat-button type="button" (click)="onCreateNewAccount()" class="new-account-button"
             [disabled]="isLoading">
             Creat New Account</button>
         <!-- <div class="text-container">or</div>
-        <button mat-raised-button (click)="onFacebookLogIn()" class="facebook-login-button" [disabled]="isLoading">
+        <button mat-flat-button (click)="onFacebookLogIn()" class="facebook-login-button" [disabled]="isLoading">
             <mat-icon class="facebook-icon">facebook</mat-icon>Login with Facebook
         </button> -->
     </form>

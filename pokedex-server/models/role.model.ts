@@ -14,9 +14,10 @@ const roleSchema = new Schema<IRole>({
   text: {
     type: String,
     require: true,
-    unique: true
+    unique: true,
+    trim: true
   }
-});
+}, { versionKey: false });
 
 const Role: Model<IRole> = model('Role', roleSchema);
 

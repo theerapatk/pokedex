@@ -6,7 +6,7 @@
     <mat-dialog-content class="mat-typography">
         <p [innerHTML]="data.content"></p>
     </mat-dialog-content>
-    <button mat-raised-button type="submit" color="primary" (mouseup)="onDeleteClicked()" [disabled]="isLoading"
+    <button mat-flat-button type="submit" color="primary" (mouseup)="onDeleteClicked()" [disabled]="isLoading"
         (keyup.enter)="onDeleteClicked()">Delete</button>
 </div>
 <mat-dialog-actions align="end">

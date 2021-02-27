@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { Document, Model, model, Schema } from 'mongoose';
+import Role from './role.model';
 
 interface IUser extends Document {
   email: string;
@@ -19,8 +20,13 @@ const userSchema = new Schema<IUser>({
   },
   password: { type: String, require: true },
   name: { type: String },
-  role: { type: String, default: 'trainer' }
-});
+  role: { type: Schema.Types.ObjectId, ref: 'Role' }
+}, { versionKey: false });
+
+const populateRole = function (this: any) {
+  this.populate('role');
+};
+userSchema.pre('findOne', populateRole).pre('find', populateRole);
 
 userSchema.pre('save', async function (next): Promise<void> {
   try {

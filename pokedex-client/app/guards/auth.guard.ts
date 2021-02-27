@@ -11,7 +11,7 @@ export class AuthGuard implements CanLoad {
 
   canLoad(): boolean {
     this.authServce.decodeAccessToken();
-    const canLoad = this.authServce.isLoggedIn && this.authServce.currentUser?.role === 'admin';
+    const canLoad = this.authServce.isLoggedIn && this.authServce.isAdmin();
     if (!canLoad) {
       this.router.navigate(['/']);
     }

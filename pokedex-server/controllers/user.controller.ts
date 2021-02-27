@@ -1,6 +1,7 @@
 import createError = require('http-errors');
 import * as jwt from 'jsonwebtoken';
-import { authSchema } from '../helpers/schema-validation';
+import { authSchema, insertUserSchema, updateUserSchema } from '../helpers/schema-validation';
+import Role from '../models/role.model';
 import User from '../models/user.model';
 import BaseController from './base.controller';
 
@@ -12,12 +13,12 @@ class UserController extends BaseController {
     try {
       const validatedBody = await authSchema.validateAsync(req.body);
 
-      const doesExist = await User.findOne({ email: validatedBody.email });
+      const doesExist = await this.model.findOne({ email: validatedBody.email });
       if (doesExist) {
         throw new createError.Conflict(`${validatedBody.email} has already been registered`);
       }
 
-      const user = new User(validatedBody);
+      const user = new this.model(validatedBody);
       const savedUser = await user.save();
 
       res.status(201).json(savedUser);
@@ -31,7 +32,7 @@ class UserController extends BaseController {
 
   login = async (req: any, res: any, next: any) => {
     try {
-      const user = await User.findOne({ email: req.body.email });
+      const user = await this.model.findOne({ email: req.body.email });
       if (!user) {
         throw new createError.NotFound(`${req.body.email} has not been registered`);
       }
@@ -79,6 +80,49 @@ class UserController extends BaseController {
     } catch (error) {
       if (error.name === 'JsonWebTokenError') {
         return next(new createError.Unauthorized());
+      }
+      next(error);
+    }
+  }
+
+  insert = async (req: any, res: any, next: any) => {
+    try {
+      const validatedBody = await insertUserSchema.validateAsync(req.body);
+
+      const role = await Role.findOne({ value: validatedBody.role });
+      validatedBody.role = role?._id;
+
+      const savedUser = await new this.model(validatedBody).save();
+      const populatedUser = await savedUser.populate('role').execPopulate();
+      res.status(201).json(populatedUser);
+    } catch (error) {
+      if (error.isJoi === true) {
+        error.status = 422;
+      } else if (error.code === 11000) {
+        if (error.keyValue.hasOwnProperty('email')) {
+          return next(new createError.Conflict(`${error.keyValue.email} has already been registered`));
+        }
+      }
+      next(error);
+    }
+  }
+
+  update = async (req: any, res: any, next: any) => {
+    try {
+      const validatedBody = await updateUserSchema.validateAsync(req.body);
+
+      const role = await Role.findOne({ value: validatedBody.role });
+      validatedBody.role = role?._id;
+
+      await this.model.findOneAndUpdate({ _id: req.params.id }, validatedBody);
+      res.status(200).send({ success: true });
+    } catch (error) {
+      if (error.isJoi === true) {
+        error.status = 422;
+      } else if (error.code === 11000) {
+        if (error.keyValue.hasOwnProperty('email')) {
+          return next(new createError.Conflict(`${error.keyValue.email} has already been registered`));
+        }
       }
       next(error);
     }

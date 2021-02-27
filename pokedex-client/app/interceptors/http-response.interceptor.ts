@@ -9,7 +9,6 @@ import { catchError, finalize, switchMap } from 'rxjs/operators';
 export class HttpResponseInterceptor implements HttpInterceptor {
 
   private isRefreshingToken = false;
-  // private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(
     private toastrService: ToastrService,
@@ -19,68 +18,40 @@ export class HttpResponseInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
-        let errorStatus = errorResponse.status;
-        let errorMessage = errorResponse.message;
-
-        if (errorResponse && errorResponse.error) {
-          errorStatus = errorResponse.error.error.status;
-          errorMessage = errorResponse.error.error.message;
-
+        if (errorResponse.error) {
+          const errorStatus = errorResponse.error.error?.status;
           const apiRegex = new RegExp('(?=.*/api/).*');
+
           if (apiRegex.test(request.url)) {
-            return this.handleUnauthorizedError(errorResponse, request, next);
+            if (errorStatus === 401) {
+              return this.handleUnauthorizedError(request, next);
+            }
+          } else {
+            if (request.url.includes('/auth/refresh-token')) {
+              this.authService.logout();
+              this.toastrService.warning('Your login credentials expired, please log in again');
+            }
           }
         }
 
-        const errorText = `Error Code: ${errorStatus}, Message: ${errorMessage}`;
-        if (request.url.includes('/auth/refresh-token')) {
-          this.authService.logout();
-          this.toastrService.warning('Your login credentials expired, please log in again');
-        } else if (request.url.includes('/auth/register')) {
-          this.toastrService.warning(errorMessage);
-        }
-
-        return throwError(errorText);
+        return throwError(errorResponse);
       })
     );
   }
 
-
-  private handleUnauthorizedError(
-    errorResponse: HttpErrorResponse,
-    request: HttpRequest<any>,
-    next: HttpHandler): Observable<HttpEvent<any>> {
-    const errorStatus = errorResponse.error.error.status;
-    const errorMessage = errorResponse.error.error.message;
-    if (errorStatus === 401) {
-      if (this.isRefreshingToken) {
-        // return this.refreshTokenSubject.pipe(
-        //   filter(response => response != null),
-        //   take(1),
-        //   switchMap(response => {
-        //     console.log('this.refreshTokenSubject.pipe:request  ' + request);
-        //     console.log('this.refreshTokenSubject.pipe:response  ' + response);
-        //     return next.handle(request);
-        //   })
-        // );
-        return next.handle(request);
-      } else {
-        this.isRefreshingToken = true;
-        // this.refreshTokenSubject.next(null);
-        return this.authService.refreshToken().pipe(
-          switchMap(response => {
-            // this.refreshTokenSubject.next(response);
-            return next.handle(request.clone({
-              setHeaders: { Authorization: `Bearer ${response.accessToken}` }
-            }));
-          }),
-          finalize(() => this.isRefreshingToken = false)
-        );
-      }
+  private handleUnauthorizedError(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (this.isRefreshingToken) {
+      return next.handle(request);
     } else {
-      const errorText = `Error Code: ${errorStatus}, Message: ${errorMessage}`;
-      this.toastrService.error(errorText);
-      return throwError(errorText);
+      this.isRefreshingToken = true;
+      return this.authService.refreshToken().pipe(
+        switchMap(response => {
+          return next.handle(request.clone({
+            setHeaders: { Authorization: `Bearer ${response.accessToken}` }
+          }));
+        }),
+        finalize(() => this.isRefreshingToken = false)
+      );
     }
   }
 }

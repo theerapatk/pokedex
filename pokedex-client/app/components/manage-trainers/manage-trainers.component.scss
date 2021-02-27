@@ -11,7 +11,6 @@
 
 app-column-filter {
     flex: 1 1 auto;
-    margin-right: 20px;
 }
 
 .trainer-top-action > span {
@@ -28,9 +27,9 @@ app-column-filter {
 
 mat-progress-bar {
     position: absolute;
-    left: 16px;
-    z-index: 2;
-    width: calc(100% - 32px);
+    left: 20px;
+    z-index: 102;
+    width: calc(100% - 40px);
 }
 
 table {
@@ -46,10 +45,6 @@ td.mat-column-action {
     width: 41px;
 }
 
-.mat-table-sticky:first-child {
-    border-right: 1px solid #e0e0e0;
-}
-
 .mat-table-sticky:last-child {
     border-left: 1px solid #e0e0e0;
 }
@@ -59,5 +54,9 @@ td.mat-column-action {
         display: flex;
         flex-flow: row wrap;
         align-items: center;
+    }
+
+    app-column-filter {
+        margin-right: 20px;
     }
 }

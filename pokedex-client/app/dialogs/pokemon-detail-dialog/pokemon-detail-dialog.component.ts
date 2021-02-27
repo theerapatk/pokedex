@@ -36,9 +36,9 @@ export class PokemonDetailDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.getPokemon();
-    }, 1000);
+    this.getPokemon();
+    // setTimeout(() => {
+    // }, 500);
   }
 
   private getPokemon(): void {

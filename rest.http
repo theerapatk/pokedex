@@ -14,6 +14,9 @@ Content-Type: application/json
 ###
 @accessToken = {{login.response.body.accessToken}}
 
+GET http://localhost:4200/api/v1/users
+Authorization: Bearer {{accessToken}}
+
 ### Register Route
 POST http://localhost:3000/auth/register
 Content-Type: application/json
@@ -46,16 +49,27 @@ Authorization: Bearer {{accessToken}}
 # Authorization: Bearer eyJhbGciOiJIUzI1I6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJhZG1pbiIsIl9pZCI6IjYwMzI5YTQzZTU4YjRjNTZkOGFlZjAwZiIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW4ifSwiaWF0IjoxNjEzOTMwMTM5LCJleHAiOjE2MTM5MzEwMzksImlzcyI6Impvam8tcG9rZWRleCJ9.k-sij8bmjx9UmZDTBuEasSr2B8b9Vs-2E5DINCwDnCk
 
 ### Get User
-GET http://localhost:4200/api/v1/users/602ca84fc497115784d49c27
+GET http://localhost:4200/api/v1/users/603a196d1aedff9b7c588ec5
 Authorization: Bearer {{accessToken}}
 
-### Update User
-PUT http://localhost:4200/api/v1/users/603356aa20bcf3ac047ad988
+### Insert User
+POST http://localhost:4200/api/v1/users
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "name": "test"
+  "email": "test11@test.com",
+  "name": "test name",
+  "role": 2
+}
+
+### Update User
+PUT http://localhost:4200/api/v1/users/603a196d1aedff9b7c588ec5
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "role": 1
 }
 
 
@@ -66,7 +80,7 @@ Content-Type: application/json
 
 {
   "value": 10,
-  "text": "Admin"
+  "text": "test"
 }
 
 ### Get Roles

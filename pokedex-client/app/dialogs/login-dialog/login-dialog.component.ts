@@ -57,15 +57,15 @@ export class LoginDialogComponent implements OnInit {
   private login(): void {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.controls.credential.get('password')?.value;
-    setTimeout(() => {
-      this.authService.login({ email, password }).subscribe(
-        response => this.handleSuccessfulLogIn(response),
-        errorResponse => {
-          this.isLoading = false;
-          this.isCredentialsValid = false;
-        }
-      );
-    }, 1000);
+    this.authService.login({ email, password }).subscribe(
+      response => this.handleSuccessfulLogIn(response),
+      errorResponse => {
+        this.isLoading = false;
+        this.isCredentialsValid = false;
+      }
+    );
+    // setTimeout(() => {
+    // }, 500);
   }
 
   onFacebookLogIn(): void {

@@ -19,7 +19,7 @@ export class ManageTrainersComponent implements OnInit {
   displayedColumns = ['email', 'name', '_id', 'role', 'action'];
   selectedFilterColumn = 'email';
 
-  readonly pageSizeOptions = [12, 25, 40, 100];
+  readonly pageSizeOptions = [6, 16, 30];
   readonly USER_COLUMN_MAP: any = {
     email: 'Email',
     name: 'Name',
@@ -27,7 +27,7 @@ export class ManageTrainersComponent implements OnInit {
     role: 'Rank'
   };
 
-  isLoading = false;
+  isLoading = true;
   selectColumnOptions: any = [];
   excludedSelectColumnOptions = ['action'];
   dataSource = new MatTableDataSource<User>();
@@ -51,7 +51,7 @@ export class ManageTrainersComponent implements OnInit {
       users => {
         this.isLoading = false;
         this.dataSource = new MatTableDataSource(users as User[]);
-        this.proceedSuccessResponse(isCreatingNew, 'email');
+        this.proceedSuccessResponse(isCreatingNew, '_id');
       },
       errorResponse => this.isLoading = false
     );
@@ -104,7 +104,7 @@ export class ManageTrainersComponent implements OnInit {
       result => {
         if (result && result.success) {
           this.getUsers(result.isCreatingNew);
-          let toastMessage = 'New trainer has been created';
+          let toastMessage = `The new trainer has been created`;
           if (!result.isCreatingNew) {
             toastMessage = `Trainer ID: ${result.entityId} has been updated`;
           }
@@ -115,7 +115,7 @@ export class ManageTrainersComponent implements OnInit {
   }
 
   showSuccessToastr(toastMessage: string): void {
-    this.toastrService.success(toastMessage, 'Success');
+    this.toastrService.success(toastMessage);
   }
 
   openUpdateDialog(dialogComponent: any, row?: any, width?: string, autoFocus = true): MatDialogRef<UserDialogComponent> {

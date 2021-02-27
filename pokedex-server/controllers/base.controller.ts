@@ -23,12 +23,12 @@ abstract class BaseController {
   }
 
   // Insert
-  insert = async (req: any, res: any) => {
+  insert = async (req: any, res: any, next: any) => {
     try {
       const obj = await new this.model(req.body).save();
       res.status(201).json(obj);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      next(err);
     }
   }
 
@@ -43,12 +43,12 @@ abstract class BaseController {
   }
 
   // Update by id
-  update = async (req: any, res: any) => {
+  update = async (req: any, res: any, next: any) => {
     try {
       await this.model.findOneAndUpdate({ _id: req.params.id }, req.body);
       res.status(200).send({ success: true });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      next(err);
     }
   }
 
