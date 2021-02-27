@@ -17,14 +17,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { AccountMenuComponent } from '@components/account-menu/account-menu.component';
-import { ColumnFilterComponent } from '@components/column-filter/column-filter.component';
 
 @NgModule({
     declarations: [
-        ColumnFilterComponent,
         AccountMenuComponent
     ],
     imports: [
@@ -47,7 +44,6 @@ import { ColumnFilterComponent } from '@components/column-filter/column-filter.c
         MatTableModule,
         MatTabsModule,
         MatToolbarModule,
-        MatTooltipModule,
         RouterModule
     ],
     exports: [
@@ -70,8 +66,6 @@ import { ColumnFilterComponent } from '@components/column-filter/column-filter.c
         MatTableModule,
         MatTabsModule,
         MatToolbarModule,
-        MatTooltipModule,
-        ColumnFilterComponent,
         AccountMenuComponent
     ]
 })

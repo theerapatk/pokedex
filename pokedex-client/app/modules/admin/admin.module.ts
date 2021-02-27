@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
+import { AccountMenuComponent } from '@components/account-menu/account-menu.component';
 import { AdminComponent } from '@components/admin/admin.component';
+import { ColumnFilterComponent } from '@components/column-filter/column-filter.component';
 import { ManageTrainersComponent } from '@components/manage-trainers/manage-trainers.component';
 import { DeleteDialogComponent } from '@dialogs/delete-dialog/delete-dialog.component';
 import { UserDialogComponent } from '@dialogs/user-dialog/user-dialog.component';
@@ -8,10 +10,11 @@ import { AdminRoutingModule } from './admin-routing.module';
 
 @NgModule({
   declarations: [
-    ManageTrainersComponent,
     AdminComponent,
+    ManageTrainersComponent,
     UserDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    ColumnFilterComponent
   ],
   entryComponents: [
     UserDialogComponent,
