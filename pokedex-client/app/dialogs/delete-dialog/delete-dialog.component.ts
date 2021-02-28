@@ -32,7 +32,7 @@ export class DeleteDialogComponent {
   deleteUser(): void {
     const entity = this.data.row as User;
     this.userService.deleteUser(entity._id as string).subscribe(
-      response => this.handleSuccessResponse(entity._id as string),
+      response => this.handleSuccessResponse(entity.email as string),
       errorResponse => this.handleErrorResponse(errorResponse)
     );
   }

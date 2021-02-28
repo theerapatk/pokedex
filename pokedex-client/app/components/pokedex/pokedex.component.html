@@ -33,8 +33,7 @@
         <ng-container *ngIf="pokemon.details && pokemon.details.types.length > 0">
             <div class="details-container">
                 <div class="pokemon-sprite-container">
-                    <img class="pokemon-sprite"
-                        [src]="pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'"
+                    <img [src]="pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'"
                         alt="Sprite of Pokemon" width="96" height="96">
                 </div>
                 <mat-chip-list>

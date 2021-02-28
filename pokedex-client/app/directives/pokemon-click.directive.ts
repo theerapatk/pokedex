@@ -23,7 +23,8 @@ export class PokemonClickDirective {
         selfUrl: element.id,
         previous: element.previousElementSibling,
         next: element.nextElementSibling
-      }
+      },
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe(result => {

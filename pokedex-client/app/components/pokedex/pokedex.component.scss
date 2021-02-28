@@ -95,6 +95,10 @@ mat-progress-bar {
     justify-content: center;
 }
 
+:host::ng-deep mat-chip-list > .mat-chip-list-wrapper {
+    justify-content: center;
+}
+
 .scroll-to-top-button-container {
     width: 120px;
     position: fixed;

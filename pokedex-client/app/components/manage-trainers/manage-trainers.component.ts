@@ -100,22 +100,19 @@ export class ManageTrainersComponent implements OnInit {
 
   onCreateOrEditClicked(row?: User): void {
     const dialogRef = this.openUpdateDialog(UserDialogComponent, row);
+
     dialogRef.afterClosed().subscribe(
       result => {
         if (result && result.success === true) {
           this.getUsers(result.isCreatingNew);
-          let toastMessage = `The new trainer has been created`;
+          let toastMessage = `The trainer whose email is ${result.entityId} has been created`;
           if (!result.isCreatingNew) {
             toastMessage = `Trainer ID: ${result.entityId} has been updated`;
           }
-          this.showSuccessToastr(toastMessage);
+          this.toastrService.success(toastMessage);
         }
       }
     );
-  }
-
-  showSuccessToastr(toastMessage: string): void {
-    this.toastrService.success(toastMessage);
   }
 
   openUpdateDialog(dialogComponent: any, row?: any, width?: string, autoFocus = true): MatDialogRef<UserDialogComponent> {
@@ -135,11 +132,12 @@ export class ManageTrainersComponent implements OnInit {
       dataType: 'trainer',
       row
     });
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result.success) {
           this.getUsers();
-          this.showSuccessToastr(`Trainer ID: ${result.entityId} has been deleted`);
+          this.toastrService.success(`The trainer whose email is ${result.entityId} has been deleted`);
         } else {
           this.toastrService.error(result.errorMessage, 'Delete Failed');
         }

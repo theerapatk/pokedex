@@ -98,7 +98,7 @@ export class UserDialogComponent implements OnInit {
 
   private createUser(): void {
     this.userService.createUser(this.buildRequestBody()).subscribe(
-      response => this.handleSuccessfulUpdate(this.trainerForm),
+      response => this.handleSuccessfulUpdate(this.trainerForm, response.email),
       errorResponse => this.handleErrorUpdate(this.trainerForm, errorResponse)
     );
   }
