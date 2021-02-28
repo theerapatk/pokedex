@@ -105,18 +105,19 @@ export class UserDialogComponent implements OnInit {
 
   private updateUser(): void {
     this.userService.updateUser(this.data.row?._id as string, this.buildRequestBody()).subscribe(
-      response => this.handleSuccessfulUpdate(this.trainerForm, this.data.row?._id),
+      response => this.handleSuccessfulUpdate(this.trainerForm, this.data.row?._id, response),
       errorResponse => this.handleErrorUpdate(this.trainerForm, errorResponse)
     );
   }
 
-  handleSuccessfulUpdate(formGroup: FormGroup, entityId?: string): void {
+  handleSuccessfulUpdate(formGroup: FormGroup, entityId?: string, response?: any): void {
     this.isLoading = false;
     formGroup.enable();
     this.dialogRef.close({
       success: true,
       isCreatingNew: this.isCreatingNew,
-      entityId
+      entityId,
+      user: response.user
     });
   }
 

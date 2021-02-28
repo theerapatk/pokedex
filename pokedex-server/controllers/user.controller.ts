@@ -94,8 +94,8 @@ class UserController extends BaseController {
       validatedBody.role = role?._id;
 
       const savedUser = await new this.model(validatedBody).save();
-      const populatedUser = await savedUser.populate('role').execPopulate();
-      res.status(201).json(populatedUser);
+      const user = await savedUser.populate('role').execPopulate();
+      res.status(201).json(user);
     } catch (error) {
       if (error.isJoi === true) {
         error.status = 422;
@@ -115,8 +115,10 @@ class UserController extends BaseController {
       const role = await Role.findOne({ value: validatedBody.role });
       validatedBody.role = role?._id;
 
-      await this.model.findOneAndUpdate({ _id: req.params.id }, validatedBody);
-      res.status(200).send({ success: true });
+      const user = await this.model
+        .findOneAndUpdate({ _id: req.params.id }, validatedBody, { new: true })
+        .populate('role');
+      res.status(200).send({ success: true, user });
     } catch (error) {
       if (error.isJoi === true) {
         error.status = 422;

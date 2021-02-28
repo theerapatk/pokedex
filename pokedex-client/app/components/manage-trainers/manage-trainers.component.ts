@@ -3,9 +3,11 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { DeleteDialogComponent } from '@dialogs/delete-dialog/delete-dialog.component';
 import { UserDialogComponent } from '@dialogs/user-dialog/user-dialog.component';
 import { User } from '@models/user.model';
+import { AuthenticationService } from '@services/authentication.service';
 import { UserService } from '@services/user.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -38,6 +40,8 @@ export class ManageTrainersComponent implements OnInit {
   constructor(
     private service: UserService,
     private toastrService: ToastrService,
+    private authServce: AuthenticationService,
+    private router: Router,
     public dialog: MatDialog
   ) { }
 
@@ -104,6 +108,7 @@ export class ManageTrainersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       result => {
         if (result && result.success === true) {
+          this.checkIfSelfUpdate(result);
           this.getUsers(result.isCreatingNew);
           let toastMessage = `The trainer whose email is ${result.entityId} has been created`;
           if (!result.isCreatingNew) {
@@ -113,6 +118,17 @@ export class ManageTrainersComponent implements OnInit {
         }
       }
     );
+  }
+
+  private checkIfSelfUpdate(result: any) {
+    const currentUser = this.authServce.currentUser;
+    if (!result.isCreatingNew && currentUser._id === result.user._id) {
+      const newRole = result.user.role?.text || '';
+      if (newRole.toLowerCase() !== 'admin') {
+        currentUser.role = newRole;
+        this.router.navigate(['/pokedex']);
+      }
+    }
   }
 
   openUpdateDialog(dialogComponent: any, row?: any, width?: string, autoFocus = true): MatDialogRef<UserDialogComponent> {
