@@ -68,7 +68,8 @@ class UserController extends BaseController {
       }
 
       const decodedToken = jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN as string) as any;
-      const user = decodedToken.user;
+      const user = await this.model.findOne({ _id: decodedToken.user._id });
+
       const accessToken = jwt.sign({ user }, process.env.SECRET_ACCESS_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '15m'
