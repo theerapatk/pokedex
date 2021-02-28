@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { SlideAnimation } from '@animations/slide-animation';
 import { CreateAccountComponent } from '@components/create-account/create-account.component';
 import { AuthenticationService } from '@services/authentication.service';
-import { FacebookService, InitParams, LoginOptions, LoginResponse } from 'ngx-facebook';
+import { FacebookService, LoginOptions, LoginResponse } from 'ngx-facebook';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginDialogComponent implements OnInit {
 
+  hidePassword = true;
   animationState = 0;
   isLoading = false;
   isFormSubmitted = false;

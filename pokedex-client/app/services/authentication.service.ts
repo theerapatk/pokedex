@@ -80,7 +80,7 @@ export class AuthenticationService {
 
   isAdmin(): boolean {
     let isAdmin = false;
-    if (this.currentUser && this.currentUser.role) {
+    if (this.currentUser && this.currentUser.role && this.isLoggedIn === true) {
       isAdmin = this.currentUser.role.toLowerCase() === 'admin';
     }
     return isAdmin;

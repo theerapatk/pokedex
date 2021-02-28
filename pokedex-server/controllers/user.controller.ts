@@ -1,6 +1,6 @@
 import createError = require('http-errors');
 import * as jwt from 'jsonwebtoken';
-import { authSchema, insertUserSchema, updateUserSchema } from '../helpers/schema-validation';
+import { insertUserSchema, registerUserSchema, updateUserSchema } from '../helpers/schema-validation';
 import Role from '../models/role.model';
 import User from '../models/user.model';
 import BaseController from './base.controller';
@@ -11,17 +11,18 @@ class UserController extends BaseController {
 
   register = async (req: any, res: any, next: any) => {
     try {
-      const validatedBody = await authSchema.validateAsync(req.body);
+      const validatedBody = await registerUserSchema.validateAsync(req.body);
 
       const doesExist = await this.model.findOne({ email: validatedBody.email });
       if (doesExist) {
         throw new createError.Conflict(`${validatedBody.email} has already been registered`);
       }
 
-      const user = new this.model(validatedBody);
-      const savedUser = await user.save();
+      const role = await Role.findOne({ value: 0 });
+      validatedBody.role = role?._id;
 
-      res.status(201).json(savedUser);
+      new this.model(validatedBody).save();
+      res.status(201).json({ success: true });
     } catch (error) {
       if (error.isJoi === true) {
         error.status = 422;

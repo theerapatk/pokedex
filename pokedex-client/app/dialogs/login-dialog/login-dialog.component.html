@@ -11,7 +11,13 @@
                 <input matInput formControlName="email" placeholder="Email" #email>
             </mat-form-field>
             <mat-form-field formGroupName="credential">
-                <input matInput formControlName="password" type="password" placeholder="Password" autocomplete="off">
+                <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'"
+                    placeholder="Password" (keydown.space)="$event.preventDefault();"
+                    (paste)="$event.preventDefault();">
+                <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword" type="button">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
             </mat-form-field>
         </div>
         <button mat-flat-button type="submit" color="primary" (click)="onLogIn()" class="login-button"

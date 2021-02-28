@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 import { CreateAccountComponent } from '@components/create-account/create-account.component';
 import { PokedexComponent } from '@components/pokedex/pokedex.component';
-import { PokemonCardComponent } from '@components/pokemon-card/pokemon-card.component';
 import { PokemonMoveComponent } from '@components/pokemon-move/pokemon-move.component';
 import { PokemonSummaryComponent } from '@components/pokemon-summary/pokemon-summary.component';
 import { TestComponent } from '@components/test/test.component';
@@ -38,7 +37,6 @@ import { AppComponent } from './app.component';
     DetailDialogLoadingComponent,
     LoginDialogComponent,
     CreateAccountComponent,
-    PokemonCardComponent,
     PokemonMoveComponent,
     PokemonSummaryComponent
   ],

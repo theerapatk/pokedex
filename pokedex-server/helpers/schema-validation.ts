@@ -1,8 +1,9 @@
 import Joi = require('@hapi/joi');
 
-const authSchema = Joi.object({
+const registerUserSchema = Joi.object({
   email: Joi.string().email().lowercase().trim().required(),
-  password: Joi.string().min(2).required()
+  name: Joi.string().required(),
+  password: Joi.string().min(4).required()
 });
 
 const insertUserSchema = Joi.object({
@@ -17,5 +18,5 @@ const updateUserSchema = Joi.object({
   role: Joi.number()
 });
 
-export { authSchema, insertUserSchema, updateUserSchema };
+export { registerUserSchema, insertUserSchema, updateUserSchema };
 

@@ -6,9 +6,9 @@
         <h2 mat-dialog-title id="user-dialog-title"> {{isCreatingNew ? 'Create New':'Edit'}} Trainer</h2>
         <form [formGroup]="trainerForm" (ngSubmit)="onSubmit()">
             <mat-form-field>
-                <input matInput #email maxlength="254" placeholder="Email" formControlName="email">
+                <input matInput #email maxlength="32" placeholder="Email" formControlName="email">
                 <mat-hint>Required</mat-hint>
-                <mat-hint align="end">{{email.value.length}} / 254</mat-hint>
+                <mat-hint align="end">{{email.value.length}} / 32</mat-hint>
                 <mat-error
                     *ngIf="trainerForm.controls.email.hasError('email') && !trainerForm.controls.email.hasError('required')">
                     Please enter a valid email address
@@ -18,14 +18,11 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
-                <input matInput #name maxlength="256" placeholder="Name" formControlName="name">
+                <input matInput #name maxlength="32" placeholder="Name" formControlName="name">
                 <mat-hint>Required</mat-hint>
-                <mat-hint align="end">{{name.value.length}} / 256</mat-hint>
+                <mat-hint align="end">{{name.value.length}} / 32</mat-hint>
                 <mat-error *ngIf="trainerForm.controls.name.hasError('required')">
                     Required*
-                </mat-error>
-                <mat-error *ngIf="trainerForm.controls.name.hasError('duplicateField')">
-                    {{errorMessage}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field>

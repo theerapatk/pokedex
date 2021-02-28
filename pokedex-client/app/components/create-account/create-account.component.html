@@ -1,5 +1,5 @@
 <div *ngIf="animationState === 1" class="create-account-container">
-    <h2 mat-dialog-title>{{isCreatingNew ? 'Create New':'Edit'}} Account</h2>
+    <h2 mat-dialog-title>Create New Account</h2>
     <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit()">
         <mat-form-field>
             <input matInput maxlength="32" placeholder="Email" formControlName="email" #newEmail>
@@ -9,9 +9,17 @@
                 Required*
             </mat-error>
         </mat-form-field>
+        <mat-form-field>
+            <input matInput #name maxlength="32" placeholder="Name" formControlName="name">
+            <mat-hint>Required</mat-hint>
+            <mat-hint align="end">{{name.value.length}} / 32</mat-hint>
+            <mat-error *ngIf="createAccountForm.controls.name.hasError('required')">
+                Required*
+            </mat-error>
+        </mat-form-field>
         <mat-form-field formGroupName="credential">
             <input matInput formControlName="password" #password maxlength="64"
-                [type]="hidePassword ? 'password' : 'text'" [placeholder]="isCreatingNew ? 'Password' : 'New password'"
+                [type]="hidePassword ? 'password' : 'text'" placeholder="Password"
                 (keydown.space)="$event.preventDefault();" (paste)="$event.preventDefault();">
             <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hidePassword" type="button">

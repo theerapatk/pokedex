@@ -13,12 +13,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CreateAccountComponent implements OnInit {
 
-  isCreatingNew = true;
   hidePassword = true;
   hideConfirmPassword = true;
 
   createAccountForm = new FormGroup({
     email: new FormControl({ value: '', disabled: false }, Validators.required),
+    name: new FormControl({ value: '', disabled: false }, [Validators.required]),
     credential: new FormGroup({
       password: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl({ value: '', disabled: false }, Validators.required),
@@ -38,13 +38,10 @@ export class CreateAccountComponent implements OnInit {
 
   onSubmit(): void {
     this.isCreatingAccount.emit(true);
-    const creatUser = {
-      email: this.createAccountForm.get('email')?.value,
-      password: this.createAccountForm.controls.credential.get('password')?.value
-    };
-    this.service.register(creatUser).subscribe(
+
+    this.service.register(this.buildRegisterBody()).subscribe(
       response => {
-        this.toastrService.success('Successful, you can now log in with your new account');
+        this.toastrService.success('Success! You can now log in with your new account');
         this.onBackToLogIn();
       },
       errorResponse => {
@@ -54,6 +51,14 @@ export class CreateAccountComponent implements OnInit {
     );
     // setTimeout(() => {
     // }, 500);
+  }
+
+  private buildRegisterBody(): any {
+    return {
+      email: this.createAccountForm.get('email')?.value,
+      name: this.createAccountForm.get('name')?.value,
+      password: this.createAccountForm.controls.credential.get('password')?.value
+    };
   }
 
   onBackToLogIn(): void {

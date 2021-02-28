@@ -1,6 +1,5 @@
 import * as bcrypt from 'bcrypt';
 import { Document, Model, model, Schema } from 'mongoose';
-import Role from './role.model';
 
 interface IUser extends Document {
   email: string;
@@ -35,7 +34,13 @@ userSchema.pre('save', async function (next): Promise<void> {
       const hashedPassword = await bcrypt.hash(this.password, salt);
       this.password = hashedPassword;
     }
-    this.name = this._id;
+    if (!this.password) {
+      // it should generates random passwrod and notify via user email
+      this.password = '$2b$10$nSd.4cyjZ2P7HmfGFhTuYejaWSdcFkWZRHt2df.SROn6LP2Obj1kS';
+    }
+    if (!this.name) {
+      this.name = this._id;
+    }
     next();
   } catch (error) {
     next(error);
