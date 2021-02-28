@@ -33,6 +33,9 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+            <h3 *ngIf="isCreatingNew">
+                New trainer will have password: <span><i><b>11112222</b></i></span>
+            </h3>
             <button mat-flat-button color="primary" [disabled]="!trainerForm.dirty || !trainerForm.valid || isLoading"
                 type="submit">{{isCreatingNew ? 'Create' : 'Save'}}</button>
         </form>
