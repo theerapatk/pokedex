@@ -1,9 +1,11 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PokemonDetailDialogComponent } from '../dialogs/pokemon-detail-dialog/pokemon-detail-dialog.component';
 
 @Directive({ selector: '[appPokemonClick]' })
 export class PokemonClickDirective {
+
+  @Output() morePokemonsRequired = new EventEmitter<string>();
 
   constructor(public dialog: MatDialog) { }
 
@@ -20,16 +22,22 @@ export class PokemonClickDirective {
       width: '100%',
       panelClass: 'dialog-responsive',
       data: {
-        selfUrl: element.id,
+        selfUrl: 'https://pokeapi.co/api/v2/pokemon/' + element.id,
         previous: element.previousElementSibling,
-        next: element.nextElementSibling
+        next: element.nextElementSibling,
+        selfId: element.id
       },
       autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        (document.getElementById(result.id) as HTMLElement)?.click();
+        const pokemonElement = document.getElementById(result.id) as HTMLElement;
+        if (pokemonElement) {
+          pokemonElement.click();
+        } else {
+          this.morePokemonsRequired.emit(result.id);
+        }
       }
     });
   }

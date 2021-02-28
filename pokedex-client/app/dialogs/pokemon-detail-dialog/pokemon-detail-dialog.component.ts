@@ -55,7 +55,25 @@ export class PokemonDetailDialogComponent implements OnInit {
   }
 
   onNextPokemonClick(isNext: boolean = false): void {
-    this.dialogRef.close({ id: isNext ? this.data.next?.id : this.data.previous?.id });
+    this.dialogRef.close({ id: isNext ? this.getNextId(true) : this.getNextId(false) });
+  }
+
+  getNextImgSrc(): string {
+    const nextId = Number(this.data.selfId) + 1;
+    return this.data.next.dataset === true ? this.data.next.dataset.imgsrc :
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${nextId}.png`;
+  }
+
+  private getNextId(isNext: boolean): string {
+    let id = this.data.previous?.id;
+    if (isNext) {
+      if (this.data.next.id) {
+        id = this.data.next.id;
+      } else {
+        id = Number(this.data.selfId) + 1;
+      }
+    }
+    return id;
   }
 
 }

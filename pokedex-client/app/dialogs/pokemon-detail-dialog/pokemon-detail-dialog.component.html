@@ -28,7 +28,7 @@
       <mat-icon>close</mat-icon>
     </button>
     <button *ngIf="data.next" mat-button color="primary" (click)="onNextPokemonClick(true)" class="next-pokemon-button">
-      <img class="pokemon-sprite" [src]="data.next.dataset.imgsrc" width="70" height="70" alt="Sprite of Pokemon">
+      <img class="pokemon-sprite" [src]="getNextImgSrc()" width="70" height="70" alt="Sprite of Pokemon">
       Next<mat-icon>keyboard_arrow_right</mat-icon>
     </button>
     <div *ngIf="!data.next" class="next-button-placeholder"></div>

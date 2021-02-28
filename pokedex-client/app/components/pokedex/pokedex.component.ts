@@ -3,7 +3,6 @@ import { PokeApi } from '@models/poke-api';
 import { Pokemon } from '@models/pokemon';
 import { PokemonDetail } from '@models/pokemon-detail';
 import { PokedexService } from '@services/pokedex.service';
-import { UserService } from '@services/user.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -34,20 +33,20 @@ export class PokedexComponent implements AfterViewInit {
     }, 0);
   }
 
-  private getPokemons(): void {
+  private getPokemons(pokemonId?: string): void {
     this.isLoading = true;
     this.pokedexService.getPokemons(this.nextUrl).subscribe(
-      response => this.handleSuccessfulGetPokemons(response),
+      response => this.handleSuccessfulGetPokemons(response, pokemonId),
       error => this.isLoading = false
     );
   }
 
-  private handleSuccessfulGetPokemons(response: PokeApi): void {
+  private handleSuccessfulGetPokemons(response: PokeApi, pokemonId?: string): void {
     this.nextUrl = response.next;
 
     const partialPokemons = response.results as Pokemon[];
     if (partialPokemons.length > 0) {
-      this.getPokemonDetails(partialPokemons);
+      this.getPokemonDetails(partialPokemons, pokemonId);
     }
 
     const filterValue = this.input.nativeElement.value;
@@ -65,7 +64,7 @@ export class PokedexComponent implements AfterViewInit {
     }
   }
 
-  private getPokemonDetails(pokemons: Pokemon[] = this.pokemons): void {
+  private getPokemonDetails(pokemons: Pokemon[] = this.pokemons, pokemonId?: string): void {
     if (pokemons.length > 0) {
       const calls = pokemons.map((pokemon: any) => this.pokedexService.getPokemon(pokemon.url));
       this.isLoading = true;
@@ -74,9 +73,22 @@ export class PokedexComponent implements AfterViewInit {
           pokemons.forEach((pokemon, index) =>
             pokemon.details = this.buildPokemonDetails(pokemonDetails[index]));
           this.isLoading = false;
+
+          setTimeout(() => {
+            this.clickOnNextPokemonFromDialog(pokemonId);
+          }, 0);
         },
         error => this.isLoading = false
       );
+    }
+  }
+
+  private clickOnNextPokemonFromDialog(pokemonId: string | undefined) {
+    if (pokemonId) {
+      const pokemonElement = document.getElementById(pokemonId) as HTMLElement;
+      if (pokemonElement) {
+        pokemonElement.click();
+      }
     }
   }
 
@@ -89,9 +101,9 @@ export class PokedexComponent implements AfterViewInit {
     };
   }
 
-  onScroll(): void {
+  onScroll(pokemonId?: string): void {
     if (this.nextUrl && !this.isApplyingType) {
-      this.getPokemons();
+      this.getPokemons(pokemonId);
     }
   }
 

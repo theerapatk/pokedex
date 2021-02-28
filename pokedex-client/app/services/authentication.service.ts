@@ -68,9 +68,9 @@ export class AuthenticationService {
 
   decodeAccessToken(): void {
     try {
-      this.isLoggedIn = true;
       const accessToken = localStorage.getItem('accessToken') || '';
       const decodedUser = this.jwtHelper.decodeToken(accessToken).user;
+      this.isLoggedIn = true;
       const { _id, name, email, role } = decodedUser;
       this.currentUser = { _id, name, email, role: role.text };
     } catch (error) {
