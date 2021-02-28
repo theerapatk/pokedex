@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ChartsModule } from 'ng2-charts';
 import { PokemonSummaryComponent } from './pokemon-summary.component';
 
 describe('PokemonSummaryComponent', () => {
@@ -8,7 +8,8 @@ describe('PokemonSummaryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PokemonSummaryComponent]
+      declarations: [PokemonSummaryComponent],
+      imports: [ChartsModule]
     })
       .compileComponents();
   });

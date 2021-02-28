@@ -10,6 +10,7 @@ import { PokemonSummaryComponent } from '@components/pokemon-summary/pokemon-sum
 import { DetailDialogLoadingComponent } from '@dialogs/detail-dialog-loading/detail-dialog-loading.component';
 import { PokemonDetail } from '@models/pokemon-detail';
 import { PokedexService } from '@services/pokedex.service';
+import { ChartsModule } from 'ng2-charts';
 import { of } from 'rxjs';
 import { PokemonDetailDialogComponent } from './pokemon-detail-dialog.component';
 
@@ -29,6 +30,7 @@ describe('PokemonDetailDialogComponent', () => {
       ],
       imports: [
         HttpClientTestingModule,
+        ChartsModule,
         MatCardModule,
         MatDialogModule,
         MatIconModule,
@@ -48,11 +50,13 @@ describe('PokemonDetailDialogComponent', () => {
     fixture = TestBed.createComponent(PokemonDetailDialogComponent);
     component = fixture.componentInstance;
     const expected: PokemonDetail = {
-      id: 1, name: 'bulbasuar',
+      id: 1,
+      name: 'bulbasuar',
       sprites: { front_default: '' },
       types: [{ slot: 0, type: { name: '', url: '' } }],
       stats: [],
-      moves: []
+      moves: [],
+      abilities: []
     };
     serviceSpy.getPokemon.and.returnValue(of(expected));
     fixture.detectChanges();
