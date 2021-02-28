@@ -42,10 +42,14 @@ export class PokemonSummaryComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    const { stats } = this.pokemonDetail;
     this.radarChartData = [...this.radarChartData, ...[{
-      data: stats.map((stat: any) => stat.base_stat), label: 'Base Stats'
+      data: this.buildStatData(), label: 'Base Stats'
     }]];
+  }
+
+  private buildStatData() {
+    const { stats } = this.pokemonDetail;
+    return stats && stats.length !== 0 ? stats.map((stat: any) => stat.base_stat) : [];
   }
 
   chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {

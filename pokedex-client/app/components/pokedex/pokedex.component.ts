@@ -26,10 +26,7 @@ export class PokedexComponent implements AfterViewInit {
 
   @ViewChild('searchInput') input: any;
 
-  constructor(
-    private pokedexService: PokedexService,
-    private userService: UserService,
-  ) { }
+  constructor(private pokedexService: PokedexService) { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {

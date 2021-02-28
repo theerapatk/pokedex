@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ColumnFilterComponent } from './column-filter.component';
 
 describe('ColumnFilterComponent', () => {
@@ -8,9 +11,15 @@ describe('ColumnFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ColumnFilterComponent ]
+      declarations: [ColumnFilterComponent],
+      imports: [
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        BrowserAnimationsModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

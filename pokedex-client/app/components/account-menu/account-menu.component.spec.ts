@@ -1,6 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +20,7 @@ describe('AccountMenuComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AccountMenuComponent],
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, MatDividerModule, MatIconModule],
       providers: [{
         provide: ToastrService,
         useValue: toastrService

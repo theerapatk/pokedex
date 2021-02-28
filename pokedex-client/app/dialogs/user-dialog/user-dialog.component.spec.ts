@@ -1,9 +1,10 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RoleService } from '@services/role.service';
@@ -28,8 +29,10 @@ describe('UserDialogComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
+        MatDialogModule,
         MatFormFieldModule,
         MatInputModule,
+        MatProgressBarModule,
         MatSelectModule,
         BrowserAnimationsModule
       ],

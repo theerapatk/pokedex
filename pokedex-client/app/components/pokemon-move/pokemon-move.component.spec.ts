@@ -1,5 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
 import { PokemonMoveComponent } from './pokemon-move.component';
 
 
@@ -10,7 +12,7 @@ describe('PokemonMoveComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [PokemonMoveComponent],
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule, MatProgressSpinnerModule, MatTableModule]
     })
       .compileComponents();
   });

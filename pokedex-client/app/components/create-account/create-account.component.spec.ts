@@ -1,5 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { AuthenticationService } from '@services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
 import { CreateAccountComponent } from './create-account.component';
@@ -14,7 +17,12 @@ describe('CreateAccountComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CreateAccountComponent],
-      imports: [HttpClientTestingModule],
+      imports: [
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        FormsModule
+      ],
       providers: [{
         provide: ToastrService,
         useValue: toastrService

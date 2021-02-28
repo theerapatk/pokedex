@@ -2,6 +2,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PokemonMoveComponent } from '@components/pokemon-move/pokemon-move.component';
+import { PokemonSummaryComponent } from '@components/pokemon-summary/pokemon-summary.component';
 import { DetailDialogLoadingComponent } from '@dialogs/detail-dialog-loading/detail-dialog-loading.component';
 import { PokemonDetail } from '@models/pokemon-detail';
 import { PokedexService } from '@services/pokedex.service';
@@ -16,8 +21,20 @@ describe('PokemonDetailDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PokemonDetailDialogComponent, DetailDialogLoadingComponent],
-      imports: [HttpClientTestingModule, MatCardModule, MatDialogModule],
+      declarations: [
+        PokemonDetailDialogComponent,
+        DetailDialogLoadingComponent,
+        PokemonSummaryComponent,
+        PokemonMoveComponent
+      ],
+      imports: [
+        HttpClientTestingModule,
+        MatCardModule,
+        MatDialogModule,
+        MatIconModule,
+        MatTabsModule,
+        BrowserAnimationsModule
+      ],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
@@ -34,8 +51,8 @@ describe('PokemonDetailDialogComponent', () => {
       id: 1, name: 'bulbasuar',
       sprites: { front_default: '' },
       types: [{ slot: 0, type: { name: '', url: '' } }],
-      stats: {},
-      moves: {}
+      stats: [],
+      moves: []
     };
     serviceSpy.getPokemon.and.returnValue(of(expected));
     fixture.detectChanges();
