@@ -1,6 +1,8 @@
 # Pokédex
 
-DEMO: https://jojo-pokedex.herokuapp.com/
+DEMO
+https://jojo-pokedex.herokuapp.com/
+https://jojo-pokedex.azurewebsites.net/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
 
