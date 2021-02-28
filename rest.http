@@ -6,15 +6,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTI5OTYxN
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
-# {
-#   "email": "admin",
-#   "password": "admin"
-# }
-
 {
-  "email": "4@1.com",
-  "password": "11112222"
+  "email": "admin",
+  "password": "admin"
 }
+
+# {
+#   "email": "4@1.com",
+#   "password": "11112222"
+# }
 
 ###
 @accessToken = {{login.response.body.accessToken}}

@@ -5,7 +5,7 @@ interface IUser extends Document {
   email: string;
   password: string;
   name: string;
-  role: string;
+  role: { text: string };
   isPasswordMatched(password: any): Promise<boolean>;
 }
 

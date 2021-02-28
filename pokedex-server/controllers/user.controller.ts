@@ -43,11 +43,16 @@ class UserController extends BaseController {
         throw new createError.Unauthorized('Invalid Email/Password');
       }
 
-      const accessToken = jwt.sign({ user }, process.env.SECRET_ACCESS_TOKEN as string, {
+      const userRole = user.role.text.toLowerCase();
+      const payload = {
+        user: user.toJSON(),
+        permissions: [userRole]
+      }
+      const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '15m'
       });
-      const refreshToken = jwt.sign({ user }, process.env.SECRET_REFRESH_TOKEN as string, {
+      const refreshToken = jwt.sign(payload, process.env.SECRET_REFRESH_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '1y'
       });
@@ -68,13 +73,22 @@ class UserController extends BaseController {
       }
 
       const decodedToken = jwt.verify(refreshToken, process.env.SECRET_REFRESH_TOKEN as string) as any;
-      const user = await this.model.findOne({ _id: decodedToken.user._id });
 
-      const accessToken = jwt.sign({ user }, process.env.SECRET_ACCESS_TOKEN as string, {
+      const user = await this.model.findOne({ _id: decodedToken.user._id });
+      if (!user) {
+        throw new createError.NotFound(`${req.body.email} has not been registered`);
+      }
+
+      const userRole = user.role.text.toLowerCase();
+      const payload = {
+        user: user.toJSON(),
+        permissions: [userRole]
+      }
+      const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '15m'
       });
-      const newRefreshToken = jwt.sign({ user }, process.env.SECRET_REFRESH_TOKEN as string, {
+      const newRefreshToken = jwt.sign(payload, process.env.SECRET_REFRESH_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '1y'
       });

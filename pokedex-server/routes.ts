@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as jwt from 'express-jwt';
 import RoleController from './controllers/role.controller';
 import UserController from './controllers/user.controller';
-import createError = require('http-errors');
+const guard = require('express-jwt-permissions')();
 
 function setRoutes(app: any): void {
   const userCtrl = new UserController();
@@ -16,7 +16,7 @@ function setRoutes(app: any): void {
   const apiRouter = express.Router();
   apiRouter.use(
     jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }),
-    checkIfAdminRole
+    guard.check('admin')
   );
   apiRouter.route('/users').get(userCtrl.getAll);
   apiRouter.route('/users').post(userCtrl.insert);
@@ -35,14 +35,6 @@ function setRoutes(app: any): void {
     .put(roleCtrl.update)
     .delete(roleCtrl.delete);
   app.use('/api/v1', apiRouter);
-}
-
-function checkIfAdminRole(req: any, res: any, next: any) {
-  const role = req.user.user.role.text.toLowerCase();
-  if (role !== 'admin') {
-    return next(new createError.Forbidden('Only admin is allowed to access the resource'));
-  }
-  next();
 }
 
 export default setRoutes;
