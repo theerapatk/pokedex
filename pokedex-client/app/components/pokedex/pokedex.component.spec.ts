@@ -24,7 +24,8 @@ describe('PokedexComponent', () => {
         MatInputModule,
         MatProgressBarModule,
         FormsModule,
-        BrowserAnimationsModule]
+        BrowserAnimationsModule
+      ]
     })
       .compileComponents();
   });

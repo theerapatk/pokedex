@@ -1,6 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PokemonMoveComponent } from './pokemon-move.component';
+
 
 describe('PokemonMoveComponent', () => {
   let component: PokemonMoveComponent;
@@ -8,9 +9,10 @@ describe('PokemonMoveComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PokemonMoveComponent ]
+      declarations: [PokemonMoveComponent],
+      imports: [HttpClientTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,29 +1,39 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { AuthenticationService } from '@services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpResponseInterceptor } from './http-response.interceptor';
 
 describe('HttpResponseInterceptor', () => {
 
-    let interceptor: HttpResponseInterceptor;
+  let interceptor: HttpResponseInterceptor;
 
-    const toastrService = jasmine.createSpyObj('ToastrService', ['error']);
+  const toastrService = jasmine.createSpyObj('ToastrService', ['error']);
+  const authService = jasmine.createSpyObj('AuthenticationService', ['refreshToken', 'logout']);
 
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            providers: [{
-                provide: ToastrService,
-                useValue: toastrService
-            }]
-        })
-            .compileComponents();
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      // imports: [HttpClientTestingModule],
+      providers: [{
+        provide: ToastrService,
+        useValue: toastrService
+      }, {
+        provide: AuthenticationService,
+        useValue: authService
+      }]
+    })
+      .compileComponents();
+  });
 
-    beforeEach(() => {
-        interceptor = new HttpResponseInterceptor(TestBed.inject(ToastrService));
-    });
+  beforeEach(() => {
+    interceptor = new HttpResponseInterceptor(
+      TestBed.inject(ToastrService),
+      TestBed.inject(AuthenticationService)
+    );
+  });
 
-    it('should create', () => {
-        expect(interceptor).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(interceptor).toBeTruthy();
+  });
 
 });
