@@ -10,7 +10,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { ColumnFilterComponent } from '@components/column-filter/column-filter.component';
+import { AuthenticationService } from '@services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
 import { ManageTrainersComponent } from './manage-trainers.component';
 
@@ -20,6 +22,8 @@ describe('ManageTrainersComponent', () => {
 
   const toastrService = jasmine.createSpyObj('ToastrService', ['success', 'error']);
   const matDialog = jasmine.createSpyObj('MatDialog', ['open']);
+  const authService = jasmine.createSpyObj('AuthenticationService', ['currentUser']);
+  const router = jasmine.createSpyObj('Router', ['navigate']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -42,6 +46,12 @@ describe('ManageTrainersComponent', () => {
       }, {
         provide: MatDialog,
         useValue: matDialog
+      }, {
+        provide: AuthenticationService,
+        useValue: authService
+      }, {
+        provide: Router,
+        useValue: router
       }]
     })
       .compileComponents();
