@@ -26,6 +26,11 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { TrainerCardDialogComponent } from './dialogs/trainer-card-dialog/trainer-card-dialog.component';
+import { TrainerProfileComponent } from './components/trainer-profile/trainer-profile.component';
+import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
+import { InlineFormComponent } from './components/inline-form/inline-form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,12 @@ import { AppComponent } from './app.component';
     LoginDialogComponent,
     CreateAccountComponent,
     PokemonMoveComponent,
-    PokemonSummaryComponent
+    PokemonSummaryComponent,
+    ForgotPasswordComponent,
+    TrainerCardDialogComponent,
+    TrainerProfileComponent,
+    AccountSettingsComponent,
+    InlineFormComponent
   ],
   entryComponents: [
     PokemonDetailDialogComponent

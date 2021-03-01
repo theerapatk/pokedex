@@ -1,0 +1,23 @@
+<div *ngIf="isLoading; then thenBlock else elseBlock"></div>
+
+<ng-template #thenBlock>
+  <app-detail-dialog-loading [isLoading]="isLoading"></app-detail-dialog-loading>
+</ng-template>
+
+<ng-template #elseBlock>
+  <mat-tab-group>
+    <mat-tab label="Trainer Profile">
+      <ng-template matTabContent>
+        <app-trainer-profile></app-trainer-profile>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Account Settings">
+      <ng-template matTabContent>
+        <app-account-settings></app-account-settings>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+  <mat-dialog-actions align="end">
+    <button mat-button color="primary" type="button" mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</ng-template>

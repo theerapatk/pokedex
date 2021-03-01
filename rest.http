@@ -54,7 +54,7 @@ Authorization: Bearer {{accessToken}}
 # Authorization: Bearer eyJhbGciOiJIUzI1I6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJhZG1pbiIsIl9pZCI6IjYwMzI5YTQzZTU4YjRjNTZkOGFlZjAwZiIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW4ifSwiaWF0IjoxNjEzOTMwMTM5LCJleHAiOjE2MTM5MzEwMzksImlzcyI6Impvam8tcG9rZWRleCJ9.k-sij8bmjx9UmZDTBuEasSr2B8b9Vs-2E5DINCwDnCk
 
 ### Get User
-GET http://localhost:4200/api/v1/users/603a196d1aedff9b7c588ec5
+GET http://localhost:4200/api/v1/users/603b76fc53894b1eac0d2a37
 Authorization: Bearer {{accessToken}}
 
 ### Insert User
@@ -69,12 +69,13 @@ Content-Type: application/json
 }
 
 ### Update User
-PUT http://localhost:4200/api/v1/users/603a196d1aedff9b7c588ec5
+PUT http://localhost:4200/api/v1/users/603b563b968458046ca9ae2f
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "role": 1
+  "name": "3@1.com",
+  "role": 0
 }
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
+import { TrainerCardDialogComponent } from '@dialogs/trainer-card-dialog/trainer-card-dialog.component';
 import { AuthenticationService } from '@services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -32,6 +33,20 @@ export class AccountMenuComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.success === true) {
         this.router.navigate(['/admin/manage-trainers']);
+      }
+    });
+  }
+
+  openTrainerCard() {
+    const dialogRef = this.dialog.open(TrainerCardDialogComponent, {
+      width: '100%',
+      panelClass: 'dialog-responsive',
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
       }
     });
   }

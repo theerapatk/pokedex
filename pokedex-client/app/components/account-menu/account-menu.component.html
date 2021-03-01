@@ -4,10 +4,10 @@
     <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #menu="matMenu" id="matMenu">
-    <div mat-menu-item readonly>
+    <button mat-menu-item (click)="openTrainerCard()">
       <mat-icon>person</mat-icon>
       <span>{{authService.currentUser.name}}</span>
-    </div>
+    </button>
     <div *ngIf="authService.isAdmin()" mat-menu-item routerLink="/admin/manage-trainers">
       <mat-icon>groups</mat-icon>
       <span>Manage Trainers</span>
