@@ -105,8 +105,14 @@ class UserController extends BaseController {
     try {
       const validatedBody = await insertUserSchema.validateAsync(req.body);
 
-      const role = await Role.findOne({ value: validatedBody.role });
-      validatedBody.role = role?._id;
+      if (validatedBody.hasOwnProperty('role')) {
+        const role = await Role.findOne({ value: validatedBody.role });
+        if (role) {
+          validatedBody.role = role?._id;
+        } else {
+          return next(new createError.BadRequest('Role not found'));
+        }
+      }
 
       const savedUser = await new this.model(validatedBody).save();
       const user = await savedUser.populate('role').execPopulate();
@@ -127,8 +133,17 @@ class UserController extends BaseController {
     try {
       const validatedBody = await updateUserSchema.validateAsync(req.body);
 
-      const role = await Role.findOne({ value: validatedBody.role });
-      validatedBody.role = role?._id;
+      if (validatedBody.hasOwnProperty('role')) {
+        if (!req.user.permissions.includes('admin')) {
+          return next(new createError.Forbidden('Permissioin denied'));
+        }
+        const role = await Role.findOne({ value: validatedBody.role });
+        if (role) {
+          validatedBody.role = role?._id;
+        } else {
+          return next(new createError.BadRequest('Role not found'));
+        }
+      }
 
       const user = await this.model
         .findOneAndUpdate({ _id: req.params.id }, validatedBody, { new: true })

@@ -14,17 +14,15 @@ function setRoutes(app: any): void {
   app.use('/auth', authRouter);
 
   const apiRouter = express.Router();
-  apiRouter.use(
-    jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }),
-    guard.check('admin')
-  );
+  apiRouter.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }));
+  apiRouter.route('/users/:id').put(userCtrl.update)
+  apiRouter.route('/users/:id').get(userCtrl.get)
+
+  apiRouter.use(guard.check('admin'));
   apiRouter.route('/users').get(userCtrl.getAll);
   apiRouter.route('/users').post(userCtrl.insert);
   apiRouter.route('/users/count').get(userCtrl.count);
-  apiRouter.route('/users/:id')
-    .get(userCtrl.get)
-    .put(userCtrl.update)
-    .delete(userCtrl.delete);
+  apiRouter.route('/users/:id').delete(userCtrl.delete);
 
   const roleCtrl = new RoleController();
   apiRouter.route('/roles').get(roleCtrl.getAll);
