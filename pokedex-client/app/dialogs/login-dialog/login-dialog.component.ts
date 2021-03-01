@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SlideAnimation } from '@animations/slide-animation';
 import { CreateAccountComponent } from '@components/create-account/create-account.component';
+import { ForgotPasswordComponent } from '@components/forgot-password/forgot-password.component';
 import { AuthenticationService } from '@services/authentication.service';
 import { FacebookService, LoginOptions, LoginResponse } from 'ngx-facebook';
 import { ToastrService } from 'ngx-toastr';
@@ -30,6 +31,9 @@ export class LoginDialogComponent implements OnInit {
 
   @ViewChild(CreateAccountComponent)
   private createAccountComponent!: CreateAccountComponent;
+
+  @ViewChild(ForgotPasswordComponent)
+  private forgotPasswordComponent!: ForgotPasswordComponent;
 
   constructor(
     private authService: AuthenticationService,
@@ -86,22 +90,26 @@ export class LoginDialogComponent implements OnInit {
     this.dialogRef.close({ success: true });
   }
 
-  onCreateNewAccount(): void {
+  handleNextStep(animationState: number): void {
     this.isFormSubmitted = false;
     this.loginForm.reset();
-    this.animationState = 1;
+    this.animationState = animationState;
   }
 
   onAnimationStateChange(stateNumber: number): void {
     this.animationState = stateNumber;
   }
 
-  onAccountIsCreating(isLoading: boolean): void {
+  onLoading(isLoading: boolean): void {
     this.isLoading = isLoading;
   }
 
   onBackToLogIn(): void {
-    this.createAccountComponent.onBackToLogIn();
+    if (this.animationState === 1) {
+      this.createAccountComponent.onBackToLogIn();
+    } else if (this.animationState === 2) {
+      this.forgotPasswordComponent.onBackToLogIn();
+    }
   }
 
 }

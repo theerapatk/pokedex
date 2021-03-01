@@ -13,8 +13,8 @@ export class UserService extends BaseHttpService {
     super(http);
   }
 
-  getUser(user: User): Observable<User> {
-    return this.http.get<User>(`${this.url}/users/${user._id}`);
+  getUser(userId: string): Observable<User> {
+    return this.http.get<User>(`${this.url}/users/${userId}`);
   }
 
   getUsers(): Observable<User[]> {

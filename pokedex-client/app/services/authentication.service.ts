@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { User } from '@models/user.model';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -84,6 +85,11 @@ export class AuthenticationService {
       isAdmin = this.currentUser.role.toLowerCase() === 'admin';
     }
     return isAdmin;
+  }
+
+  updateCurrentUser(user: User): void {
+    const { _id, name, email, role } = user;
+    this.currentUser = { _id, name, email, role: role?.text } as any;
   }
 
 }

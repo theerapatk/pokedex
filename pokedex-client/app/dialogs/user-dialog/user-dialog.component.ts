@@ -110,7 +110,7 @@ export class UserDialogComponent implements OnInit {
     );
   }
 
-  handleSuccessfulUpdate(formGroup: FormGroup, entityId?: string, response?: any): void {
+  private handleSuccessfulUpdate(formGroup: FormGroup, entityId?: string, response?: any): void {
     this.isLoading = false;
     formGroup.enable();
     this.dialogRef.close({
@@ -121,7 +121,7 @@ export class UserDialogComponent implements OnInit {
     });
   }
 
-  handleErrorUpdate(formGroup: FormGroup, errorResponse: any): void {
+  private handleErrorUpdate(formGroup: FormGroup, errorResponse: any): void {
     this.isLoading = false;
     formGroup.enable();
     this.toastrService.warning(errorResponse?.error?.error?.message);

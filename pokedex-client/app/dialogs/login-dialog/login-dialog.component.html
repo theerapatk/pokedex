@@ -22,9 +22,9 @@
         </div>
         <button mat-flat-button type="submit" color="primary" (click)="onLogIn()" class="login-button"
             [disabled]="!loginForm.dirty || !loginForm.valid || isLoading">Log In</button>
-        <div class="anchor-container"><a href="">Forgotten password?</a></div>
+        <div class="anchor-container"><a [routerLink]="" (click)="handleNextStep(2)">Forgotten password?</a></div>
         <mat-divider></mat-divider>
-        <button mat-flat-button type="button" (click)="onCreateNewAccount()" class="new-account-button"
+        <button mat-flat-button type="button" (click)="handleNextStep(1)" class="new-account-button"
             [disabled]="isLoading">
             Creat New Account</button>
         <!-- <div class="text-container">or</div>
@@ -32,13 +32,16 @@
             <mat-icon class="facebook-icon">facebook</mat-icon>Login with Facebook
         </button> -->
     </form>
-    <app-create-account (isCreatingAccount)="onAccountIsCreating($event)" [animationState]="animationState"
+    <app-forgot-password (isLoading)="onLoading($event)" [animationState]="animationState"
+        (animationStateChange)="onAnimationStateChange($event)">
+    </app-forgot-password>
+    <app-create-account (isLoading)="onLoading($event)" [animationState]="animationState"
         (animationStateChange)="onAnimationStateChange($event)">
     </app-create-account>
 </div>
 <mat-dialog-actions align="center">
     <div class="back-to-login-button">
-        <button *ngIf="animationState === 1" mat-button color="primary" type="button" (click)="onBackToLogIn()">
+        <button *ngIf="animationState !== 0" mat-button color="primary" type="button" (click)="onBackToLogIn()">
             Back to Log In
         </button>
     </div>
