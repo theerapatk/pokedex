@@ -1,6 +1,7 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { BrowserModule } from '@angular/platform-browser';
@@ -26,11 +27,12 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { TrainerCardDialogComponent } from './dialogs/trainer-card-dialog/trainer-card-dialog.component';
-import { TrainerProfileComponent } from './components/trainer-profile/trainer-profile.component';
 import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
+import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { InlineFormComponent } from './components/inline-form/inline-form.component';
+import { TrainerProfileComponent } from './components/trainer-profile/trainer-profile.component';
+import { TrainerCardDialogComponent } from './dialogs/trainer-card-dialog/trainer-card-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { InlineFormComponent } from './components/inline-form/inline-form.compon
     TrainerCardDialogComponent,
     TrainerProfileComponent,
     AccountSettingsComponent,
-    InlineFormComponent
+    InlineFormComponent,
+    ChangePasswordFormComponent
   ],
   entryComponents: [
     PokemonDetailDialogComponent
@@ -61,6 +64,7 @@ import { InlineFormComponent } from './components/inline-form/inline-form.compon
     SharedModule,
     InfiniteScrollModule,
     MatCardModule,
+    MatCheckboxModule,
     MatChipsModule,
     MatDividerModule,
     ChartsModule,

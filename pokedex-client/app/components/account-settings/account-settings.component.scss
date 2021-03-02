@@ -1,5 +1,5 @@
 .account-settings-container {
-  height: 400px;
+  height: 500px;
 }
 
 .first-form {
@@ -8,4 +8,8 @@
 
 app-inline-form {
   display: block;
+}
+
+app-change-password-form {
+  margin-top: 5px;
 }
