@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { CustomValidators } from '@utils/custom-validators';
 
 @Component({
   selector: 'app-change-password-form',
@@ -9,6 +10,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 })
 export class ChangePasswordFormComponent implements OnInit {
 
+  isLoading = false;
   enableCredentialForm = false;
   hideCurrentPassword = true;
   hidePassword = true;
@@ -24,8 +26,7 @@ export class ChangePasswordFormComponent implements OnInit {
         Validators.minLength(8)
       ]),
       confirmPassword: new FormControl({ value: '', disabled: false }, Validators.required)
-    })
-    // }, { validators: CustomValidators.passwordMatchValidator });
+    }, CustomValidators.passwordMatchValidator)
   });
 
   constructor() { }
