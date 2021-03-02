@@ -95,6 +95,7 @@ export class InlineFormComponent implements OnInit {
     }
     this.inlineForm.markAsPristine();
     this.authService.updateCurrentUser(response.user);
+    this.toastrService.success('Update successful');
   }
 
   private handleErrorUpdate(errorResponse: any): void {
