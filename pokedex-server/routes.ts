@@ -16,6 +16,7 @@ function setRoutes(app: any): void {
   const apiRouter = express.Router();
   apiRouter.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }));
   apiRouter.route('/users/:id').put(userCtrl.update)
+  apiRouter.route('/users/:id/change-password').put(userCtrl.changePassword)
   apiRouter.route('/users/:id').get(userCtrl.get)
 
   apiRouter.use(guard.check('admin'));

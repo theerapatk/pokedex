@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ChangePassword } from '@models/change-password.model';
 import { User } from '@models/user.model';
 import { Observable } from 'rxjs';
 import { BaseHttpService } from './base-http.service';
@@ -31,6 +32,10 @@ export class UserService extends BaseHttpService {
 
   deleteUser(id: string): Observable<any> {
     return this.http.delete<any>(`${this.url}/users/${id}`);
+  }
+
+  changePassword(id: string, credential: ChangePassword): Observable<any> {
+    return this.http.put<any>(`${this.url}/users/${id}/change-password`, credential);
   }
 
 }

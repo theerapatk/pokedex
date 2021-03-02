@@ -7,8 +7,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "admin",
-  "password": "admin"
+  "email": "133@1.com",
+  "password": "1111333a"
 }
 
 # {
@@ -28,8 +28,8 @@ Content-Type: application/json
 
 {
   // "email": "yourstruly267@gmail.com",
-  "email": "admin",
-  "password": "1234"
+  "email": "133@1.com",
+  "password": "1111333a"
 }
 
 ### Refresh token Route
@@ -54,7 +54,7 @@ Authorization: Bearer {{accessToken}}
 # Authorization: Bearer eyJhbGciOiJIUzI1I6IkpXVCJ9.eyJ1c2VyIjp7InJvbGUiOiJhZG1pbiIsIl9pZCI6IjYwMzI5YTQzZTU4YjRjNTZkOGFlZjAwZiIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW4ifSwiaWF0IjoxNjEzOTMwMTM5LCJleHAiOjE2MTM5MzEwMzksImlzcyI6Impvam8tcG9rZWRleCJ9.k-sij8bmjx9UmZDTBuEasSr2B8b9Vs-2E5DINCwDnCk
 
 ### Get User
-GET http://localhost:4200/api/v1/users/603b76fc53894b1eac0d2a37
+GET http://localhost:4200/api/v1/users/603b563b968458046ca9ae2f
 Authorization: Bearer {{accessToken}}
 
 ### Insert User
@@ -75,7 +75,7 @@ Content-Type: application/json
 
 {
   "name": "3@1.com",
-  "role": 0
+  "role": 10
 }
 
 
@@ -93,3 +93,14 @@ Content-Type: application/json
 GET http://localhost:4200/api/v1/roles
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
+
+### Change Password
+PUT http://localhost:4200/api/v1/users/603b563b968458046ca9ae2f/change-password
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "currentPassword": "1111333a",
+  "password": "11112222",
+  "confirmPassword": "11112222"
+}

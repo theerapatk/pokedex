@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { UserService } from '@services/user.service';
 import { CustomValidators } from '@utils/custom-validators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-change-password-form',
@@ -29,16 +31,61 @@ export class ChangePasswordFormComponent implements OnInit {
     }, CustomValidators.passwordMatchValidator)
   });
 
-  constructor() { }
+  @Input() data = { _id: '', fieldName: '', value: '' };
+  @ViewChild('currentPassword') currentPasswordElement: any;
 
-  ngOnInit(): void {
+  constructor(
+    private userService: UserService,
+    private toastrService: ToastrService
+  ) { }
+
+  ngOnInit(): void { this.subscribeChangePasswordCheckboxEvent() }
+
+  private subscribeChangePasswordCheckboxEvent() {
+    this.changePasswordForm.controls.changePasswordCheckbox.valueChanges.subscribe(
+      (checked: boolean) => {
+        this.enableCredentialForm = checked;
+        if (checked) {
+          setTimeout(() => {
+            this.currentPasswordElement.nativeElement.focus();
+          }, 0);
+        }
+      }
+    );
   }
 
   onChangePasswordCheckboxChanged(event: MatCheckboxChange) {
     this.enableCredentialForm = event.checked;
   }
 
-  onSubmit(): void { }
+  onSubmit(): void {
+    this.isLoading = true;
+    const credentialForm = this.changePasswordForm.controls.credential;
+    credentialForm.disable();
+    const currentPassword = credentialForm.get('currentPassword')?.value;
+    const password = credentialForm.get('password')?.value;
+    const confirmPassword = credentialForm.get('confirmPassword')?.value;
+    this.userService.changePassword(this.data._id, { currentPassword, password, confirmPassword }).subscribe(
+      response => this.handleSuccessfulUpdate(),
+      errorResponse => this.handleErrorUpdate(errorResponse)
+    );
+  }
+
+  private handleSuccessfulUpdate(): void {
+    this.isLoading = false;
+    const credentialForm = this.changePasswordForm.controls.credential;
+    credentialForm.enable();
+    this.changePasswordForm.reset();
+    this.changePasswordForm.markAsPristine();
+    this.toastrService.success('Update successful');
+  }
+
+  private handleErrorUpdate(errorResponse: any): void {
+    this.isLoading = false;
+    const credentialForm = this.changePasswordForm.controls.credential;
+    credentialForm.enable();
+    this.toastrService.warning(errorResponse?.error?.error?.message);
+  }
 
   get hasRequiredOrAlphanumericError() {
     const passwordControl = this.changePasswordForm.controls.credential.get('password');

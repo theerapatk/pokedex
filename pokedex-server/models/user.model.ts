@@ -38,9 +38,6 @@ userSchema.pre('save', async function (next): Promise<void> {
       // it should generates random passwrod and notify via user email
       this.password = '$2b$10$nSd.4cyjZ2P7HmfGFhTuYejaWSdcFkWZRHt2df.SROn6LP2Obj1kS';
     }
-    if (!this.name) {
-      this.name = this._id;
-    }
     next();
   } catch (error) {
     next(error);

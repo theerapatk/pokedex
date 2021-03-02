@@ -1,6 +1,9 @@
 import createError = require('http-errors');
 import * as jwt from 'jsonwebtoken';
-import { insertUserSchema, registerUserSchema, updateUserSchema } from '../helpers/schema-validation';
+import {
+  changePasswordSchema, insertUserSchema, registerUserSchema,
+  updateUserSchema
+} from '../helpers/schema-validation';
 import Role from '../models/role.model';
 import User from '../models/user.model';
 import BaseController from './base.controller';
@@ -65,6 +68,34 @@ class UserController extends BaseController {
     }
   }
 
+  changePassword = async (req: any, res: any, next: any) => {
+    try {
+      const user = await this.model.findOne({ _id: req.params.id });
+      if (!user) {
+        throw new createError.Unauthorized('Invalid credentials');
+      }
+
+      const validatedBody = await changePasswordSchema.validateAsync(req.body);
+      const isMatched = await user.isPasswordMatched(validatedBody.currentPassword);
+      if (!isMatched) {
+        throw new createError.Unauthorized('Invalid credentials');
+      }
+
+      if (validatedBody.password !== validatedBody.confirmPassword) {
+        throw new createError.BadRequest('New password and confirm password do not match');
+      }
+
+      user.password = validatedBody.password;
+      new this.model(user).save();
+      res.status(200).send({ success: true });
+    } catch (error) {
+      if (error.isJoi === true) {
+        error.status = 422;
+      }
+      next(error);
+    }
+  }
+
   refreshToken = async (req: any, res: any, next: any) => {
     try {
       const { refreshToken } = req.body;
@@ -110,7 +141,7 @@ class UserController extends BaseController {
         if (role) {
           validatedBody.role = role?._id;
         } else {
-          return next(new createError.BadRequest('Role not found'));
+          throw new createError.BadRequest('Role not found');
         }
       }
 
@@ -135,13 +166,13 @@ class UserController extends BaseController {
 
       if (validatedBody.hasOwnProperty('role')) {
         if (!req.user.permissions.includes('admin')) {
-          return next(new createError.Forbidden('Permissioin denied'));
+          throw new createError.Forbidden('Permissioin denied');
         }
         const role = await Role.findOne({ value: validatedBody.role });
         if (role) {
           validatedBody.role = role?._id;
         } else {
-          return next(new createError.BadRequest('Role not found'));
+          throw new createError.BadRequest('Role not found');
         }
       }
 
@@ -154,7 +185,7 @@ class UserController extends BaseController {
         error.status = 422;
       } else if (error.code === 11000) {
         if (error.keyValue.hasOwnProperty('email')) {
-          return next(new createError.Conflict(`${error.keyValue.email} has already been registered`));
+          next(new createError.Conflict(`${error.keyValue.email} has already been registered`));
         }
       }
       next(error);
