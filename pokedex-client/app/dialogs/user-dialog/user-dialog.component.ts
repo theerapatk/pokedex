@@ -117,7 +117,7 @@ export class UserDialogComponent implements OnInit {
       success: true,
       isCreatingNew: this.isCreatingNew,
       entityId,
-      user: response.user
+      user: response?.user
     });
   }
 

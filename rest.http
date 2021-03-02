@@ -7,8 +7,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "133@1.com",
-  "password": "1111333a"
+  "email": "admin",
+  "password": "admin"
 }
 
 # {
@@ -19,7 +19,7 @@ Content-Type: application/json
 ###
 @accessToken = {{login.response.body.accessToken}}
 
-GET http://localhost:4200/api/v1/users
+GET http://localhost:3000/api/v1/users
 Authorization: Bearer {{accessToken}}
 
 ### Register Route
