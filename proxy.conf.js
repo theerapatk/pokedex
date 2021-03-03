@@ -4,8 +4,7 @@ const PROXY_CONFIG = [{
   secure: false,
   logLevel: 'debug',
   changeOrigin: true,
-  onProxyRes(proxyRes, req, res) {
-
+  onProxyRes: (proxyRes, req, res) => {
     console.log('RAW Headers from the target', JSON.stringify(proxyRes.headers, true, 2));
 
     let body = [];
@@ -23,7 +22,6 @@ const PROXY_CONFIG = [{
         console.error(`Cannot parse JSON body: ${error.message}`);
       }
     });
-
   }
 }];
 
