@@ -7,6 +7,7 @@ import {
 import Role from '../models/role.model';
 import User from '../models/user.model';
 import BaseController from './base.controller';
+import multer = require('multer');
 
 class UserController extends BaseController {
 
@@ -191,6 +192,62 @@ class UserController extends BaseController {
       next(error);
     }
   }
+
+  validateRequestParam = async (req: any, res: any, next: any) => {
+    try {
+      const user = await this.model.findOne({ _id: req.params.id });
+      if (!user) {
+        throw new createError.BadRequest('User not found');
+      }
+      next();
+    } catch (error) {
+      if (error.name === 'CastError') {
+        next(new createError.BadRequest('User not found'));
+      }
+      next(error);
+    }
+  }
+
+  addProfilePicture = async (req: any, res: any, next: any) => {
+    try {
+      const profilePicture = req.file?.location;
+      if (!profilePicture) {
+        throw new createError.BadGateway('There\'s something wrong with the uploaded file');
+      }
+
+      req.body.profilePicture = profilePicture;
+      const user = await this.model.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
+      res.status(200).send(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  //   let update = { profilePicture: req.file.location };
+  //   res.status(200).send();
+
+  //   const uid = req.params.id;
+
+  //   const singleUpload = upload.single('image');
+  //   singleUpload(req, res, function (err: { message: any; }) {
+  //     if (err) {
+  //       return res.json({
+  //         success: false,
+  //         errors: {
+  //           title: 'Image Upload Error',
+  //           detail: err.message,
+  //           error: err,
+  //         },
+  //       });
+  //     }
+
+  //     let update = { profilePicture: req.file.location };
+
+  //     User.findByIdAndUpdate(uid, update, { new: true })
+  //       .then((user) => res.status(200).json({ success: true, user: user }))
+  //       .catch((err) => res.status(400).json({ success: false, error: err }));
+  //   });
+  // }
 
 }
 
