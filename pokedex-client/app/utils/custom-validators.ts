@@ -1,4 +1,5 @@
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { ValidationErrorFunction } from '@hapi/joi';
 
 export class CustomValidators {
 
@@ -21,10 +22,14 @@ export class CustomValidators {
   //   };
   // }
 
-  static passwordMatchValidator(control: AbstractControl): any {
+  static compareConfirmPassword(control: AbstractControl): any {
     const passwordControl = control.get('password') as FormControl;
     const confirmPasswordControl = control.get('confirmPassword') as FormControl;
     confirmPasswordControl.setErrors(passwordControl.value !== confirmPasswordControl.value ? { passwordMismatch: true } : null);
+  }
+
+  static passwordMatchValidator(formGroup: AbstractControl): ValidationErrors {
+    return formGroup.get('password')?.value === formGroup.get('confirmPassword')?.value ? {} : { 'passwordMismatch': true };
   }
 
 }

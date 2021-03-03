@@ -28,7 +28,7 @@ export class ChangePasswordFormComponent implements OnInit {
         Validators.minLength(8)
       ]),
       confirmPassword: new FormControl({ value: '', disabled: false }, Validators.required)
-    }, CustomValidators.passwordMatchValidator)
+    }, CustomValidators.compareConfirmPassword)
   });
 
   @Input() data = { _id: '', fieldName: '', value: '' };

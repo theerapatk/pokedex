@@ -22,7 +22,7 @@ export class CreateAccountComponent implements OnInit {
     credential: new FormGroup({
       password: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl({ value: '', disabled: false }, Validators.required),
-    }, CustomValidators.passwordMatchValidator)
+    }, CustomValidators.compareConfirmPassword)
   });
 
   @Input() animationState = 0;

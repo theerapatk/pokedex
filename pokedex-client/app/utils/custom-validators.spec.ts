@@ -37,25 +37,25 @@ describe('CustomValidators', () => {
   //   });
   // });
 
-  it('#passwordMatchValidator should not have error given the password and confirmed password matched', () => {
+  it('#compareConfirmPassword should not have error given the password and confirmed password matched', () => {
     const credentialFormGroup = new FormGroup({
       password: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl({ value: '', disabled: false }, Validators.required),
     });
 
-    CustomValidators.passwordMatchValidator(credentialFormGroup);
+    CustomValidators.compareConfirmPassword(credentialFormGroup);
 
     const confirmPasswordControl = credentialFormGroup.get('confirmPassword') as FormControl;
     expect(confirmPasswordControl.hasError('passwordMismatch')).toBe(false);
   });
 
-  it('#passwordMatchValidator should have error given the password and confirmed password mismatched', () => {
+  it('#compareConfirmPassword should have error given the password and confirmed password mismatched', () => {
     const credentialFormGroup = new FormGroup({
       password: new FormControl({ value: 'MISMatch', disabled: false }, [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl({ value: 'misMatch', disabled: false }, Validators.required),
     });
 
-    CustomValidators.passwordMatchValidator(credentialFormGroup);
+    CustomValidators.compareConfirmPassword(credentialFormGroup);
 
     const confirmPasswordControl = credentialFormGroup.get('confirmPassword') as FormControl;
     expect(confirmPasswordControl.hasError('passwordMismatch')).toBe(true);
