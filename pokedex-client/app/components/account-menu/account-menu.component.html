@@ -3,7 +3,7 @@
   <button mat-icon-button [matMenuTriggerFor]="menu" [title]="authService.currentUser.name">
     <mat-icon>account_circle</mat-icon>
   </button>
-  <mat-menu #menu="mat-menu" id="mat-menu">
+  <mat-menu #menu="matMenu" id="matMenu">
     <button mat-menu-item (click)="openTrainerCard()">
       <mat-icon>person</mat-icon>
       <span>{{authService.currentUser.name}}</span>
