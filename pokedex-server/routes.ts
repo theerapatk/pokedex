@@ -26,7 +26,7 @@ function setRoutes(app: any): void {
   uploadRouter.post(
     '/api/v1/users/:id/add-profile-picture',
     userCtrl.validateRequestParam,
-    upload.single('image'),
+    // upload.single('image'),
     userCtrl.addProfilePicture);
   app.use(uploadRouter);
 
