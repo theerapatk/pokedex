@@ -44,7 +44,9 @@ export class InlineFormComponent implements OnInit {
   }
 
   onBlur(event: FocusEvent) {
-    this.isEditting = !this.isEditting;
+    if (!this.isLoading) {
+      this.isEditting = !this.isEditting;
+    }
     if (event.relatedTarget != null) {
       this.inlineForm.patchValue({ inputForm: this.previousValue });
     }
@@ -62,8 +64,11 @@ export class InlineFormComponent implements OnInit {
   onSubmit(): void {
     if (this.inlineForm.valid && this.inlineForm.dirty) {
       // this.inlineForm.markAsPristine();
+      this.isLoading = true;
       this.inlineForm.disable();
-      this.updateUser();
+      setTimeout(() => {
+        this.updateUser();
+      }, 2000);
     }
   }
 

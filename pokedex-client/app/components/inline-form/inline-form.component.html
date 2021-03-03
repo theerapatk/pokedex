@@ -18,7 +18,8 @@
     <button *ngIf="!isEditting" mat-button type="button" (click)="onEditClicked()" title="Edit">
       <mat-icon>edit</mat-icon>
     </button>
-    <button *ngIf="isEditting" mat-button type="submit" (mousedown)="$event.preventDefault()" title="Save">
+    <button *ngIf="isEditting" mat-button type="submit" (mousedown)="$event.preventDefault()" title="Save"
+      [disabled]="isLoading">
       <mat-icon>check</mat-icon>
     </button>
   </div>
