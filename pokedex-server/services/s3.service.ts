@@ -23,12 +23,10 @@ const upload = multer({
     acl: 'public-read',
     s3,
     bucket: 'jojo-pokedex',
-    metadata: function (req: any, file: any, callback: any) {
-      callback(null, { fieldName: 'TESTING_METADATA' });
-    },
-    key: function (req: any, file: any, callback: any) {
-      callback(null, Date.now().toString());
-    },
+    metadata: (req: any, file: any, callback: any) =>
+      callback(null, { fieldName: 'TESTING_METADATA' }),
+    key: (req: any, file: any, callback: any) =>
+      callback(null, Date.now().toString()),
   }),
 });
 

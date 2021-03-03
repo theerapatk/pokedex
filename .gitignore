@@ -46,4 +46,3 @@ testem.log
 Thumbs.db
 pokedex-app/node_modules/
 pokedex-app/dist/
-.env

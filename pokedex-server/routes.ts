@@ -6,20 +6,23 @@ import User from './models/user.model';
 import createError = require('http-errors');
 const guard = require('express-jwt-permissions')();
 
-function setRoutes(app: any): void {
+const setRoutes = (app: any) => {
   const userCtrl = new UserController();
 
   const authRouter = express.Router();
-  authRouter.route('/register').post(userCtrl.register);
-  authRouter.route('/login').post(userCtrl.login);
-  authRouter.route('/refresh-token').post(userCtrl.refreshToken);
+  authRouter
+    .post('/register', userCtrl.register)
+    .post('/login', userCtrl.login)
+    .post('/refresh-token', userCtrl.refreshToken)
   app.use('/auth', authRouter);
 
   const apiRouter = express.Router();
-  apiRouter.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }));
-  apiRouter.put('/users/:id', forbidAdminOp, userCtrl.update);
-  apiRouter.put('/users/:id/change-password', forbidAdminOp, userCtrl.changePassword);
-  apiRouter.route('/users/:id').get(userCtrl.get)
+  apiRouter
+    .use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }))
+    .put('/users/:id', forbidAdminOp, userCtrl.update)
+    .put('/users/:id/change-password', forbidAdminOp, userCtrl.changePassword)
+    .get('/users/:id', userCtrl.get);
+
   // apiRouter.route('/users/:id/add-profile-picture').post(userCtrl.addProfilePicture)
 
   // const uploadRouter = express.Router();
@@ -32,15 +35,16 @@ function setRoutes(app: any): void {
   // app.use(uploadRouter);
 
   apiRouter.use(guard.check('admin'));
-  apiRouter.route('/users').get(userCtrl.getAll);
-  apiRouter.route('/users').post(userCtrl.insert);
-  apiRouter.route('/users/count').get(userCtrl.count);
+  apiRouter.route('/users')
+    .get(userCtrl.getAll)
+    .post(userCtrl.insert);
+  apiRouter.get('/users/count', userCtrl.count);
   apiRouter.delete('/users/:id', forbidAdminOp, userCtrl.delete);
 
   const roleCtrl = new RoleController();
-  apiRouter.route('/roles').get(roleCtrl.getAll);
-  apiRouter.route('/roles').post(roleCtrl.insert);
-  apiRouter.route('/roles/count').get(roleCtrl.count);
+  apiRouter.route('/roles')
+    .get(roleCtrl.getAll)
+    .post(roleCtrl.insert);
   apiRouter.route('/roles/:id')
     .get(roleCtrl.get)
     .put(roleCtrl.update)

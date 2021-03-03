@@ -15,11 +15,13 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
-async function main(): Promise<any> {
+const main = async () => {
   try {
     await setMongo();
     setRoutes(app);
+
     app.get('/*', (req, res) => res.sendFile(path.join(__dirname, '../public/index.html')));
+
     app.use((err: any, req: any, res: any, next: any) => {
       res.status(err.status || 500);
       res.send({
@@ -29,6 +31,7 @@ async function main(): Promise<any> {
         },
       });
     });
+
     if (require.main === module) {
       const port = app.get('port');
       app.listen(port, () => console.log(`** Pokedex server is listening on port ${port}, (http://localhost:${port}/) **`));

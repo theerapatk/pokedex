@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 
-async function setMongo(): Promise<void> {
-
+const setMongo = async () => {
   let uri = process.env.MONGODB_URI;
   if (process.env.NODE_ENV === 'test') {
     uri = process.env.MONGODB_TEST_URI;
@@ -34,7 +33,6 @@ async function setMongo(): Promise<void> {
     await mongoose.connection.close();
     process.exit(0);
   });
-
 }
 
 export default setMongo;
