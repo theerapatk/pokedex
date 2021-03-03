@@ -5,7 +5,8 @@ const PROXY_CONFIG = [{
   logLevel: 'debug',
   changeOrigin: true,
   onProxyRes: (proxyRes, req, res) => {
-    console.log('RAW Headers from the target', JSON.stringify(proxyRes.headers, true, 2));
+    const prettyHeaders = JSON.stringify(proxyRes.headers, true, 2);
+    console.log(`RAW Headers from the target:\n${prettyHeaders}\n`);
 
     let body = [];
 
