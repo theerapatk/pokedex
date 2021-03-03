@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SlideAnimation } from '@animations/slide-animation';
@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login-dialog.component.scss'],
   animations: [SlideAnimation]
 })
-export class LoginDialogComponent implements OnInit {
+export class LoginDialogComponent {
 
   hidePassword = true;
   animationState = 0;
@@ -49,8 +49,6 @@ export class LoginDialogComponent implements OnInit {
 
     // this.fbService.init(initParams);
   }
-
-  ngOnInit(): void { }
 
   onLogIn(): void {
     this.isLoading = true;

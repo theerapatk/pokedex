@@ -54,7 +54,7 @@ export class PokemonDetailDialogComponent implements OnInit {
     this.pokemonDetail = { id, name, sprites, types, stats, moves, abilities };
   }
 
-  onNextPokemonClick(isNext: boolean = false): void {
+  onNextPokemonClick(isNext = false): void {
     this.dialogRef.close({ id: isNext ? this.getNextId(true) : this.getNextId(false) });
   }
 

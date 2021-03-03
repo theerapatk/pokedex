@@ -4,7 +4,7 @@ import RoleController from './controllers/role.controller';
 import UserController from './controllers/user.controller';
 import User from './models/user.model';
 import createError = require('http-errors');
-const guard = require('express-jwt-permissions')();
+import guard = require('express-jwt-permissions');
 
 const setRoutes = (app: any) => {
   const userCtrl = new UserController();
@@ -13,7 +13,7 @@ const setRoutes = (app: any) => {
   authRouter
     .post('/register', userCtrl.register)
     .post('/login', userCtrl.login)
-    .post('/refresh-token', userCtrl.refreshToken)
+    .post('/refresh-token', userCtrl.refreshToken);
   app.use('/auth', authRouter);
 
   const apiRouter = express.Router();
@@ -34,7 +34,7 @@ const setRoutes = (app: any) => {
   //   userCtrl.addProfilePicture);
   // app.use(uploadRouter);
 
-  apiRouter.use(guard.check('admin'));
+  apiRouter.use(guard().check('admin'));
   apiRouter.route('/users')
     .get(userCtrl.getAll)
     .post(userCtrl.insert);
@@ -50,7 +50,7 @@ const setRoutes = (app: any) => {
     .put(roleCtrl.update)
     .delete(roleCtrl.delete);
   app.use('/api/v1', apiRouter);
-}
+};
 
 const forbidAdminOp = async (req: any, res: any, next: any) => {
   try {
@@ -62,6 +62,6 @@ const forbidAdminOp = async (req: any, res: any, next: any) => {
   } catch (err) {
     next();
   }
-}
+};
 
 export default setRoutes;

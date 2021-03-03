@@ -22,7 +22,7 @@ const userSchema = new Schema<IUser>({
   role: { type: Schema.Types.ObjectId, ref: 'Role' }
 }, { versionKey: false });
 
-const populateRole = function (this: any) {
+const populateRole = function (this: any): void {
   this.populate('role');
 };
 userSchema.pre('findOne', populateRole).pre('find', populateRole);
@@ -45,11 +45,7 @@ userSchema.pre('save', async function (next): Promise<void> {
 });
 
 userSchema.methods.isPasswordMatched = async function (password): Promise<boolean> {
-  try {
-    return await bcrypt.compare(password, this.password);
-  } catch (error) {
-    throw error;
-  }
+  return await bcrypt.compare(password, this.password);
 };
 
 // Omit the password when returning a user

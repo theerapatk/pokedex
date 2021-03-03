@@ -60,7 +60,14 @@ describe('UserDialogComponent', () => {
     fixture = TestBed.createComponent(UserDialogComponent);
     component = fixture.componentInstance;
 
-    roleService.getRoles.and.returnValue(asyncData([{ "_id": "60391b846a4cc87510ee69dc", "value": 0, "text": "Pokémon Trainer", "__v": 0 }, { "_id": "60391b976a4cc87510ee69de", "value": 1, "text": "Pokémon Master", "__v": 0 }, { "_id": "60391ba16a4cc87510ee69df", "value": 2, "text": "Gym Leader", "__v": 0 }, { "_id": "60391baa6a4cc87510ee69e0", "value": 3, "text": "Elite Four", "__v": 0 }, { "_id": "60391bb36a4cc87510ee69e1", "value": 4, "text": "Pokémon Champion", "__v": 0 }, { "_id": "60391c956a4cc87510ee69e2", "value": 9, "text": "Admin", "__v": 0 }, { "_id": "6039f6dd9349c433683130c6", "value": 10, "text": "test" }]));
+    roleService.getRoles.and.returnValue(asyncData([
+      { _id: '60391b846a4cc87510ee69dc', value: 0, text: 'Pokémon Trainer', __v: 0 },
+      { _id: '60391b976a4cc87510ee69de', value: 1, text: 'Pokémon Master', __v: 0 },
+      { _id: '60391ba16a4cc87510ee69df', value: 2, text: 'Gym Leader', __v: 0 },
+      { _id: '60391baa6a4cc87510ee69e0', value: 3, text: 'Elite Four', __v: 0 },
+      { _id: '60391bb36a4cc87510ee69e1', value: 4, text: 'Pokémon Champion', __v: 0 },
+      { _id: '60391c956a4cc87510ee69e2', value: 9, text: 'Admin', __v: 0 }
+    ]));
     fixture.detectChanges();
   });
 

@@ -13,14 +13,14 @@ export class TrainerProfileComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  onSelectFile(event: Event) {
+  onSelectFile(event: Event): void {
     const inputElment = event.target as HTMLInputElement;
     if (inputElment.files && inputElment.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(inputElment.files[0]);
-      reader.onload = (event) => {
-        this.imgSrc = (event.target as FileReader).result;
-      }
+      reader.onload = (progressEvent: ProgressEvent) => {
+        this.imgSrc = (progressEvent.target as FileReader).result;
+      };
     }
   }
 

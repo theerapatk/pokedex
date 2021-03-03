@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '@services/authentication.service';
-import { UserService } from '@services/user.service';
 
 @Component({
   selector: 'app-account-settings',
@@ -19,7 +18,7 @@ export class AccountSettingsComponent implements OnInit {
 
   buildData(fieldName = ''): { _id: string, fieldName: string, value: string } {
     const { _id, email, name } = this.authService.currentUser;
-    let data = { _id, fieldName, value: '' };
+    const data = { _id, fieldName, value: '' };
     if (fieldName === 'email') {
       data.value = email;
     } else if (fieldName === 'name') {

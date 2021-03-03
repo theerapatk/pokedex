@@ -51,7 +51,7 @@ class UserController extends BaseController {
       const payload = {
         user: user.toJSON(),
         permissions: [userRole]
-      }
+      };
       const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '15m'
@@ -115,7 +115,7 @@ class UserController extends BaseController {
       const payload = {
         user: user.toJSON(),
         permissions: [userRole]
-      }
+      };
       const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN as string, {
         issuer: 'jojo-pokedex',
         expiresIn: '15m'
@@ -137,7 +137,7 @@ class UserController extends BaseController {
     try {
       const validatedBody = await insertUserSchema.validateAsync(req.body);
 
-      if (validatedBody.hasOwnProperty('role')) {
+      if (Object.hasOwnProperty.call(validatedBody, 'role')) {
         const role = await Role.findOne({ value: validatedBody.role });
         if (role) {
           validatedBody.role = role?._id;
@@ -153,7 +153,7 @@ class UserController extends BaseController {
       if (error.isJoi === true) {
         error.status = 422;
       } else if (error.code === 11000) {
-        if (error.keyValue.hasOwnProperty('email')) {
+        if (Object.hasOwnProperty.call(error.keyValue, 'email')) {
           return next(new createError.Conflict(`${error.keyValue.email} has already been registered`));
         }
       }
@@ -165,7 +165,7 @@ class UserController extends BaseController {
     try {
       const validatedBody = await updateUserSchema.validateAsync(req.body);
 
-      if (validatedBody.hasOwnProperty('role')) {
+      if (Object.hasOwnProperty.call(validatedBody, 'role')) {
         if (!req.user.permissions.includes('admin')) {
           throw new createError.Forbidden('Permissioin denied');
         }
@@ -185,7 +185,7 @@ class UserController extends BaseController {
       if (error.isJoi === true) {
         error.status = 422;
       } else if (error.code === 11000) {
-        if (error.keyValue.hasOwnProperty('email')) {
+        if (Object.hasOwnProperty.call(error.keyValue, 'email')) {
           next(new createError.Conflict(`${error.keyValue.email} has already been registered`));
         }
       }
@@ -216,7 +216,7 @@ class UserController extends BaseController {
       }
 
       req.body.profilePicture = profilePicture;
-      const user = await this.model.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
+      const user = await this.model.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true });
       res.status(200).send(user);
     } catch (error) {
       next(error);

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from '@models/user.model';
 import { AuthenticationService } from '@services/authentication.service';
 import { UserService } from '@services/user.service';
 import { ToastrService } from 'ngx-toastr';
@@ -43,7 +44,7 @@ export class InlineFormComponent implements OnInit {
     inputForm.updateValueAndValidity();
   }
 
-  onBlur(event: FocusEvent) {
+  onBlur(event: FocusEvent): void {
     if (!this.isLoading) {
       this.isEditting = !this.isEditting;
     }
@@ -79,12 +80,12 @@ export class InlineFormComponent implements OnInit {
     );
   }
 
-  private buildRequestBody() {
+  private buildRequestBody(): User {
     const requestBody = {} as any;
     if (this.data.fieldName === 'email') {
-      requestBody.email = this.inlineForm.controls.inputForm.value
+      requestBody.email = this.inlineForm.controls.inputForm.value;
     } else if (this.data.fieldName === 'name') {
-      requestBody.name = this.inlineForm.controls.inputForm.value
+      requestBody.name = this.inlineForm.controls.inputForm.value;
     }
     return requestBody;
   }

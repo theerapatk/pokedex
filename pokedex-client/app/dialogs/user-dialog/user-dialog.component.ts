@@ -41,7 +41,7 @@ export class UserDialogComponent implements OnInit {
     this.initRoleOptions();
   }
 
-  private initRoleOptions() {
+  private initRoleOptions(): void {
     this.isLoading = true;
     this.roleService.getRoles().subscribe(
       response => this.handleSuccessfulGetRoles(response as Role[]),
@@ -49,7 +49,7 @@ export class UserDialogComponent implements OnInit {
     );
   }
 
-  private handleSuccessfulGetRoles(roles: Role[]) {
+  private handleSuccessfulGetRoles(roles: Role[]): void {
     roles.forEach(role => {
       const { value, text } = role;
       this.roleOptions.push({ value, viewValue: text });
@@ -59,7 +59,7 @@ export class UserDialogComponent implements OnInit {
     this.initForm();
   }
 
-  private handleErrorGetRoles() {
+  private handleErrorGetRoles(): void {
     this.isLoading = false;
     this.trainerForm.enable();
   }

@@ -39,9 +39,9 @@ export class ChangePasswordFormComponent implements OnInit {
     private toastrService: ToastrService
   ) { }
 
-  ngOnInit(): void { this.subscribeChangePasswordCheckboxEvent() }
+  ngOnInit(): void { this.subscribeChangePasswordCheckboxEvent(); }
 
-  private subscribeChangePasswordCheckboxEvent() {
+  private subscribeChangePasswordCheckboxEvent(): void {
     this.changePasswordForm.controls.changePasswordCheckbox.valueChanges.subscribe(
       (checked: boolean) => {
         this.enableCredentialForm = checked;
@@ -54,7 +54,7 @@ export class ChangePasswordFormComponent implements OnInit {
     );
   }
 
-  onChangePasswordCheckboxChanged(event: MatCheckboxChange) {
+  onChangePasswordCheckboxChanged(event: MatCheckboxChange): void {
     this.enableCredentialForm = event.checked;
   }
 
@@ -87,18 +87,18 @@ export class ChangePasswordFormComponent implements OnInit {
     this.toastrService.warning(errorResponse?.error?.error?.message);
   }
 
-  get hasRequiredOrAlphanumericError() {
+  get hasRequiredOrAlphanumericError(): boolean {
     const passwordControl = this.changePasswordForm.controls.credential.get('password');
     return false;
   }
 
-  get hasRequiredOrNumberError() {
+  get hasRequiredOrNumberError(): boolean {
     const passwordControl = this.changePasswordForm.controls.credential.get('password');
     return false;
 
   }
 
-  get hasRequiredOrNonAlphanumericError() {
+  get hasRequiredOrNonAlphanumericError(): boolean {
     const passwordControl = this.changePasswordForm.controls.credentialForm.get('password');
     return false;
   }

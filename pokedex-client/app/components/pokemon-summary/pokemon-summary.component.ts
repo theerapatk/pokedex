@@ -47,7 +47,7 @@ export class PokemonSummaryComponent implements OnInit {
     }]];
   }
 
-  private buildStatData() {
+  private buildStatData(): [] {
     const { stats } = this.pokemonDetail;
     return stats && stats.length !== 0 ? stats.map((stat: any) => stat.base_stat) : [];
   }

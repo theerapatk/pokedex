@@ -83,7 +83,7 @@ export class PokedexComponent implements AfterViewInit {
     }
   }
 
-  private clickOnNextPokemonFromDialog(pokemonId: string | undefined) {
+  private clickOnNextPokemonFromDialog(pokemonId: string | undefined): void {
     if (pokemonId) {
       const pokemonElement = document.getElementById(pokemonId) as HTMLElement;
       if (pokemonElement) {

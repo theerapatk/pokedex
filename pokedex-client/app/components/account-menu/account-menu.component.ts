@@ -39,7 +39,7 @@ export class AccountMenuComponent implements OnInit {
     });
   }
 
-  openTrainerCard() {
+  openTrainerCard(): void {
     const dialogRef = this.dialog.open(TrainerCardDialogComponent, {
       width: '100%',
       panelClass: 'dialog-responsive',

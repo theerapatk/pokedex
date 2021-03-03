@@ -29,7 +29,7 @@ export class CustomValidators {
   }
 
   static passwordMatchValidator(formGroup: AbstractControl): ValidationErrors {
-    return formGroup.get('password')?.value === formGroup.get('confirmPassword')?.value ? {} : { 'passwordMismatch': true };
+    return formGroup.get('password')?.value === formGroup.get('confirmPassword')?.value ? {} : { passwordMismatch: true };
   }
 
 }

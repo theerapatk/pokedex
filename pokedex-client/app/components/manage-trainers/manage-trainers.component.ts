@@ -118,7 +118,7 @@ export class ManageTrainersComponent implements OnInit {
     );
   }
 
-  private checkIfSelfUpdate(result: any) {
+  private checkIfSelfUpdate(result: any): void {
     const currentUser = this.authService.currentUser;
     if (!result.isCreatingNew && currentUser._id === result.user._id) {
       this.authService.updateCurrentUser(result.user);
