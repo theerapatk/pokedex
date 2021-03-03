@@ -1,12 +1,12 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent implements OnInit, OnDestroy {
+export class SidenavComponent implements OnDestroy {
 
   mobileQuery: MediaQueryList;
 
@@ -26,8 +26,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener('change', this.mobileQueryListener);
   }
-
-  ngOnInit(): void { }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeEventListener('changet', this.mobileQueryListener);

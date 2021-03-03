@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './account-menu.component.html',
   styleUrls: ['./account-menu.component.scss']
 })
-export class AccountMenuComponent implements OnInit {
+export class AccountMenuComponent {
 
   constructor(
     private toastrService: ToastrService,
@@ -19,9 +19,6 @@ export class AccountMenuComponent implements OnInit {
     public authService: AuthenticationService,
     public dialog: MatDialog
   ) { }
-
-  ngOnInit(): void {
-  }
 
   onLogInClick(): void {
     const dialogRef = this.dialog.open(LoginDialogComponent, {
@@ -40,16 +37,10 @@ export class AccountMenuComponent implements OnInit {
   }
 
   openTrainerCard(): void {
-    const dialogRef = this.dialog.open(TrainerCardDialogComponent, {
+    this.dialog.open(TrainerCardDialogComponent, {
       width: '100%',
       panelClass: 'dialog-responsive',
       autoFocus: false
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-
-      }
     });
   }
 

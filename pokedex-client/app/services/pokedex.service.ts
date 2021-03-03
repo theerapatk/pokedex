@@ -13,7 +13,7 @@ export class PokedexService {
 
   constructor(private http: HttpClient) { }
 
-  getPokemons(nextUrl: string = ''): Observable<any> {
+  getPokemons(nextUrl = ''): Observable<any> {
     const url = nextUrl.trim() === '' ? 'https://pokeapi.co/api/v2/pokemon' : nextUrl;
     return this.http.get<PokeApi>(url);
   }

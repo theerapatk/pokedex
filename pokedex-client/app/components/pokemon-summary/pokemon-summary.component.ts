@@ -39,8 +39,6 @@ export class PokemonSummaryComponent implements OnInit {
     abilities: []
   };
 
-  constructor() { }
-
   ngOnInit(): void {
     this.radarChartData = [...this.radarChartData, ...[{
       data: this.buildStatData(), label: 'Base Stats'
@@ -52,11 +50,11 @@ export class PokemonSummaryComponent implements OnInit {
     return stats && stats.length !== 0 ? stats.map((stat: any) => stat.base_stat) : [];
   }
 
-  chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
+  chartClicked({ event, active }: any): void {
     console.log(event, active);
   }
 
-  chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
+  chartHovered({ event, active }: any): void {
     console.log(event, active);
   }
 

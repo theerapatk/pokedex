@@ -107,7 +107,7 @@ export class PokedexComponent implements AfterViewInit {
     }
   }
 
-  getId(url: string = ''): string {
+  getId(url = ''): string {
     return url.split('pokemon/')[1]?.split('/')[0];
   }
 

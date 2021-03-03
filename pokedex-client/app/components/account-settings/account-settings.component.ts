@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthenticationService } from '@services/authentication.service';
 
 @Component({
@@ -6,15 +6,13 @@ import { AuthenticationService } from '@services/authentication.service';
   templateUrl: './account-settings.component.html',
   styleUrls: ['./account-settings.component.scss']
 })
-export class AccountSettingsComponent implements OnInit {
+export class AccountSettingsComponent {
 
   isLoading = true;
 
   constructor(
     public authService: AuthenticationService
   ) { }
-
-  ngOnInit(): void { }
 
   buildData(fieldName = ''): { _id: string, fieldName: string, value: string } {
     const { _id, email, name } = this.authService.currentUser;
