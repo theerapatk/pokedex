@@ -21,14 +21,14 @@ function setRoutes(app: any): void {
   apiRouter.route('/users/:id').get(userCtrl.get)
   // apiRouter.route('/users/:id/add-profile-picture').post(userCtrl.addProfilePicture)
 
-  const uploadRouter = express.Router();
-  uploadRouter.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }));
-  uploadRouter.post(
-    '/api/v1/users/:id/add-profile-picture',
-    userCtrl.validateRequestParam,
-    // upload.single('image'),
-    userCtrl.addProfilePicture);
-  app.use(uploadRouter);
+  // const uploadRouter = express.Router();
+  // uploadRouter.use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }));
+  // uploadRouter.post(
+  //   '/api/v1/users/:id/add-profile-picture',
+  //   userCtrl.validateRequestParam,
+  //   upload.single('image'),
+  //   userCtrl.addProfilePicture);
+  // app.use(uploadRouter);
 
   apiRouter.use(guard.check('admin'));
   apiRouter.route('/users').get(userCtrl.getAll);
