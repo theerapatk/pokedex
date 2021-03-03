@@ -32,7 +32,9 @@ export class AccountMenuComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.success === true) {
-        this.router.navigate(['/admin/manage-trainers']);
+        if (result.isAdmin === true) {
+          this.router.navigate(['/admin/manage-trainers']);
+        }
       }
     });
   }

@@ -27,8 +27,11 @@
         <button mat-flat-button type="button" (click)="handleNextStep(1)" class="new-account-button"
             [disabled]="isLoading">
             Creat New Account</button>
-        <!-- <div class="text-container">or</div>
-        <button mat-flat-button (click)="onFacebookLogIn()" class="facebook-login-button" [disabled]="isLoading">
+        <div class="text-container">or</div>
+        <button mat-flat-button (click)="logInAsGuest()" class="facebook-login-button" [disabled]="isLoading">
+            <mat-icon class="facebook-icon">catching_pokemon</mat-icon>Login as Guest
+        </button>
+        <!-- <button mat-flat-button (click)="onFacebookLogIn()" class="facebook-login-button" [disabled]="isLoading">
             <mat-icon class="facebook-icon">facebook</mat-icon>Login with Facebook
         </button> -->
     </form>

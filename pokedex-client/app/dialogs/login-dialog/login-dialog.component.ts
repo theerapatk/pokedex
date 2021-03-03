@@ -73,6 +73,16 @@ export class LoginDialogComponent implements OnInit {
     // }, 500);
   }
 
+  logInAsGuest(): void {
+    this.authService.login({ email: 'admin', password: 'admin' }).subscribe(
+      response => this.handleSuccessfulLogIn(false),
+      errorResponse => {
+        this.isLoading = false;
+        this.isCredentialsValid = false;
+      }
+    );
+  }
+
   onFacebookLogIn(): void {
     const options: LoginOptions = {
       scope: 'public_profile',
@@ -84,10 +94,10 @@ export class LoginDialogComponent implements OnInit {
       .catch(e => console.error('Error logging in'));
   }
 
-  private handleSuccessfulLogIn(): void {
+  private handleSuccessfulLogIn(isAdmin = true): void {
     this.isLoading = false;
     this.toastrService.success('Logged in successfully');
-    this.dialogRef.close({ success: true });
+    this.dialogRef.close({ success: true, isAdmin });
   }
 
   handleNextStep(animationState: number): void {
