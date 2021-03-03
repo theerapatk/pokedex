@@ -1,17 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-trainer-profile',
   templateUrl: './trainer-profile.component.html',
   styleUrls: ['./trainer-profile.component.scss']
 })
-export class TrainerProfileComponent implements OnInit {
+export class TrainerProfileComponent {
 
   imgSrc: string | ArrayBuffer | null = '';
-
-  constructor() { }
-
-  ngOnInit(): void { }
 
   onSelectFile(event: Event): void {
     const inputElment = event.target as HTMLInputElement;

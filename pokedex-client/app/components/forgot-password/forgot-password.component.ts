@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SlideAnimation } from '@animations/slide-animation';
 
@@ -8,7 +8,7 @@ import { SlideAnimation } from '@animations/slide-animation';
   styleUrls: ['./forgot-password.component.scss'],
   animations: [SlideAnimation]
 })
-export class ForgotPasswordComponent implements OnInit {
+export class ForgotPasswordComponent {
 
   createAccountForm = new FormGroup({
     email: new FormControl({ value: '', disabled: false }, Validators.required)
@@ -18,11 +18,9 @@ export class ForgotPasswordComponent implements OnInit {
   @Output() animationStateChange = new EventEmitter<number>();
   @Output() isLoading = new EventEmitter<boolean>(false);
 
-  constructor() { }
-
-  ngOnInit(): void { }
-
-  onSubmit(): void { }
+  onSubmit(): void {
+    throw new Error('Method not implemented.');
+  }
 
   onBackToLogIn(): void {
     this.createAccountForm.reset();

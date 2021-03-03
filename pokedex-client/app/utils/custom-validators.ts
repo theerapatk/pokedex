@@ -5,7 +5,7 @@ export class CustomValidators {
 
   static readonly HAS_ALPHANUMERIC_REGEX = /[a-z].*[A-Z]|[A-Z].*[a-z]/;
   static readonly HAS_NUMBER_REGEX = /\d/;
-  static readonly HAS_NON_ALPHANUMERIC_REGEX = /^(?=.*?["!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~"])/;
+  static readonly HAS_NON_ALPHANUMERIC_REGEX = /^(?=.*?["!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"])/;
 
   // static atLeastTwoValidator(): ValidatorFn {
   //   return (control: AbstractControl): { [key: string]: any } => {

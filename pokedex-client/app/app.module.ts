@@ -77,7 +77,7 @@ import { TrainerCardDialogComponent } from './dialogs/trainer-card-dialog/traine
     JwtModule.forRoot({
       config: {
         tokenGetter: (): string => localStorage.getItem('accessToken') || '',
-        disallowedRoutes: [new RegExp('\/auth')]
+        disallowedRoutes: [new RegExp('/auth')]
         // allowedDomains: ['localhost:3000', 'localhost:4200']
       }
     })

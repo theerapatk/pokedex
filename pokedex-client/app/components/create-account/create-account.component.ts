@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SlideAnimation } from '@animations/slide-animation';
 import { AuthenticationService } from '@services/authentication.service';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./create-account.component.scss'],
   animations: [SlideAnimation]
 })
-export class CreateAccountComponent implements OnInit {
+export class CreateAccountComponent {
 
   hidePassword = true;
   hideConfirmPassword = true;
@@ -33,8 +33,6 @@ export class CreateAccountComponent implements OnInit {
     private toastrService: ToastrService,
     private service: AuthenticationService
   ) { }
-
-  ngOnInit(): void { }
 
   onSubmit(): void {
     this.isLoading.emit(true);
