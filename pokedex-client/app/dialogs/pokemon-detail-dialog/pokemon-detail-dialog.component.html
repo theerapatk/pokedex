@@ -18,19 +18,22 @@
     </mat-tab>
   </mat-tab-group>
   <mat-dialog-actions align="center">
-    <button *ngIf="data.previous" mat-button color="primary" (click)="onNextPokemonClick()"
-      class="previous-pokemon-button">
-      <mat-icon>keyboard_arrow_left</mat-icon>Previous
-      <img class="pokemon-sprite" [src]="data.previous.dataset.imgsrc" width="70" height="70" alt="Sprite of Pokemon">
-    </button>
-    <div *ngIf="!data.previous" class="next-button-placeholder"></div>
+    <div class="previous-pokemon-button">
+      <button *ngIf="data.previous" mat-button color="primary" (click)="onNextPokemonClick()">
+        <mat-icon>keyboard_arrow_left</mat-icon>Previous
+        <img class="pokemon-sprite" [src]="data.previous.dataset.imgsrc" width="70" height="70" alt="Sprite of Pokemon">
+      </button>
+      <div *ngIf="!data.previous" class="next-button-placeholder"></div>
+    </div>
     <button mat-mini-fab color="primary" mat-dialog-close class="close-dialog-button">
       <mat-icon>close</mat-icon>
     </button>
-    <button *ngIf="data.next" mat-button color="primary" (click)="onNextPokemonClick(true)" class="next-pokemon-button">
-      <img class="pokemon-sprite" [src]="getNextImgSrc()" width="70" height="70" alt="Sprite of Pokemon">
-      Next<mat-icon>keyboard_arrow_right</mat-icon>
-    </button>
-    <div *ngIf="!data.next" class="next-button-placeholder"></div>
+    <div class="next-pokemon-button">
+      <button *ngIf="data.next" mat-button color="primary" (click)="onNextPokemonClick(true)">
+        <img class="pokemon-sprite" [src]="getNextImgSrc()" width="70" height="70" alt="Sprite of Pokemon">
+        Next<mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+      <div *ngIf="!data.next" class="next-button-placeholder"></div>
+    </div>
   </mat-dialog-actions>
 </ng-template>
