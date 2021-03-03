@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from '@models/user.model';
 import { UserService } from '@services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-delete-dialog',
@@ -15,6 +16,7 @@ export class DeleteDialogComponent {
 
   constructor(
     private userService: UserService,
+    private toastrService: ToastrService,
     public dialogRef: MatDialogRef<DeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
       title?: string,
@@ -32,20 +34,19 @@ export class DeleteDialogComponent {
   deleteUser(): void {
     const entity = this.data.row as User;
     this.userService.deleteUser(entity._id as string).subscribe(
-      response => this.handleSuccessResponse(entity.email as string),
-      errorResponse => this.handleErrorResponse(errorResponse)
+      response => this.handleSuccess(entity.email as string),
+      errorResponse => this.handleError(errorResponse)
     );
   }
 
-  private handleSuccessResponse(entityId: string): void {
+  private handleSuccess(entityId: string): void {
     this.isLoading = false;
     this.dialogRef.close({ success: true, entityId });
   }
 
-  private handleErrorResponse(errorResponse: any): void {
+  private handleError(errorResponse: any): void {
     this.isLoading = false;
-    const errorResponseMessage = errorResponse?.error?.errors[0]?.errorMessage;
-    this.dialogRef.close({ success: false, errorMessage: errorResponseMessage || this.errorMessage });
+    this.toastrService.warning(errorResponse?.error?.error?.message || this.errorMessage);
   }
 
 }

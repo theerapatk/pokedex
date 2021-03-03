@@ -103,9 +103,7 @@ export class ManageTrainersComponent implements OnInit {
   }
 
   onCreateOrEditClicked(row?: User): void {
-    const dialogRef = this.openUpdateDialog(UserDialogComponent, row);
-
-    dialogRef.afterClosed().subscribe(
+    this.openUpdateDialog(UserDialogComponent, row).afterClosed().subscribe(
       result => {
         if (result && result.success === true) {
           this.checkIfSelfUpdate(result);
@@ -131,10 +129,10 @@ export class ManageTrainersComponent implements OnInit {
     }
   }
 
-  openUpdateDialog(dialogComponent: any, row?: any, width?: string, autoFocus = true): MatDialogRef<UserDialogComponent> {
+  openUpdateDialog(dialogComponent: any, row: any): MatDialogRef<UserDialogComponent> {
     return this.dialog.open(dialogComponent, {
       data: { row },
-      autoFocus,
+      autoFocus: true,
       disableClose: true,
       width: '100%',
       panelClass: 'login-dialog-responsive',
@@ -142,26 +140,22 @@ export class ManageTrainersComponent implements OnInit {
   }
 
   onDeleteClientClicked(row: User): void {
-    const dialogRef = this.openDeleteDialog({
+    this.openDeleteDialog({
       title: 'Delete Trainer',
       content: `Are you sure you want to delete the trainer whose email is <em><u>${row.email}</u></em> ?`,
       dataType: 'trainer',
       row
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result.success) {
+    }).afterClosed().subscribe(
+      result => {
+        if (result && result.success === true) {
           this.getUsers();
           this.toastrService.success(`The trainer whose email is ${result.entityId} has been deleted`);
-        } else {
-          this.toastrService.error(result.errorMessage, 'Delete Failed');
         }
       }
-    });
+    );
   }
 
-  openDeleteDialog(data: any, width?: string): MatDialogRef<DeleteDialogComponent> {
+  openDeleteDialog(data: any): MatDialogRef<DeleteDialogComponent> {
     return this.dialog.open(DeleteDialogComponent, {
       data,
       autoFocus: false,
