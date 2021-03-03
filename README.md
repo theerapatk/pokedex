@@ -11,7 +11,10 @@ This project uses the [MEAN stack](https://en.wikipedia.org/wiki/MEAN_(software_
 * [**E**xpress.js](http://expressjs.com): backend framework
 * [**A**ngular 2+](https://angular.io): frontend framework
 * [**N**ode.js](https://nodejs.org): runtime environment
-Most of the server setup thanks to [davideviolante](https://github.com/davideviolante/Angular-Full-Stack/)
+
+Special Thanks
+* [Angular-Full-Stack](https://github.com/davideviolante/Angular-Full-Stack)
+* [API-Authentication-NodeJs](https://github.com/trulymittal/API-Authentication-NodeJs)
 
 ## Run
 ### Docker
