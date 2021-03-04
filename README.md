@@ -1,4 +1,6 @@
 # Pokédex App - MEAN Stack
+[![](https://github.com/theerapatk/pokedex/workflows/Build/badge.svg)](https://github.com/theerapatk/pokedex/actions?query=workflow%3ABuild)
+[![](https://github.com/theerapatk/pokedex/workflows/Tests/badge.svg)](https://github.com/theerapatk/pokedex/actions?query=workflow%3ATests)
 
 DEMO
 * [jojo-pokedex.herokuapp.com](https://jojo-pokedex.herokuapp.com)
