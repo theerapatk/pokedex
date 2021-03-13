@@ -64,18 +64,15 @@ export class InlineFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.inlineForm.valid && this.inlineForm.dirty) {
-      // this.inlineForm.markAsPristine();
       this.isLoading = true;
       this.inlineForm.disable();
-      setTimeout(() => {
-        this.updateUser();
-      }, 2000);
+      this.updateUser();
     }
   }
 
   private updateUser(): void {
     this.userService.updateUser(this.data._id, this.buildRequestBody()).subscribe(
-      response => this.handleSuccessfulUpdate(response),
+      response => this.handleSuccessfulUpdate(response as User),
       errorResponse => this.handleErrorUpdate(errorResponse)
     );
   }
@@ -90,17 +87,17 @@ export class InlineFormComponent implements OnInit {
     return requestBody;
   }
 
-  private handleSuccessfulUpdate(response?: any): void {
+  private handleSuccessfulUpdate(user: User): void {
     this.isLoading = false;
     this.isEditting = false;
     this.inlineForm.enable();
     if (this.data.fieldName === 'email') {
-      this.inlineForm.patchValue({ inputForm: response.user.email });
+      this.inlineForm.patchValue({ inputForm: user.email });
     } else if (this.data.fieldName === 'name') {
-      this.inlineForm.patchValue({ inputForm: response.user.name });
+      this.inlineForm.patchValue({ inputForm: user.name });
     }
     this.inlineForm.markAsPristine();
-    this.authService.updateCurrentUser(response.user);
+    this.authService.updateCurrentUser(user);
     this.toastrService.success('Update successful');
   }
 

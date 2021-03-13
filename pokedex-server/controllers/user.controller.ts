@@ -26,7 +26,7 @@ class UserController extends BaseController {
       validatedBody.role = role?._id;
 
       new this.model(validatedBody).save();
-      res.status(201).json({ success: true });
+      res.status(201).send();
     } catch (error) {
       if (error.isJoi === true) {
         error.status = 422;
@@ -60,7 +60,7 @@ class UserController extends BaseController {
         issuer: 'jojo-pokedex',
         expiresIn: '1y'
       });
-      res.status(200).json({ accessToken, refreshToken });
+      res.status(200).send({ accessToken, refreshToken });
     } catch (error) {
       if (error.isJoi === true) {
         return next(new createError.BadRequest('Invalid Email/Password'));
@@ -88,7 +88,7 @@ class UserController extends BaseController {
 
       user.password = validatedBody.password;
       new this.model(user).save();
-      res.status(200).send({ success: true });
+      res.status(200).send();
     } catch (error) {
       if (error.isJoi === true) {
         error.status = 422;
@@ -124,7 +124,7 @@ class UserController extends BaseController {
         issuer: 'jojo-pokedex',
         expiresIn: '1y'
       });
-      res.status(200).json({ accessToken, refreshToken: newRefreshToken });
+      res.status(200).send({ accessToken, refreshToken: newRefreshToken });
     } catch (error) {
       if (error.name === 'JsonWebTokenError') {
         return next(new createError.Unauthorized());
@@ -148,7 +148,7 @@ class UserController extends BaseController {
 
       const savedUser = await new this.model(validatedBody).save();
       const user = await savedUser.populate('role').execPopulate();
-      res.status(201).json(user);
+      res.status(201).send(user);
     } catch (error) {
       if (error.isJoi === true) {
         error.status = 422;
@@ -180,7 +180,7 @@ class UserController extends BaseController {
       const user = await this.model
         .findOneAndUpdate({ _id: req.params.id }, validatedBody, { new: true })
         .populate('role');
-      res.status(200).send({ success: true, user });
+      res.status(200).send(user);
     } catch (error) {
       if (error.isJoi === true) {
         error.status = 422;
@@ -231,7 +231,7 @@ class UserController extends BaseController {
   //   const singleUpload = upload.single('image');
   //   singleUpload(req, res, function (err: { message: any; }) {
   //     if (err) {
-  //       return res.json({
+  //       return res.send({
   //         success: false,
   //         errors: {
   //           title: 'Image Upload Error',
@@ -244,8 +244,8 @@ class UserController extends BaseController {
   //     let update = { profilePicture: req.file.location };
 
   //     User.findByIdAndUpdate(uid, update, { new: true })
-  //       .then((user) => res.status(200).json({ success: true, user: user }))
-  //       .catch((err) => res.status(400).json({ success: false, error: err }));
+  //       .then((user) => res.status(200).send({ success: true, user: user }))
+  //       .catch((err) => res.status(400).send({ success: false, error: err }));
   //   });
   // }
 

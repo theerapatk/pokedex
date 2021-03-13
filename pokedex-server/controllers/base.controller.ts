@@ -6,9 +6,9 @@ abstract class BaseController {
   getAll = async (req: any, res: any) => {
     try {
       const docs = await this.model.find({});
-      res.status(200).json(docs);
+      res.status(200).send(docs);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(400).send({ error: err.message });
     }
   }
 
@@ -16,9 +16,9 @@ abstract class BaseController {
   count = async (req: any, res: any) => {
     try {
       const count = await this.model.count();
-      res.status(200).json(count);
+      res.status(200).send(count);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(400).send({ error: err.message });
     }
   }
 
@@ -26,7 +26,7 @@ abstract class BaseController {
   insert = async (req: any, res: any, next: any) => {
     try {
       const obj = await new this.model(req.body).save();
-      res.status(201).json(obj);
+      res.status(201).send(obj);
     } catch (err) {
       next(err);
     }
@@ -36,9 +36,9 @@ abstract class BaseController {
   get = async (req: any, res: any) => {
     try {
       const obj = await this.model.findOne({ _id: req.params.id });
-      res.status(200).json(obj);
+      res.status(200).send(obj);
     } catch (err) {
-      return res.status(500).json({ error: err.message });
+      return res.status(500).send({ error: err.message });
     }
   }
 
@@ -58,7 +58,7 @@ abstract class BaseController {
       await this.model.findOneAndRemove({ _id: req.params.id });
       res.status(200).send({ success: true });
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(400).send({ error: err.message });
     }
   }
 }
