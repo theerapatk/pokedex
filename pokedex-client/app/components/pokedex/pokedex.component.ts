@@ -121,7 +121,7 @@ export class PokedexComponent implements AfterViewInit {
       pokemonType => this.handleSuccessfulGetPokemonByType(pokemonType.pokemon),
       error => {
         this.isLoading = false;
-        this.searchingByType = previousType;
+        this.searchingByType = previousType || 'N/A';
       }
     );
   }

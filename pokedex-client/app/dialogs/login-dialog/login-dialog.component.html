@@ -22,13 +22,14 @@
         </div>
         <button mat-flat-button type="submit" color="primary" (click)="onLogIn()" class="login-button"
             [disabled]="!loginForm.dirty || !loginForm.valid || isLoading">Log In</button>
-        <div class="anchor-container"><a [routerLink]="" (click)="handleNextStep(2)">Forgotten password?</a></div>
+        <div class="anchor-container"><a [routerLink]="" (click)="handleNextStep(2)"
+                [ngClass]="isLoading ? 'disabled' : 'enabled'">Forgotten password?</a></div>
         <mat-divider></mat-divider>
         <button mat-flat-button type="button" (click)="handleNextStep(1)" class="new-account-button"
             [disabled]="isLoading">
             Creat New Account</button>
         <div class="text-container">or</div>
-        <button mat-flat-button (click)="logInAsGuest()" class="facebook-login-button" [disabled]="isLoading">
+        <button mat-flat-button (click)="onLogIn(true)" class="facebook-login-button" [disabled]="isLoading">
             <mat-icon class="facebook-icon">catching_pokemon</mat-icon>Login as Guest
         </button>
         <!-- <button mat-flat-button (click)="onFacebookLogIn()" class="facebook-login-button" [disabled]="isLoading">

@@ -59,9 +59,12 @@ export class PokemonDetailDialogComponent implements OnInit {
   }
 
   getNextImgSrc(): string {
-    const nextId = Number(this.data.selfId) + 1;
-    return this.data.next.dataset === true ? this.data.next.dataset.imgsrc :
-      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${nextId}.png`;
+    let imgSrc = this.data.next.dataset.imgsrc;
+    if (!imgSrc) {
+      const nextId = Number(this.data.selfId) + 1;
+      imgSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${nextId}.png`;
+    }
+    return imgSrc;
   }
 
   private getNextId(isNext: boolean): string {

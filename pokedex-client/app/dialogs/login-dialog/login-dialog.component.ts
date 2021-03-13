@@ -50,34 +50,33 @@ export class LoginDialogComponent {
     // this.fbService.init(initParams);
   }
 
-  onLogIn(): void {
+  onLogIn(isGuest = false): void {
+    this.loginForm.disable();
     this.isLoading = true;
     this.isFormSubmitted = true;
     this.isCredentialsValid = true;
-    this.login();
+    if (isGuest) {
+      this.logInAsGuest();
+    } else {
+      this.login();
+    }
   }
 
   private login(): void {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.controls.credential.get('password')?.value;
-    this.authService.login({ email, password }).subscribe(
+    this.authService.login(email, password).subscribe(
       response => this.handleSuccessfulLogIn(),
-      errorResponse => {
-        this.isLoading = false;
-        this.isCredentialsValid = false;
-      }
+      errorResponse => this.handleErrorLogIn()
     );
     // setTimeout(() => {
     // }, 500);
   }
 
   logInAsGuest(): void {
-    this.authService.login({ email: 'admin', password: 'admin' }).subscribe(
+    this.authService.login('admin', 'admin').subscribe(
       response => this.handleSuccessfulLogIn(false),
-      errorResponse => {
-        this.isLoading = false;
-        this.isCredentialsValid = false;
-      }
+      errorResponse => this.handleErrorLogIn()
     );
   }
 
@@ -96,6 +95,12 @@ export class LoginDialogComponent {
     this.isLoading = false;
     this.toastrService.success('Logged in successfully');
     this.dialogRef.close({ success: true, isAdmin });
+  }
+
+  private handleErrorLogIn(): void {
+    this.loginForm.enable();
+    this.isLoading = false;
+    this.isCredentialsValid = false;
   }
 
   handleNextStep(animationState: number): void {

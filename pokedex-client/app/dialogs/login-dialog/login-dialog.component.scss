@@ -55,10 +55,19 @@ mat-form-field.mat-form-field {
 }
 
 .anchor-container > a {
-    color: #1877f2;
     font-size: 14px;
     font-weight: 400;
     text-decoration: none;
+}
+
+.enabled {
+    color: #1877f2;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: grey;
 }
 
 mat-divider {

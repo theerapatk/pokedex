@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -35,8 +35,14 @@ export class AuthenticationService {
     return this.http.post<any>('/auth/register', user);
   }
 
-  login(credentials: any): Observable<any> {
-    return this.http.post<any>('/auth/login', credentials).pipe(
+  login(email: string, password: string): Observable<any> {
+    const body = `email=${email}&password=${encodeURIComponent(password)}`;
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+    };
+    return this.http.post<any>('/auth/login', body, options).pipe(
       tap(response => {
         localStorage.setItem('accessToken', response.accessToken);
         localStorage.setItem('refreshToken', response.refreshToken);
