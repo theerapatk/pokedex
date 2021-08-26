@@ -20,7 +20,8 @@ const setRoutes = (app: any) => {
 
   const pokeCtrl = new PokeApiController();
   const apiRouter = express.Router();
-  const client = redis.createClient(process.env.REDIS_URL || 'redis://:test@localhost:6378');
+  const options = process.env.REDIS_URL ? { url: process.env.REDIS_URL } : { port: 6379, host: 'localhost' };
+  const client = redis.createClient(options);
   const cache = expressRedisCache({ client, expire: 86400 });
   apiRouter
     .get('/poke-api/pokemons', cache.route(), pokeCtrl.getPokemons)
