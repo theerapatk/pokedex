@@ -20,13 +20,14 @@ const setRoutes = (app: any) => {
 
   const pokeCtrl = new PokeApiController();
   const apiRouter = express.Router();
-  const options = process.env.REDIS_URL ? { url: process.env.REDIS_URL } : { port: 6379, host: 'localhost' };
-  const client = redis.createClient(options);
-  const cache = expressRedisCache({ client, expire: 86400 });
+  // const options = process.env.REDIS_URL ? { url: process.env.REDIS_URL } : { port: 6379, host: 'localhost' };
+  // const client = redis.createClient(options);
+  // const cache = expressRedisCache({ client, expire: 86400 });
+  // cache.route()
   apiRouter
-    .get('/poke-api/pokemons', cache.route(), pokeCtrl.getPokemons)
-    .get('/poke-api/pokemons/:id', cache.route(), pokeCtrl.getPokemon)
-    .get('/poke-api/types/:type', cache.route(), pokeCtrl.getTypes);
+    .get('/poke-api/pokemons', pokeCtrl.getPokemons)
+    .get('/poke-api/pokemons/:id', pokeCtrl.getPokemon)
+    .get('/poke-api/types/:type', pokeCtrl.getTypes);
 
   apiRouter
     .use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }))
