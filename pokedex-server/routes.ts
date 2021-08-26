@@ -7,6 +7,7 @@ import User from './models/user.model';
 import createError = require('http-errors');
 import guard = require('express-jwt-permissions');
 import expressRedisCache = require('express-redis-cache');
+import redis = require('redis');
 
 const setRoutes = (app: any) => {
   const authRouter = express.Router();
@@ -19,13 +20,8 @@ const setRoutes = (app: any) => {
 
   const pokeCtrl = new PokeApiController();
   const apiRouter = express.Router();
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const url = require('url');
-  const redis_uri = url.parse(process.env.REDIS_URL);
-  const cache = expressRedisCache({
-    host: redis_uri.hostname, port: Number(redis_uri.port) + 1,
-    auth_pass: redis_uri.auth.split(':')[1], expire: 86400
-  });
+  const client = redis.createClient(process.env.REDIS_URL || 'redis://:test@localhost:6378');
+  const cache = expressRedisCache({ client, expire: 86400 });
   apiRouter
     .get('/poke-api/pokemons', cache.route(), pokeCtrl.getPokemons)
     .get('/poke-api/pokemons/:id', cache.route(), pokeCtrl.getPokemon)
