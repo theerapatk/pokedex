@@ -1,15 +1,17 @@
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PokeApi } from '@models/poke-api';
 import { Pokemon } from '@models/pokemon';
 import { PokemonDetail } from '@models/pokemon-detail';
 import { PokedexService } from '@services/pokedex.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-pokedex',
   templateUrl: './pokedex.component.html',
   styleUrls: ['./pokedex.component.scss']
 })
-export class PokedexComponent implements AfterViewInit {
+export class PokedexComponent implements OnInit, OnDestroy {
 
   isLoggedIn = false;
   searchingByType = '';
@@ -22,19 +24,19 @@ export class PokedexComponent implements AfterViewInit {
   pokemonsByType: Pokemon[] = [];
   nextUrl = '';
 
+  private unsubscribe$: Subject<void> = new Subject();
+
   @ViewChild('searchInput') input!: ElementRef;
 
   constructor(private pokedexService: PokedexService) { }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.getPokemons();
-    }, 0);
+  ngOnInit(): void {
+    this.getPokemons();
   }
 
   private getPokemons(pokemonId?: string): void {
     this.isLoading = true;
-    this.pokedexService.getPokemons(this.nextUrl).subscribe(
+    this.pokedexService.getPokemons(this.nextUrl).pipe(takeUntil(this.unsubscribe$)).subscribe(
       response => this.handleSuccessfulGetPokemons(response, pokemonId),
       error => this.isLoading = false
     );
@@ -66,11 +68,13 @@ export class PokedexComponent implements AfterViewInit {
   private getPokemonDetails(pokemons: Pokemon[] = this.pokemons, pokemonId?: string): void {
     if (pokemons.length > 0) {
       this.isLoading = true;
-      const getPokemons$ = pokemons.map((pokemon: any) => this.pokedexService.getPokemon(pokemon.url));
+      const getPokemons$ = pokemons.map(pokemon => this.pokedexService.getPokemon(pokemon.url));
       getPokemons$.forEach((getPokemon$, index: number) => {
-        getPokemon$.subscribe(
+        getPokemon$.pipe(takeUntil(this.unsubscribe$)).subscribe(
           pokemonDetail => {
-            pokemons[index].details = this.buildPokemonDetails(pokemonDetail);
+            if (pokemons.length > 0 && pokemons[index]) {
+              pokemons[index].details = this.buildPokemonDetails(pokemonDetail);
+            }
             setTimeout(() => this.clickOnNextPokemonFromDialog(pokemonId), 0);
           },
           error => this.isLoading = false,
@@ -111,12 +115,17 @@ export class PokedexComponent implements AfterViewInit {
   }
 
   onTypeClick(type: string): void {
+    this.cancelRequest();
     this.pokemons.length = 0;
     this.isLoading = true;
     this.isApplyingType = true;
+    this.getPokemonsByType(type);
+  }
+
+  private getPokemonsByType(type: string) {
     const previousType = this.searchingByType;
     this.searchingByType = type;
-    this.pokedexService.getPokemonsByType(type).subscribe(
+    this.pokedexService.getPokemonsByType(type).pipe(takeUntil(this.unsubscribe$)).subscribe(
       pokemonType => this.handleSuccessfulGetPokemonsByType(pokemonType.pokemon),
       error => {
         this.isLoading = false;
@@ -132,14 +141,13 @@ export class PokedexComponent implements AfterViewInit {
   }
 
   onResetClick(): void {
+    this.cancelRequest();
     this.onScrollToTopClick({ top: 0 });
     this.pokemons.length = 0;
     this.nextUrl = '';
     this.isApplyingType = false;
     this.input.nativeElement.value = '';
-    setTimeout(() => {
-      this.getPokemons();
-    }, 0);
+    this.getPokemons();
   }
 
   applyFilterByType(value: string): void {
@@ -191,6 +199,15 @@ export class PokedexComponent implements AfterViewInit {
 
   trackByFn(index: number, item: any): number {
     return index;
+  }
+
+  ngOnDestroy(): void {
+    this.cancelRequest();
+  }
+
+  private cancelRequest(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }
