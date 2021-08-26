@@ -1,5 +1,4 @@
-import { animate, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { PokeApi } from '@models/poke-api';
 import { Pokemon } from '@models/pokemon';
 import { PokemonDetail } from '@models/pokemon-detail';
@@ -8,18 +7,7 @@ import { PokedexService } from '@services/pokedex.service';
 @Component({
   selector: 'app-pokedex',
   templateUrl: './pokedex.component.html',
-  styleUrls: ['./pokedex.component.scss'],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [   // :enter is alias to 'void => *'
-        style({ opacity: 0 }),
-        animate(500, style({ opacity: 1 }))
-      ]),
-      transition(':leave', [   // :leave is alias to '* => void'
-        animate(500, style({ opacity: 0 }))
-      ])
-    ])
-  ]
+  styleUrls: ['./pokedex.component.scss']
 })
 export class PokedexComponent implements AfterViewInit {
 
@@ -34,7 +22,7 @@ export class PokedexComponent implements AfterViewInit {
   pokemonsByType: Pokemon[] = [];
   nextUrl = '';
 
-  @ViewChild('searchInput') input: any;
+  @ViewChild('searchInput') input!: ElementRef;
 
   constructor(private pokedexService: PokedexService) { }
 

@@ -27,7 +27,8 @@
 </div>
 <div class="pokemon-card-container" appPokemonClick (morePokemonsRequired)="onScroll($event)">
     <ng-container *ngFor="let pokemon of pokemons; trackBy: trackByFn">
-        <mat-card *ngIf="pokemon.details && pokemon.details.types.length > 0" [@fadeInOut] id="{{ getId(pokemon.url) }}"
+        <mat-card [style.opacity]="pokemon.details ? '1' : '0'"
+            [style.visibility]="pokemon.details ? 'visible' : 'hidden'" id="{{ getId(pokemon.url) }}"
             class="mat-elevation-z2 pokemon-card"
             [class]="pokemon.details && pokemon.details.types[0].type.name + '-lighter'"
             [attr.data-imgsrc]="pokemon.details && pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'">
