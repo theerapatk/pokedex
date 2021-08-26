@@ -1,26 +1,34 @@
 import * as express from 'express';
 import * as jwt from 'express-jwt';
+import PokeApiController from './controllers/poke-api.controller';
 import RoleController from './controllers/role.controller';
 import UserController from './controllers/user.controller';
 import User from './models/user.model';
 import createError = require('http-errors');
 import guard = require('express-jwt-permissions');
+import expressRedisCache = require('express-redis-cache');
 
 const setRoutes = (app: any) => {
-  const userCtrl = new UserController();
-
   const authRouter = express.Router();
+  const userCtrl = new UserController();
   authRouter
     .post('/register', userCtrl.register)
     .post('/login', userCtrl.login)
     .post('/refresh-token', userCtrl.refreshToken);
   app.use('/auth', authRouter);
 
+  const pokeCtrl = new PokeApiController();
   const apiRouter = express.Router();
+  const cache = expressRedisCache({ expire: 86400 });
+  apiRouter
+    .get('/poke-api/pokemons', cache.route(), pokeCtrl.getPokemons)
+    .get('/poke-api/pokemons/:id', cache.route(), pokeCtrl.getPokemon)
+    .get('/poke-api/types/:type', cache.route(), pokeCtrl.getTypes);
+
   apiRouter
     .use(jwt({ secret: process.env.SECRET_ACCESS_TOKEN as string, algorithms: ['HS256'] }))
-    .put('/users/:id', forbidAdminOp, userCtrl.update)
-    .put('/users/:id/change-password', forbidAdminOp, userCtrl.changePassword)
+    .put('/users/:id', guardAdmin, userCtrl.update)
+    .put('/users/:id/change-password', guardAdmin, userCtrl.changePassword)
     .get('/users/:id', userCtrl.get);
 
   // apiRouter.route('/users/:id/add-profile-picture').post(userCtrl.addProfilePicture)
@@ -39,7 +47,7 @@ const setRoutes = (app: any) => {
     .get(userCtrl.getAll)
     .post(userCtrl.insert);
   apiRouter.get('/users/count', userCtrl.count);
-  apiRouter.delete('/users/:id', forbidAdminOp, userCtrl.delete);
+  apiRouter.delete('/users/:id', guardAdmin, userCtrl.delete);
 
   const roleCtrl = new RoleController();
   apiRouter.route('/roles')
@@ -52,7 +60,7 @@ const setRoutes = (app: any) => {
   app.use('/api/v1', apiRouter);
 };
 
-const forbidAdminOp = async (req: any, res: any, next: any) => {
+const guardAdmin = async (req: any, res: any, next: any) => {
   try {
     const admin = await User.findOne({ _id: req.params.id }).lean();
     if (admin?.email === 'admin') {

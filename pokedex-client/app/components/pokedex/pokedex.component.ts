@@ -1,14 +1,25 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
 import { PokeApi } from '@models/poke-api';
 import { Pokemon } from '@models/pokemon';
 import { PokemonDetail } from '@models/pokemon-detail';
 import { PokedexService } from '@services/pokedex.service';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-pokedex',
   templateUrl: './pokedex.component.html',
-  styleUrls: ['./pokedex.component.scss']
+  styleUrls: ['./pokedex.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [   // :enter is alias to 'void => *'
+        style({ opacity: 0 }),
+        animate(500, style({ opacity: 1 }))
+      ]),
+      transition(':leave', [   // :leave is alias to '* => void'
+        animate(500, style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class PokedexComponent implements AfterViewInit {
 
@@ -45,7 +56,7 @@ export class PokedexComponent implements AfterViewInit {
     this.nextUrl = response.next;
 
     const partialPokemons = response.results as Pokemon[];
-    if (partialPokemons.length > 0) {
+    if (partialPokemons?.length > 0) {
       this.getPokemonDetails(partialPokemons, pokemonId);
     }
 
@@ -66,29 +77,29 @@ export class PokedexComponent implements AfterViewInit {
 
   private getPokemonDetails(pokemons: Pokemon[] = this.pokemons, pokemonId?: string): void {
     if (pokemons.length > 0) {
-      const calls = pokemons.map((pokemon: any) => this.pokedexService.getPokemon(pokemon.url));
       this.isLoading = true;
-      forkJoin(calls).subscribe(
-        pokemonDetails => {
-          pokemons.forEach((pokemon, index) =>
-            pokemon.details = this.buildPokemonDetails(pokemonDetails[index]));
-          this.isLoading = false;
-
-          setTimeout(() => {
-            this.clickOnNextPokemonFromDialog(pokemonId);
-          }, 0);
-        },
-        error => this.isLoading = false
-      );
+      const getPokemons$ = pokemons.map((pokemon: any) => this.pokedexService.getPokemon(pokemon.url));
+      getPokemons$.forEach((getPokemon$, index: number) => {
+        getPokemon$.subscribe(
+          pokemonDetail => {
+            pokemons[index].details = this.buildPokemonDetails(pokemonDetail);
+            setTimeout(() => this.clickOnNextPokemonFromDialog(pokemonId), 0);
+          },
+          error => this.isLoading = false,
+          () => {
+            if (getPokemons$.length - 1 === index) {
+              this.isLoading = false;
+            }
+          }
+        )
+      });
     }
   }
 
   private clickOnNextPokemonFromDialog(pokemonId: string | undefined): void {
     if (pokemonId) {
       const pokemonElement = document.getElementById(pokemonId) as HTMLElement;
-      if (pokemonElement) {
-        pokemonElement.click();
-      }
+      if (pokemonElement) pokemonElement.click()
     }
   }
 
@@ -102,7 +113,7 @@ export class PokedexComponent implements AfterViewInit {
   }
 
   onScroll(pokemonId?: string): void {
-    if (this.nextUrl && !this.isApplyingType) {
+    if (this.nextUrl && !this.isApplyingType && !this.isLoading) {
       this.getPokemons(pokemonId);
     }
   }
@@ -117,8 +128,8 @@ export class PokedexComponent implements AfterViewInit {
     this.isApplyingType = true;
     const previousType = this.searchingByType;
     this.searchingByType = type;
-    this.pokedexService.getPokemonByType(type).subscribe(
-      pokemonType => this.handleSuccessfulGetPokemonByType(pokemonType.pokemon),
+    this.pokedexService.getPokemonsByType(type).subscribe(
+      pokemonType => this.handleSuccessfulGetPokemonsByType(pokemonType.pokemon),
       error => {
         this.isLoading = false;
         this.searchingByType = previousType || 'N/A';
@@ -126,7 +137,7 @@ export class PokedexComponent implements AfterViewInit {
     );
   }
 
-  private handleSuccessfulGetPokemonByType(pokemon: any): void {
+  private handleSuccessfulGetPokemonsByType(pokemon: any): void {
     this.pokemonsByType = [...pokemon.map((item: { pokemon: Pokemon; }) => item.pokemon)];
     this.pokemons = [...this.pokemonsByType];
     this.applyFilterByType(this.input.nativeElement.value);
@@ -188,6 +199,10 @@ export class PokedexComponent implements AfterViewInit {
   @HostListener('window:scroll', ['$event']) getScrollHeight(): void {
     this.shouldShowScrollTopButton = window.pageYOffset > 1260;
     this.shouldShowElevation = window.pageYOffset > 20;
+  }
+
+  trackByFn(index: number, item: any): number {
+    return index;
   }
 
 }

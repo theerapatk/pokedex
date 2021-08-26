@@ -26,25 +26,28 @@
     {{ this.nextUrl && !this.isApplyingType ? 'There might be some results' : 'Result not found' }}
 </div>
 <div class="pokemon-card-container" appPokemonClick (morePokemonsRequired)="onScroll($event)">
-    <mat-card *ngFor="let pokemon of pokemons;" id="{{ getId(pokemon.url) }}" class="mat-elevation-z2 pokemon-card"
-        [class]="pokemon.details && pokemon.details.types[0].type.name + '-lighter'"
-        [attr.data-imgsrc]="pokemon.details && pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'">
-        #{{ getId(pokemon.url) }}<span class="pokemon-name"> {{ pokemon.name }}</span>
-        <ng-container *ngIf="pokemon.details && pokemon.details.types.length > 0">
-            <div class="details-container">
-                <div class="pokemon-sprite-container">
-                    <img [src]="pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'"
-                        alt="Sprite of Pokemon" width="96" height="96">
+    <ng-container *ngFor="let pokemon of pokemons; trackBy: trackByFn">
+        <mat-card *ngIf="pokemon.details && pokemon.details.types.length > 0" [@fadeInOut] id="{{ getId(pokemon.url) }}"
+            class="mat-elevation-z2 pokemon-card"
+            [class]="pokemon.details && pokemon.details.types[0].type.name + '-lighter'"
+            [attr.data-imgsrc]="pokemon.details && pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'">
+            #{{ getId(pokemon.url) }}<span class="pokemon-name"> {{ pokemon.name }}</span>
+            <ng-container *ngIf="pokemon.details && pokemon.details.types.length > 0">
+                <div class="details-container">
+                    <div class="pokemon-sprite-container">
+                        <img [src]="pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'"
+                            alt="Sprite of Pokemon" width="96" height="96">
+                    </div>
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let type of pokemon.details.types;" class="white-text"
+                            [ngClass]="type.type.name" (click)="onTypeClick(type.type.name)">
+                            {{ type.type.name }}
+                        </mat-chip>
+                    </mat-chip-list>
                 </div>
-                <mat-chip-list>
-                    <mat-chip *ngFor="let type of pokemon.details.types;" class="white-text" [ngClass]="type.type.name"
-                        (click)="onTypeClick(type.type.name)">
-                        {{ type.type.name }}
-                    </mat-chip>
-                </mat-chip-list>
-            </div>
-        </ng-container>
-    </mat-card>
+            </ng-container>
+        </mat-card>
+    </ng-container>
     <ng-container *ngIf="nextUrl && !isApplyingType">
         <div class="scoll-to-load-text" (click)="onScroll()">
             <mat-icon aria-hidden="false" aria-label="Scroll down to load more" class="arrow-downward bounce">
