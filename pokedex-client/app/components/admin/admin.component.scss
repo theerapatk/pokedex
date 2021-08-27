@@ -27,16 +27,38 @@ h1.app-name {
   margin-left: 8px;
 }
 
+mat-nav-list > .mat-list-item {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+mat-nav-list > .mat-list-item.active {
+  color: rgb(0, 23, 64);
+  background-color: lighten(#3f51b5, 35);
+}
+
 .admin-sidenav-container {
   /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
      causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
   flex: 1;
 }
 
+.admin-sidenav-container > mat-sidenav {
+  width: 260px;
+}
+
 .admin-is-mobile .admin-sidenav-container {
   /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
      `<body>` to be our scrolling element for mobile layouts. */
   flex: 1 0 auto;
+}
+
+.refresh-button {
+  margin-left: auto;
+  opacity: 0.25;
+}
+
+.anchor-item.active:hover .refresh-button {
+  opacity: 1;
 }
 
 @media only screen and (min-width: 600px) {

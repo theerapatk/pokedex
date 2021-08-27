@@ -47,10 +47,17 @@ mat-progress-bar {
     text-align: center;
     font-weight: bold;
     font-size: larger;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .reset-button {
     top: 1px;
+}
+
+.search-result-container {
+    margin-top: 10px;
+    margin-bottom: 25px;
 }
 
 .pokemon-card-container {
@@ -63,11 +70,10 @@ mat-progress-bar {
 
 .pokemon-card {
     margin: 1em;
-    flex: 1 0 calc(11%);
+    flex: 1 0 calc(10%);
     min-width: 75px;
-    max-width: 216px;
+    max-width: 200px;
     font-weight: bold;
-    transition: 0.3s;
 
     &:hover {
         cursor: pointer;
@@ -118,6 +124,10 @@ mat-progress-bar {
         opacity: 0.6;
         color: rgb(22, 138, 255);
         text-decoration: underline;
+    }
+
+    span {
+        margin-left: 5px;
     }
 }
 

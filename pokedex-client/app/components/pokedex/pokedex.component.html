@@ -23,7 +23,7 @@
     </mat-chip>
 </div>
 <div *ngIf="pokemons.length === 0 && !isLoading" class="search-result-not-found-container">
-    {{ this.nextUrl && !this.isApplyingType ? 'There might be some results' : 'Result not found' }}
+    {{ this.nextUrl && !this.isApplyingType ? 'There are more results' : 'Result not found' }}
 </div>
 <div class="pokemon-card-container" appPokemonClick (morePokemonsRequired)="onScroll($event)">
     <mat-card *ngFor="let pokemon of pokemons;" id="{{ getId(pokemon.url) }}" class="mat-elevation-z2 pokemon-card"
@@ -48,8 +48,8 @@
     <ng-container *ngIf="nextUrl && !isApplyingType">
         <div class="scoll-to-load-text" (click)="onScroll()">
             <mat-icon aria-hidden="false" aria-label="Scroll down to load more" class="arrow-downward bounce">
-                arrow_downward
-            </mat-icon> Scroll down to load more
+                catching_pokemon
+            </mat-icon><span>Tap to load more</span>
         </div>
     </ng-container>
 </div>
