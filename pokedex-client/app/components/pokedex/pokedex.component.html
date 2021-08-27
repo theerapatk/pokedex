@@ -30,10 +30,10 @@
         <mat-card [style.opacity]="pokemon.details ? '1' : '0'"
             [style.visibility]="pokemon.details ? 'visible' : 'hidden'" id="{{ getId(pokemon.url) }}"
             class="mat-elevation-z2 pokemon-card"
-            [class]="pokemon.details && pokemon.details.types[0].type.name + '-lighter'"
+            [class]="pokemon.details && pokemon.details.types ? pokemon.details.types[0].type.name + '-lighter' : ''"
             [attr.data-imgsrc]="pokemon.details && pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'">
             #{{ getId(pokemon.url) }}<span class="pokemon-name"> {{ pokemon.name }}</span>
-            <ng-container *ngIf="pokemon.details && pokemon.details.types.length > 0">
+            <ng-container *ngIf="pokemon.details && pokemon.details.types && pokemon.details.types.length > 0">
                 <div class="details-container">
                     <div class="pokemon-sprite-container">
                         <img [src]="pokemon.details.sprites.front_default || 'assets/img/meltan_placeholder.png'"

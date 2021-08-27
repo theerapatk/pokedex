@@ -97,9 +97,9 @@ export class PokedexComponent implements OnInit, OnDestroy {
 
   private buildPokemonDetails(pokemonDetail: PokemonDetail): PokemonDetail {
     return {
-      types: pokemonDetail.types,
+      types: pokemonDetail?.types,
       sprites: {
-        front_default: pokemonDetail.sprites.front_default
+        front_default: pokemonDetail?.sprites?.front_default
       }
     };
   }

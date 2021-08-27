@@ -24,7 +24,7 @@ export class CachingInterceptor implements HttpInterceptor {
 
 function isCacheable(request: HttpRequest<any>): boolean {
   return request.method === 'GET' && (request.url.includes('/api/v1/poke-api/')
-    || request.url.includes('raw.githubusercontent.com/PokeAPI/sprites'));
+    || request.url.includes('raw.githubusercontent.com/PokeAPI/sprites/'));
 }
 
 function sendRequest(req: HttpRequest<any>, next: HttpHandler, cache: RequestCache): Observable<HttpEvent<any>> {

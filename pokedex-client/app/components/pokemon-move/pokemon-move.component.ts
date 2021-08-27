@@ -26,11 +26,11 @@ export class PokemonMoveComponent implements OnInit {
   }
 
   private getMoves(): void {
-    if (this.pokemonMoves.length > 0) {
-      const calls = this.pokemonMoves.map(
-        (move: any) => this.pokedexService.getByFullUrl(move.move.url));
+    if (this.pokemonMoves?.length > 0) {
+      const calls$ = this.pokemonMoves.map(
+        (move: any) => this.pokedexService.getByFullUrl(move?.move?.url));
 
-      forkJoin(calls).subscribe(moveDetails => {
+      forkJoin(calls$).subscribe(moveDetails => {
         const dataSource = moveDetails.map((detail: any) => ({
           name: detail.name,
           type: detail.type.name,
@@ -43,7 +43,9 @@ export class PokemonMoveComponent implements OnInit {
         this.dataSource = new MatTableDataSource(dataSource);
         this.dataSource.sort = this.sort;
         this.isLoadingMove = false;
-      });
+      }, error => this.isLoadingMove = false);
+    } else {
+      this.isLoadingMove = false;
     }
   }
 
