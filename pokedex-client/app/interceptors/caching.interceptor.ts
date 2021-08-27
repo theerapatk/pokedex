@@ -6,6 +6,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { pokeApiUrl } from '../services/pokedex.service';
 import { RequestCache } from '../services/request-cache.service';
 
 // https://github.com/angular/angular/blob/master/aio/content/examples/http/src/app/http-interceptors/caching-interceptor.ts
@@ -21,7 +22,7 @@ export class CachingInterceptor implements HttpInterceptor {
 }
 
 function isCacheable(request: HttpRequest<any>): boolean {
-  return request.method === 'GET' && (request.url.includes('https://pokeapi.co/api/v2/') ||
+  return request.method === 'GET' && (request.url.includes(pokeApiUrl) ||
     request.url.includes('raw.githubusercontent.com/PokeAPI/sprites/'));
 }
 

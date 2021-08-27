@@ -2,8 +2,8 @@ import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core
 import { PokeApi } from '@models/poke-api';
 import { Pokemon } from '@models/pokemon';
 import { PokemonDetail } from '@models/pokemon-detail';
-import { PokedexService } from '@services/pokedex.service';
 import { forkJoin } from 'rxjs';
+import { PokedexService } from '../../services/pokedex.service';
 
 @Component({
   selector: 'app-pokedex',
@@ -117,7 +117,7 @@ export class PokedexComponent implements AfterViewInit {
     this.isApplyingType = true;
     const previousType = this.searchingByType;
     this.searchingByType = type;
-    this.pokedexService.getPokemonByType(type).subscribe(
+    this.pokedexService.getPokemonsByType(type).subscribe(
       pokemonType => this.handleSuccessfulGetPokemonByType(pokemonType.pokemon),
       error => {
         this.isLoading = false;
