@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { User } from '@models/user.model';
 import { AuthenticationService } from '@services/authentication.service';
 import { UserService } from '@services/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { WorkspaceService } from '../../services/workspace.service';
 
 @Component({
   selector: 'app-manage-trainers',
@@ -21,7 +22,8 @@ export class ManageTrainersComponent implements OnInit {
   displayedColumns = ['email', 'name', '_id', 'role', 'action'];
   selectedFilterColumn = 'email';
 
-  readonly pageSizeOptions = [6, 16, 30];
+  readonly pageSizeOptions = [5, 10, 30, 50];
+  defaultPaginator = { pageSize: 10 };
   readonly USER_COLUMN_MAP: any = {
     email: 'Email',
     name: 'Name',
@@ -42,11 +44,24 @@ export class ManageTrainersComponent implements OnInit {
     private toastrService: ToastrService,
     private authService: AuthenticationService,
     private router: Router,
+    private workspaceService: WorkspaceService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
+    this.updateWorkspace();
     this.getUsers();
+  }
+
+  private updateWorkspace() {
+    const workspace = this.workspaceService.getWorkspace();
+    if (workspace && workspace.manageTrainers != null) {
+      const { pageSize } = workspace.manageTrainers.paginator;
+      this.defaultPaginator.pageSize = pageSize;
+    }
+    this.workspaceService.save({
+      manageTrainers: { paginator: this.defaultPaginator }
+    });
   }
 
   private getUsers(isCreatingNew = false): void {
@@ -178,6 +193,13 @@ export class ManageTrainersComponent implements OnInit {
 
   onFilterTextCleared(filterText: string): void {
     this.dataSource.filter = filterText;
+  }
+
+  onPaginatorChanged(event: PageEvent): void {
+    const paginator = { pageSize: event.pageSize };
+    this.workspaceService.save({
+      manageTrainers: { paginator }
+    });
   }
 
 }
