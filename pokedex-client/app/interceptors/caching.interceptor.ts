@@ -11,9 +11,7 @@ import { RequestCache } from '../services/request-cache.service';
 // https://github.com/angular/angular/blob/master/aio/content/examples/http/src/app/http-interceptors/caching-interceptor.ts
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {
-
   constructor(private cache: RequestCache) { }
-
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!isCacheable(request)) return next.handle(request)
     const cachedResponse = this.cache.get(request);
@@ -23,14 +21,12 @@ export class CachingInterceptor implements HttpInterceptor {
 }
 
 function isCacheable(request: HttpRequest<any>): boolean {
-  return request.method === 'GET' && (request.url.includes('/api/v1/poke-api/')
-    || request.url.includes('raw.githubusercontent.com/PokeAPI/sprites/'));
+  return request.method === 'GET' && (request.url.includes('https://pokeapi.co/api/v2/') ||
+    request.url.includes('/api/v1/poke-api/') || request.url.includes('raw.githubusercontent.com/PokeAPI/sprites/'));
 }
 
 function sendRequest(req: HttpRequest<any>, next: HttpHandler, cache: RequestCache): Observable<HttpEvent<any>> {
-
   const noHeaderReq = req.clone({ headers: new HttpHeaders() });
-
   return next.handle(noHeaderReq).pipe(
     tap(event => {
       if (event instanceof HttpResponse) {

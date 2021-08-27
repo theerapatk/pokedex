@@ -51,6 +51,10 @@ mat-progress-bar {
     font-size: larger;
 }
 
+.reset-button {
+    top: 1px;
+}
+
 .pokemon-card-container {
     display: flex;
     flex-flow: row wrap;
@@ -61,9 +65,8 @@ mat-progress-bar {
 
 .pokemon-card {
     margin: 1em;
-    flex: 1 0 calc(11%);
+    flex: 1 0 calc(10%);
     min-width: 75px;
-    max-width: 216px;
     font-weight: bold;
     transition: 0.8s;
 
@@ -73,6 +76,27 @@ mat-progress-bar {
         box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.6);
     }
 }
+
+// .pokemon-card-container {
+//     display: grid;
+//     grid-gap: 2em;
+//     position: relative;
+//     margin: 34px 14px 14px 14px;
+//     grid-template-columns: repeat(auto-fill, 250px);
+//     justify-content: space-evenly;
+// }
+
+// .pokemon-card {
+//     min-width: 75px;
+//     font-weight: bold;
+//     transition: 0.8s;
+
+//     &:hover {
+//         cursor: pointer;
+//         opacity: 0.6;
+//         box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.6);
+//     }
+// }
 
 .pokemon-name {
     text-transform: capitalize;
@@ -383,5 +407,6 @@ $unknown: #68a090;
 
     .pokemon-card {
         margin: 1.3em;
+        max-width: 200px;
     }
 }

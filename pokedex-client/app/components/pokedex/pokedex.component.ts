@@ -5,6 +5,7 @@ import { PokemonDetail } from '@models/pokemon-detail';
 import { PokedexService } from '@services/pokedex.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { PokeApiService } from '../../services/poke-api.service';
 
 @Component({
   selector: 'app-pokedex',
@@ -28,7 +29,7 @@ export class PokedexComponent implements OnInit, OnDestroy {
 
   @ViewChild('searchInput') input!: ElementRef;
 
-  constructor(private pokedexService: PokedexService) { }
+  constructor(private pokeApiService: PokeApiService) { }
 
   ngOnInit(): void {
     this.getPokemons();
@@ -36,7 +37,7 @@ export class PokedexComponent implements OnInit, OnDestroy {
 
   private getPokemons(pokemonId?: string): void {
     this.isLoading = true;
-    this.pokedexService.getPokemons(this.nextUrl).pipe(takeUntil(this.unsubscribe$)).subscribe(
+    this.pokeApiService.getPokemons(this.nextUrl).pipe(takeUntil(this.unsubscribe$)).subscribe(
       response => this.handleSuccessfulGetPokemons(response, pokemonId),
       error => this.isLoading = false
     );
@@ -68,7 +69,7 @@ export class PokedexComponent implements OnInit, OnDestroy {
   private getPokemonDetails(pokemons: Pokemon[] = this.pokemons, pokemonId?: string): void {
     if (pokemons.length > 0) {
       this.isLoading = true;
-      const getPokemons$ = pokemons.map(pokemon => this.pokedexService.getPokemon(pokemon.url));
+      const getPokemons$ = pokemons.map(pokemon => this.pokeApiService.getPokemon(pokemon.url));
       getPokemons$.forEach((getPokemon$, index: number) => {
         getPokemon$.pipe(takeUntil(this.unsubscribe$)).subscribe(
           pokemonDetail => {
@@ -125,7 +126,7 @@ export class PokedexComponent implements OnInit, OnDestroy {
   private getPokemonsByType(type: string) {
     const previousType = this.searchingByType;
     this.searchingByType = type;
-    this.pokedexService.getPokemonsByType(type).pipe(takeUntil(this.unsubscribe$)).subscribe(
+    this.pokeApiService.getPokemonsByType(type).pipe(takeUntil(this.unsubscribe$)).subscribe(
       pokemonType => this.handleSuccessfulGetPokemonsByType(pokemonType.pokemon),
       error => {
         this.isLoading = false;

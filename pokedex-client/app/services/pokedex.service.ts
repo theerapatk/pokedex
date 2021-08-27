@@ -5,8 +5,6 @@ import { PokeApi } from '../models/poke-api';
 import { PokemonDetail } from '../models/pokemon-detail';
 import { BaseHttpService } from './base-http.service';
 
-export const pokeApiUrl = 'https://pokeapi.co/api/v2';
-
 @Injectable({
   providedIn: 'root'
 })
