@@ -1,8 +1,8 @@
 <div class="summary-flex-container">
   <div class="sprite-ability-container">
-    <img [src]="pokemonDetail.sprites.front_default || 'assets/img/meltan_placeholder.png'" alt="Sprite of Pokemon"
+    <img [src]="pokemonDetail.sprites?.front_default || 'assets/img/meltan_placeholder.png'" alt="Sprite of Pokemon"
       class="pokemon-sprite">
-    <ng-container *ngIf="pokemonDetail.abilities.length > 0">
+    <ng-container *ngIf="pokemonDetail.abilities?.length > 0">
       <div>
         <h3>
           <b>Name:</b><span class="pokemon-name"> {{ pokemonDetail.name }} (#{{ pokemonDetail.id }})</span>
