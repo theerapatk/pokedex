@@ -1,3 +1,4 @@
+import compression = require('compression');
 import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as morgan from 'morgan';
@@ -11,6 +12,7 @@ app.set('port', (process.env.PORT || 3000));
 app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(compression());
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
