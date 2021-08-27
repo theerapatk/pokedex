@@ -21,7 +21,7 @@ describe('PokedexComponent', () => {
   let component: PokedexComponent;
   let fixture: ComponentFixture<PokedexComponent>;
 
-  const pokedexService = jasmine.createSpyObj('PokedexService', ['getPokemons', 'getPokemon', 'getPokemonByType']);
+  const pokedexService = jasmine.createSpyObj('PokedexService', ['getPokemons', 'getPokemon', 'getPokemonsByType']);
   const toastrService = jasmine.createSpyObj('ToastrService', ['success']);
   const router = { navigate: jasmine.createSpy('navigate') };
   const jwtHelper = jasmine.createSpyObj('JwtHelper', ['decodeToken']);
